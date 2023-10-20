@@ -6,30 +6,25 @@ OBJS_DIR = objs/
 OBJS = $(SRCS:.c=.o)
 OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
 
-OBJSB = $(SRCSB:.c=.o)
-OBJECTS_BONUS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJSB))
+INCLUDES = -I../includes
 
 CC = gcc
 
 CC_FLAGS = -Wall -Wextra -Werror
 
-$(OBJS_DIR)%.o : %.c libft.h
+$(OBJS_DIR)%.o : %.c
 	@mkdir -p $(OBJS_DIR)
-	@echo "Compiling: $<"
-	@$(CC) $(CC_FLAGS) -c $< -o $@
+	@ echo "Compiling: $<"
+	@$(CC) $(CC_FLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJECTS_PREFIXED)
-	@ar r $(NAME) $(OBJECTS_PREFIXED)
+$(NAME): $(OBJS)
+	@ar r $(NAME) $(OBJS)
 	@echo "Libft Done !"
 
 all: $(NAME)
 
-bonus: $(OBJECTS_BONUS_PREFIXED)
-	@ar r $(NAME) $(OBJECTS_BONUS_PREFIXED)
-	@echo "Bonus Done !"
-
 clean:
-	rm -rf $(OBJS_DIR)
+	rm -rf $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

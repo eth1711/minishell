@@ -6,7 +6,7 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-INCLUDES = -Iminishell.h -I
+INCLUDES = -Iminishell.h -Ilibft -L./Libft -lft
 
 NAME = minishell
 
