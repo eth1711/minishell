@@ -6,23 +6,27 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-INCLUDES = -Iminishell.h -Ilibft -L./Libft -lft
+INCLUDES = -Iincludes
+
+LINKER = -lreadline -L./Libft -lft
 
 NAME = minishell
 
 %.o : %.c
-$(CC) $(FLAGS) $(INCLUDES) $> -o $@
+	@echo Compiling $@
+	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $<
 
-$(NAME) : $(OBJ) minishell.h
-$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ)
+	@Make -C ./Libft
+	@$(CC) $(FLAGS) $(INCLUDES) $(LINKER) $(OBJ) -o $(NAME)
 
 all : $(NAME)
 
 clean :
-	rm $(OBJ)
+	@rm $(OBJ)
 
 fclean : clean
-	rm $(NAME)
+	@rm $(NAME)
 
 re : fclean all
 
