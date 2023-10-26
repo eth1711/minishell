@@ -18,13 +18,11 @@ NAME = minishell
 	@echo Compiling $<
 	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $<
 
-$(LIBFT) :
-	@Make -C ./Libft
-
 $(NAME) : $(OBJ)
+	@Make -C ./Libft
 	@$(CC) $(FLAGS) $(INCLUDES) $(LINKER) $(OBJ) -o $(NAME)
 
-all : $(LIBFT) $(NAME)
+all : $(NAME)
 
 clean :
 	@rm -rf $(OBJ)
