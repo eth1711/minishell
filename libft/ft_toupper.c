@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/13 15:11:54 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/21 18:07:58 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
-
-int	main(int argc, char *argv[])
+int	ft_toupper(int c)
 {
-	char	*input;
-
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
-	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
-	}
-	return (0);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }

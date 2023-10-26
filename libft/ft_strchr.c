@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/13 16:03:35 by amaligno          #+#    #+#             */
+/*   Updated: 2022/11/14 16:33:12 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+char	*ft_strchr(const char *str, int c)
 {
-	char	*input;
+	char			*f;
+	unsigned char	r;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	r = c;
+	if (r == '\0')
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		f = (char *)(str + ft_strlen(str));
+		return (f);
 	}
-	return (0);
+	while (*str != '\0')
+	{
+		if (*str == r)
+		{
+			f = (char *)str;
+			return (f);
+		}
+		str++;
+	}
+	return (NULL);
 }
+
+/*int main(int c, char **str)
+{
+	char *f = ft_strchr(str[1], 'l');
+	printf("%s", f);
+}*/

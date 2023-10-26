@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/13 15:19:00 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/21 18:08:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
-
-int	main(int argc, char *argv[])
+int	ft_tolower(int c)
 {
-	char	*input;
-
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	if (c >= 'A' && c <= 'Z')
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		return (c + 32);
 	}
-	return (0);
+	return (c);
 }

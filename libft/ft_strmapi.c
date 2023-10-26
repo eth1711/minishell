@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/11/10 15:08:17 by amaligno          #+#    #+#             */
+/*   Updated: 2022/11/10 15:35:59 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*input;
+	char	*str;
+	size_t	i;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	i = 0;
+	if (!s || !f)
+		return (NULL);
+	str = ft_strdup(s);
+	if (!str)
+		return (NULL);
+	while (str[i])
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		str[i] = f(i, s[i]);
+		i++;
 	}
-	return (0);
+	str[i] = '\0';
+	return (str);
 }

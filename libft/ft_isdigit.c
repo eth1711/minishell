@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/07 16:33:44 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/20 19:21:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_isdigit(int c)
 {
-	char	*input;
-
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	if (c >= '0' && c <= '9')
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		return (1);
 	}
 	return (0);
 }

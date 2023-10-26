@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/08 16:15:15 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/18 15:51:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char	*input;
+	size_t	i;
+	char	*s;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	s = (char *)b;
+	i = -1;
+	while (++i < len)
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		s[i] = c;
 	}
-	return (0);
+	return (b);
 }
+
+/*int main(void)
+{
+	int	a = 'h';
+	char c[] = "hello";
+	int f[6] = {1,2,3,4,5,6};
+	int *d = ft_memset(f, 0, 3);
+}*/

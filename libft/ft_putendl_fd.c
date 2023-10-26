@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/11/10 17:07:32 by amaligno          #+#    #+#             */
+/*   Updated: 2022/11/10 17:25:44 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	ft_putendl_fd(char *s, int fd)
 {
-	char	*input;
-
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
-	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
-	}
-	return (0);
+	if (!s)
+		return ;
+	while (*s != '\0')
+		write(fd, &(*s++), 1);
+	write(fd, &("\n"), 1);
 }

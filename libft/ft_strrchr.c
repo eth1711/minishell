@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/13 16:18:32 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/21 17:52:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*input;
+	char	*ptr;
+	char	sym;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	ptr = (char *)s + ft_strlen(s);
+	sym = (char)c;
+	while (ptr >= s)
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		if (*ptr == sym)
+			return (ptr);
+		ptr--;
 	}
-	return (0);
+	return (NULL);
 }
+
+/*int main(int c, char **str)
+{
+	char *f = ft_strchr(str[1], 'l');
+	printf("%s", f);
+}*/

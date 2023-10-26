@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/11/10 17:10:59 by amaligno          #+#    #+#             */
+/*   Updated: 2022/11/17 16:18:06 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*input;
+	int	i;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	if (n == -2147483648)
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd('8', fd);
+		return ;
 	}
-	return (0);
+	if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		i = n * -1;
+	}
+	else
+		i = n;
+	if (i >= 10)
+		ft_putnbr_fd(i / 10, fd);
+	ft_putchar_fd((i % 10 + 48), fd);
 }
+
+// int main(void)
+// {
+// 	ft_putnbr_fd(-2147483648, 1);
+// }

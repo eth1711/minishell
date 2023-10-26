@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/14 17:05:13 by amaligno          #+#    #+#             */
+/*   Updated: 2022/10/18 16:19:02 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+char	*ft_strdup(const char *s1)
 {
-	char	*input;
+	char	*str;
+	size_t	len;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
-	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
-	}
-	return (0);
+	len = ft_strlen(s1) + 1;
+	str = malloc(sizeof(char) * len);
+	if (!str)
+		return (NULL);
+	str = ft_memcpy(str, s1, len);
+	return (str);
 }

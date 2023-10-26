@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2023/10/26 17:54:23 by amaligno         ###   ########.fr       */
+/*   Created: 2022/10/21 17:30:39 by amaligno          #+#    #+#             */
+/*   Updated: 2022/11/16 11:18:21 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "string.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	*input;
+	unsigned const char	*ptr;
+	size_t				i;
 
-	(void)argc;
-	(void)argv;
-	input = readline("minishell$ ");
-	while (1)
+	i = 0;
+	ptr = (unsigned const char *)s;
+	while (i < n)
 	{
-		if (strcmp(input, "hello") == 0)
-			printf("hi :)\n");
-		input = readline("minishell$ ");
+		if (ptr[i] == (unsigned char)c)
+			return ((void *)(s + i));
+		i++;
 	}
-	return (0);
+	return (NULL);
 }
+
+// int	main(void)
+// {
+// 	char s[] = "012345";
+// 	char *f = ft_memchr(s, 256 + 2, 3);
+// 	f += 2;
+// 	printf("%s\n", f);
+// }
