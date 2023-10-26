@@ -18,17 +18,19 @@ $(OBJS_DIR)%.o : %.c
 	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS_PREF)
-	@ar r $(NAME) $(OBJS_PREF)
+	@ar rc $(NAME) $(OBJS_PREF)
 	@echo "Libft Done !"
 
 all: $(NAME)
 
 clean:
 	@rm -rf $(OBJS_DIR)
-	@echo libft clean !
+	@echo Libft clean !
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo libft fclean !
+	@echo Libft fclean !
 
 re: fclean all
+
+.PHONY : all clean fclean re

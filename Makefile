@@ -4,6 +4,8 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
+LIBFT = libft.a
+
 FLAGS = -Wall -Werror -Wextra
 
 INCLUDES = -Iincludes
@@ -16,20 +18,22 @@ NAME = minishell
 	@echo Compiling $<
 	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $<
 
+$(LIBFT) :
+	@Make -C ./Libft
+
 $(NAME) : $(OBJ)
-	Make -C ./Libft
 	@$(CC) $(FLAGS) $(INCLUDES) $(LINKER) $(OBJ) -o $(NAME)
 
-all : $(NAME)
+all : $(LIBFT) $(NAME)
 
 clean :
-	@rm $(OBJ)
-	Make clean -C ./Libft
+	@rm -rf $(OBJ)
+	@Make clean -C ./Libft
 
 fclean : clean
-	@rm $(NAME)
-	Make fclean -C ./Libft
+	@rm -rf $(NAME)
+	@Make fclean -C ./Libft
 
 re : fclean all
 
-.PHONY : all clean fclean
+.PHONY : all clean fclean re
