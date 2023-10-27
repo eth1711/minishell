@@ -6,17 +6,14 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:48:03 by amaligno          #+#    #+#             */
-/*   Updated: 2022/11/30 11:47:10 by amaligno         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:35:40 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <stdio.h>
+# include "minishell.h"
 
 typedef struct s_list
 {
