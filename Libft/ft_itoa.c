@@ -77,9 +77,7 @@ static void	*itoa(char *str, int n, int full)
 static char	*exception(int n)
 {
 	char	*str;
-	int		i;
 
-	i = 0;
 	if (n < -2147483647)
 	{
 		str = ft_strdup("-2147483648");

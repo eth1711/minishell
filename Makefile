@@ -19,18 +19,18 @@ NAME = minishell
 	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $<
 
 $(NAME) : $(OBJ)
-	@Make -C ./Libft
+	@make -C Libft
 	@$(CC) $(FLAGS) $(INCLUDES) $(LINKER) $(OBJ) -o $(NAME)
 
 all : $(NAME)
 
 clean :
 	@rm -rf $(OBJ)
-	@Make clean -C ./Libft
+	@make clean -C Libft
 
 fclean : clean
 	@rm -rf $(NAME)
-	@Make fclean -C ./Libft
+	@make fclean -C Libft
 
 re : fclean all
 
