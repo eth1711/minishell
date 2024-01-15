@@ -4,23 +4,21 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-LIBFT = libft.a
-
 FLAGS = -Wall -Werror -Wextra
 
 INCLUDES = -Iincludes
 
-LINKER = -lreadline -L./Libft -lft
+LINKER = -L./Libft -lft -lreadline
 
 NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $<
+	@$(CC) $(FLAGS) -c -o $@ $< $(INCLUDES)
 
 $(NAME) : $(OBJ)
 	@make -C Libft
-	@$(CC) $(FLAGS) $(INCLUDES) $(LINKER) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $(NAME) $(LINKER)
 
 all : $(NAME)
 
