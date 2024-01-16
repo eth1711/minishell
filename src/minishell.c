@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/01/15 19:43:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/01/16 20:26:08 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,25 @@ void	parser(char *line, char **envp)
 	{
 		if (execve(tokens[0], tokens, NULL) == -1)
 		{
-			printf("minish: command not found %s\n", tmp);
+			printf("%s: command not found \n", tmp);
 			exit(0);
 		}
 	}
 	else
 		wait(&id);
 	free (tmp);
+}
+
+void	cd_cmnd(char *line)
+{
+	if (ft_strlen(line) > 3)
+	{
+		line[2] = '\0';
+		if (chdir(line + 3) < 0)
+			ft_putstr_fd("Cannot cd :( \n", 2);
+	}
+	else
+		chdir("~");
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,9 +61,14 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell$ ");
-		// if (ft_strncmp(line, "hello", ft_strlen(line)) == 0)
-			// printf("hi :) world\n");
-		parser(line, envp);
+		add_history(line);
+		if (line && *line)
+		{
+			if (!ft_strncmp(line, "cd", 2))
+				cd_cmnd(line);
+			else
+				parser(line, envp);
+		}
 	}
 	return (0);
 }
