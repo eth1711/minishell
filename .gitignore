@@ -1,7 +1,10 @@
-*.o
-*.a
-a.out
-test.c
-.vscode
-minishell
-objs/
+# ignore everything
+*
+# whitelist directories
+!*/
+
+# whitelist these files
+!*.c
+!*.h
+!Makefile
+!.gitignore
