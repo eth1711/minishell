@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/01 21:29:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:49:47 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ enum
 
 //Parsing
 t_cmd	parser(char *line, char **envp);
-t_cmd	parsline(char **s, char *es);
+t_cmd	parseline(char **s, char *es);
+t_cmd	parsepipe(char **s, char *es);
 
 //Builtins
 void	cd_cmd(char *line);

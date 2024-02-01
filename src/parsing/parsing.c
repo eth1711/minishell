@@ -6,33 +6,41 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/01/30 20:40:23 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:53:11 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser(char *line, char **envp)
+int	gettoken(char *s, char *es, char *t, char *et)
 {
-	char	**tokens;
-	char	*tmp;
-	int		id;
+	int	ret;
 
-	(void)line;
-	tokens = ft_split(line, ' ');
-	tmp = tokens[0];
-	tokens[0] = ft_strjoin("/usr/bin/", tokens[0]);
-	id = fork();
-	if (!id)
-	{
-		if (execve(tokens[0], tokens, NULL) == -1)
-		{
-			printf("%s: command not found \n", tmp);
-			exit(0);
-		}
-	}
-	else
-		wait(&id);
-	(void)envp;
-	free (tmp);
+	return (ret);
+}
+
+t_cmd	*parsepipe(char **s, char *es)
+{
+	t_cmd	*cmd;
+
+	
+	return (cmd);
+}
+
+t_cmd	*parseline(char **s, char *es)
+{
+	t_cmd	*cmd;
+
+	cmd = parsepipe(*s, es);
+	return (cmd);
+}
+
+t_cmd	*parser(char *line, char **envp)
+{
+	t_cmd	*cmd;
+	char	*es;
+
+	es = line + ft_strlen(line);
+	cmd = parseline(line, es);
+	return (cmd);
 }

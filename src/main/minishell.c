@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/01/30 20:55:28 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:58:12 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		add_history(line);
 		if (line && *line)
-		{
-			if (!ft_strncmp(line, "cd", 2))
-				cd_cmd(line);
-			else
-				parser(line, envp);
-		}
+			parser(line, envp);
 		line = readline("minishell$ ");
 	}
 	exit(0);
