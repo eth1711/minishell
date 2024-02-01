@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/01/30 21:43:11 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:29:36 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,33 @@
 # include <sys/wait.h>
 # include "libft.h"
 
+# define WHITESPACE "\n\t\r\v "
+//These enums are for the cmd types
+//LL and RR represent << and >> respectively
 enum
 {
 	EXEC,
 	REDIR,
-	PIPE		
+	PIPE,
+	LL,
+	RR
 };
 
 //Parsing
-void	parser(char *line, char **envp);
+t_cmd	parser(char *line, char **envp);
+t_cmd	parsline(char **s, char *es);
 
 //Builtins
 void	cd_cmd(char *line);
+
+//Struct for different struct ptrs, intended to be used in
+//exec and gettoken
+typedef struct s_types
+{
+	t_execcmd	*exe;
+	t_pipecmd	*pipe;
+	t_redircmd	*redir;
+}	t_types;
 
 typedef struct s_cmd
 {
