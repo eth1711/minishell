@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 21:44:57 by amaligno          #+#    #+#             */
-/*   Updated: 2022/11/17 21:51:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:46:30 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_lstsize(t_list *lst)
 	if (!lst)
 		return (count);
 	while (lst)
-	{	
+	{
 		lst = lst->next;
 		count++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 16:50:23 by amaligno          #+#    #+#             */
-/*   Updated: 2023/02/01 19:41:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:42:29 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	len;
 	size_t	back;
 	size_t	front;
-	size_t	i;
 
 	if (!s1)
 		return (NULL);
 	if (!set)
 		return (ft_strdup(s1));
-	i = 0;
 	back = 0;
 	front = 0;
 	len = ft_strlen(s1);
@@ -58,8 +56,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 	cpy = (char *)malloc(sizeof(char) * (len + 1));
 	if (!cpy)
 		return (NULL);
+	back = 0;
 	while (len--)
-		cpy[i++] = s1[front++];
-	cpy[i] = '\0';
+		cpy[back++] = s1[front++];
+	cpy[back] = '\0';
 	return (cpy);
 }
