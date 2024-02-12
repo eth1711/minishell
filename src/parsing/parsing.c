@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/06 16:06:39 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:18:15 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 t_cmd	*parseredir(char **s, char *es, t_cmd *cmd)
 {
 	int			tok;
-	t_token		toks;
+	t_strptrs	toks;
 
 	printf("parsredir: enter\n");
 	while (checktoken(s, es, "<>"))
 	{
 		printf("parsredir: enter while\n");
 		tok = gettoken(s, es, 0, 0);
-		gettoken(s, es, &toks.t, &toks.et);
+		gettoken(s, es, &toks.s, &toks.es);
 		if (tok == '>')
 			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks);
 		else if (tok == '<')
@@ -30,9 +30,9 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd)
 		else if (tok == RR)
 			cmd = redircmd(cmd, 1, O_RDONLY | O_CREAT, toks);
 		else if (tok == LL)
-			cmd = redircmd(cmd, 0, O_RDONLY, toks);
+			cmd = redircmd(cmd, 0, LL, toks);
 	}
-	printf("parsredir: return\n");
+	// printf("parsredir: return\n");
 	return (cmd);
 }
 
@@ -42,18 +42,22 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd)
 t_cmd	*parseexec(char **s, char *es)
 {
 	t_types		ptrs;
-	t_token		toks;
+	t_strptrs	toks;
 	int			i;
+	int			tok;
 
 	i = 0;
-	ptrs.exec = (t_execcmd *)execmd(argcount(*s, es));
+	ptrs.exec = (t_execcmd *)execmd();
 	ptrs.cmd = parseredir(s, es, (t_cmd *)ptrs.exec);
-	while (!checktoken(s, es, SYMBOLS))
+	while (!checktoken(s, es, SYMBOLS) || checktoken(s, es, "\'\""))
 	{
-		if (gettoken(s, es, &toks.t, &toks.et) != 'a')
+		tok = gettoken(s, es, &toks.s, &toks.es);
+		if (!ft_strchr("\'\"a", tok))
 			break ;
-		ptrs.exec->argv[i] = toks.t;
-		ptrs.exec->eargv[i++] = toks.et;
+		else if (tok != 'a')
+			if (!quotes(s, es, &toks.s, &toks.es))
+				break ;
+		expansion(toks.s, toks.es, ptrs.exec);
 		ptrs.cmd = parseredir(s, es, ptrs.cmd);
 	}
 	return (ptrs.cmd);
@@ -67,12 +71,28 @@ t_cmd	*parsepipe(char **s, char *es)
 	cmd = parseexec(s, es);
 	if (checktoken(s, es, "|"))
 	{
-		printf("parsepipe: inside if: **s: %c\n", **s);
-		printf("parsepipe: checktoken found pipe\n");
+		// printf("parsepipe: inside if: **s: %c\n", **s);
+		// printf("parsepipe: checktoken found pipe\n");
 		gettoken(s, es, 0, 0);
 		cmd = pipecmd(cmd, parsepipe(s, es));
 	}
 	return (cmd);
+}
+
+void	nullterminate(t_cmd *cmd)
+{
+	if (cmd->type == PIPE)
+	{
+		nullterminate((((t_pipecmd *)cmd)->left));
+		nullterminate((((t_pipecmd *)cmd)->right));
+	}	
+	else if (cmd->type == REDIR)
+	{
+		((t_redircmd *)cmd)->efilename = '\0';
+		nullterminate(((t_redircmd *)cmd)->cmd);
+	}
+	else if (cmd->type == EXEC)
+		list_to_array((t_execcmd *)cmd);
 }
 
 t_cmd	*parser(char *line)
@@ -82,5 +102,6 @@ t_cmd	*parser(char *line)
 
 	es = line + ft_strlen(line);
 	cmd = parsepipe(&line, es);
+	nullterminate(cmd);
 	return (cmd);
 }

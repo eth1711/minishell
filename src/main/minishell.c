@@ -6,15 +6,23 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 17:30:13 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:17:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	error(t_cmd	*cmd)
+{
+	t_error	*error;
+
+	error = (t_error *)cmd;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	t_cmd	*tree;
 
 	(void)argc;
 	(void)argv;
@@ -23,7 +31,12 @@ int	main(int argc, char **argv, char **envp)
 	{
 		add_history(line);
 		if (line && *line)
-			print_tree(parser(line));
+		{
+			tree = praser(line);
+			print_tree(tree);
+			// if (tree->type == ERROR)
+				// 
+		}
 		line = readline("minishell$ ");
 	}
 	exit(0);

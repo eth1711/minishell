@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 22:04:59 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:06:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,48 @@
 # define WHITESPACE "\n\t\r\v "
 # define SYMBOLS "|<>\'\""
 
-//These enums are for the cmd types
+// Error strings
+# define ERROR_QUOTES "Expected closing quote"
+
+// These enums are for the cmd types
 //LL and RR represent << and >> respectively
 enum
 {
 	EXEC,
 	REDIR,
+	ERROR,
 	PIPE,
 	LL,
 	RR
 };
 
-//Struct for different struct ptrs, intended to be used in
+// Struct for different struct ptrs, intended to be used in
 //exec and gettoken
 typedef struct s_cmd
 {
 	int				type;
 }	t_cmd;
 
+typedef struct s_error
+{
+	int				type;
+	char			*error_msg;
+	t_cmd			*head;
+}	t_error;
+
+typedef struct s_arg
+{
+	bool	is_malloced;
+	char	*s;
+	char	*es;
+	char	*next;
+}	t_arg;
+
 typedef struct s_execmd
 {
 	int		type;
-	char	**argv;
-	char	**eargv;
+	t_arg	*args_list;
+	char	**args_array;
 }	t_execcmd;
 
 typedef struct s_pipecmd
@@ -78,36 +97,44 @@ typedef struct s_types
 	t_redircmd	*redir;
 }	t_types;
 
-typedef struct s_token
+typedef struct s_strptrs
 {
-	char	*t;
-	char	*et;
-}	t_token;
+	char	*s;
+	char	*es;
+}	t_strptrs;
 
-//Parsing
+// Parsing
 
 t_cmd	*parser(char *line);
-t_cmd	*parseline(char **s, char *es);
 t_cmd	*parsepipe(char **s, char *es);
 
-//Nodes
-//These functions are constructors for the structs
+// Nodes
+// These functions are constructors for the structs
 
 t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_token filename);
-t_cmd	*execmd(int argc);
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename);
+t_cmd	*execmd(void);
+t_cmd	*args(char *s, char *es, bool is_malloced);
+t_cmd	*error(t_cmd *head, char *message);
 
-//Builtins
+// Builtins
 
 void	cd_cmd(char *line);
 
-//Parsing utils
+// Parsing utils
 
-int		argcount(char *s, char *es);
+void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
 
-//Debug utils 
+// arg list funcs
+void	arg_add_back(t_arg **head, t_arg *add);
+void	arg_add_front(t_arg **head, t_arg *add);
+void	args_free(t_arg *head);
+int		arg_count(t_arg *head);
+t_arg	*arg_last(t_arg *head);
+
+// Debug utils 
 
 void	print_tree(t_cmd *head);
 

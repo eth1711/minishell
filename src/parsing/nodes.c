@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 20:07:08 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:40:04 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 	return ((t_cmd *)pipe);
 }
 
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_token filename)
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename)
 {
 	t_redircmd	*redir;
 
@@ -34,21 +34,41 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_token filename)
 	redir->type = REDIR;
 	redir->fd = fd;
 	redir->mode = mode;
-	redir->filename = filename.t;
-	redir->efilename = filename.et;
+	redir->filename = filename.s;
+	redir->efilename = filename.es;
 	return ((t_cmd *)redir);
 }
 
-t_cmd	*execmd(int argc)
+t_arg	*args(char *s, char *es, bool is_malloced)
+{
+	t_arg	*arg;
+
+	arg = malloc(sizeof(t_arg));
+	arg->is_malloced = is_malloced;
+	arg->s = s;
+	arg->es = es;
+	arg->next = NULL;
+	return (arg);
+}
+
+t_cmd	*execmd(void)
 {
 	t_execcmd	*exec;
 
-	printf("execcmd: argc: %i\n", argc);
 	exec = malloc(sizeof(t_execcmd));
 	exec->type = EXEC;
-	exec->argv = malloc(sizeof(char *) * (argc + 1));
-	exec->eargv = malloc(sizeof(char *) * (argc + 1));
-	exec->argv[argc] = NULL;
-	exec->eargv[argc] = NULL;
+	exec->args_array = NULL;
+	exec->args_list = NULL;
 	return ((t_cmd *)exec);
+}
+
+t_cmd	*error(t_cmd *head, char *message)
+{
+	t_error	*error;
+
+	error = malloc(sizeof(t_error));
+	error->type = ERROR;
+	error->error_msg = ft_strdup(message);
+	error->head = head;
+	return ((t_cmd *)error);
 }
