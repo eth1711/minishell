@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/12 18:06:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:19:20 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # include "libft.h"
 
 # define WHITESPACE "\n\t\r\v "
-# define SYMBOLS "|<>\'\""
+# define SYMBOLS "|<>"
+# define QUOTES "\'\""
 
 // Error strings
 # define ERROR_QUOTES "Expected closing quote"
@@ -123,6 +124,7 @@ void	cd_cmd(char *line);
 
 // Parsing utils
 
+int		check_quotes(char *s, char *es);
 void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);

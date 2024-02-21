@@ -6,24 +6,29 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/12 17:38:28 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:54:19 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*expand_env(char *new, char *env)
+{
+	
+}
+
 void	expansion(char *t, char *et, t_execcmd *exec)
 {
-	char	*s;
+	char	*new;
+	int		count;
 
-	s = t;
-	if (*t == '\'')
+	count = 0;
+	while ((t + count) < et)
 	{
-		arg_add_back(&exec->args_list, args(++t, et, 0));
-		return ;
+		while ((t + count) < et && t[count] != '$')
+			count++;
+		if (t[count] == '$')
+			new = expand_env(new, t);
 	}
-	while (checktoken(&s, et, "$"))
-	{
-		
-	}
+	arg_add_back(&exec->args_list, args(new, et, 1));
 }

@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/12 17:59:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:09:52 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ int	checktoken(char **s, char *es, char *find)
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (**s && ft_strchr(find, **s));
+}
+
+//function that checks whether quotes are closed in a string
+int	check_quotes(char *s, char *es)
+{
+	char	quote;
+
+	while (s < es)
+	{
+		if (ft_strchr(QUOTES, *s))
+		{
+			quote = *s;
+			s++;
+			while (s < es && *s != quote)
+				s++;
+			if (*s != quote)
+				return (0);
+		}
+		s++;
+	}
+	return (1);
 }
 
 //helper function for gettoken, that sets the value of ret
@@ -40,7 +61,8 @@ int	ret_value(char **s, char *es)
 	else
 	{
 		ret = 'a';
-		(*s)++;
+		if (check_quotes(*s, es))
+			return (-1);
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
 			(*s)++;
@@ -53,6 +75,7 @@ int	ret_value(char **s, char *es)
 // 'a' indicates an argument of a command, LL and RR indicate
 // << and >> respectively and any other character returned indicates that symbol
 // 0 if it is the end of the string
+// -1 if quotes are not closed
 // s will be moved to the next token, and if t and et, are not null, t will
 // be set to the start of the token and et to end of the token
 int	gettoken(char **s, char *es, char **t, char **et)
@@ -71,27 +94,6 @@ int	gettoken(char **s, char *es, char **t, char **et)
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
-}
-
-//function that expects **s to be either ' or ", then moves
-//the local var ptr to the next one, 
-int	quotes(char **s, char *es, char **t, char **et)
-{
-	char	c;
-	char	*ptr;
-
-	if (!s || !*s)
-		return ;
-	ptr = *s;
-	*t = ptr;
-	c = *ptr;
-	while ((ptr < *es && *ptr) && *ptr != c)
-		ptr++;
-	if (*ptr == c)
-		*et = ptr;
-	else
-		return (0);
-	return (1);
 }
 
 void	list_to_array(t_execcmd *exec)
