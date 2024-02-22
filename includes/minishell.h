@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 22:04:59 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:36:40 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,19 @@ typedef struct s_token
 	char	*t;
 	char	*et;
 }	t_token;
+
+typedef struct s_env
+{
+	char			*string;
+	struct s_env	*next;
+}	t_env;
+
+//environement
+
+t_env	*env(char *string, t_env *next);
+t_env	*init_envp(char **envp);
+char	*get_env(char *key, t_env *envp);
+void	put_env(char *string, t_env **envp);
 
 //Parsing
 
