@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/19 17:19:20 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:30:20 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ typedef struct s_error
 	t_cmd			*head;
 }	t_error;
 
+typedef struct s_env
+{
+	char			*string;
+	struct s_env	*next;
+}	t_env;
+
 typedef struct s_arg
 {
 	bool	is_malloced;
@@ -103,6 +109,13 @@ typedef struct s_strptrs
 	char	*s;
 	char	*es;
 }	t_strptrs;
+
+//environement
+
+t_env	*env(char *string, t_env *envp);
+t_env	*init_envp(char **envp);
+char	*get_env(char *key, t_env *envp);
+void	put_env(char *string, t_env **envp);
 
 // Parsing
 
