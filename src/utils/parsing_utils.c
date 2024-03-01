@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 22:11:52 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:20:24 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,18 @@ int	gettoken(char **s, char *es, char **t, char **et)
 
 int	argcount(char *s, char *es)
 {
-	int	argc;
+	int		argc;
+	char	token;
 
 	argc = 0;
-	printf("argcount: enter\n");
-	while (gettoken(&s, es, 0, 0) == 'a')
-		argc++;
-	printf("argcount: return\n");
+	token = gettoken(&s, es, 0 ,0);
+	// printf("argcount: enter\n");
+	while (token)
+	{
+		if (token == 'a')	
+			argc++;
+		token = gettoken(&s, es, 0, 0);	
+	}
+	// printf("argcount: return\n");
 	return (argc);
 }
