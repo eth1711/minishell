@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 20:30:26 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:56:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ typedef struct s_env
 
 typedef struct s_arg
 {
-	bool	is_malloced;
 	char	*s;
-	char	*es;
 	char	*next;
 }	t_arg;
 

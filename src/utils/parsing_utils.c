@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 20:28:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:02:37 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,23 @@ int	gettoken(char **s, char *es, char **t, char **et)
 
 void	list_to_array(t_execcmd *exec)
 {
-	int	argc;
+	t_arg	*ptr;
+	int		argc;
 
 	argc = 0;
-	printf("argcount: enter\n");
-	while (gettoken(&s, es, 0, 0) == 'a')
+	ptr = exec->args_list;
+	while (ptr)
+	{
 		argc++;
-	printf("argcount: return\n");
-	return (argc);
+		ptr = ptr->next;
+	}
+	exec->args_array = malloc(sizeof(char *) * argc + 1);
+	ptr = exec->args_list;
+	argc = 0;
+	while (ptr)
+	{
+		exec->args_array[argc++] = ptr->s;
+		ptr = ptr->next;
+	}
+	exec->args_array[argc] = NULL;
 }

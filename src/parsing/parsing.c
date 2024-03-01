@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 20:27:38 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:54:32 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,6 @@ t_cmd	*parsepipe(char **s, char *es)
 	return (cmd);
 }
 
-void	nullterminate(t_cmd *cmd)
-{
-	if (cmd->type == PIPE)
-	{
-		nullterminate((((t_pipecmd *)cmd)->left));
-		nullterminate((((t_pipecmd *)cmd)->right));
-	}	
-	else if (cmd->type == REDIR)
-	{
-		((t_redircmd *)cmd)->efilename = '\0';
-		nullterminate(((t_redircmd *)cmd)->cmd);
-	}
-	else if (cmd->type == EXEC)
-		list_to_array((t_execcmd *)cmd);
-}
-
 t_cmd	*parser(char *line)
 {
 	t_cmd	*cmd;
@@ -99,6 +83,5 @@ t_cmd	*parser(char *line)
 
 	es = line + ft_strlen(line);
 	cmd = parsepipe(&line, es);
-	nullterminate(cmd);
 	return (cmd);
 }
