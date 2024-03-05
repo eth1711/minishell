@@ -28,7 +28,7 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd)
 		else if (tok == '<')
 			cmd = redircmd(cmd, 0, O_RDONLY, toks);
 		else if (tok == RR)
-			cmd = redircmd(cmd, 1, O_RDONLY | O_CREAT, toks);
+			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT, toks);
 		else if (tok == LL)
 			cmd = redircmd(cmd, 0, O_RDONLY, toks);
 	}
