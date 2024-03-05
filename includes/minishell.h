@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 15:05:22 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:22:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,30 @@ typedef struct s_arg
 	char	*next;
 }	t_arg;
 
+typedef struct s_error
+{
+	int				type;
+	char			*error_msg;
+	t_cmd			*head;
+}	t_error;
+
+typedef struct s_env
+{
+	char			*string;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_arg
+{
+	char	*s;
+	char	*next;
+}	t_arg;
+
 typedef struct s_execmd
 {
 	int		type;
+	t_arg	*args_list;
+	char	**args_array;
 	t_arg	*args_list;
 	char	**args_array;
 }	t_execcmd;
@@ -91,7 +112,6 @@ typedef struct s_redircmd
 	int		fd;
 	int		mode;
 	char	*filename;
-	char	*efilename;
 }	t_redircmd;
 
 typedef struct s_types
