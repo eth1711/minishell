@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 21:56:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:05:22 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ void	put_env(char *string, t_env **envp);
 
 // Parsing
 
-t_cmd	*parser(char *line);
-t_cmd	*parsepipe(char **s, char *es);
+t_cmd	*parser(char *line, t_env *env);
 
 // Nodes
 // These functions are constructors for the structs
