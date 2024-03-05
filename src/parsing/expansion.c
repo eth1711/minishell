@@ -6,15 +6,15 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:13:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:21:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_safejoin(const char *s1, const char *s2)
+char	*ft_safejoin(char *s1, char *s2)
 {
-	const char	*tmp;
+	char	*tmp;
 
 	tmp = s1;
 	s1 = ft_strjoin(s1, s2);
@@ -31,7 +31,6 @@ char	*ft_safejoin(const char *s1, const char *s2)
 void	expand_env(char **new, t_strptrs *toks, t_env *env)
 {
 	int		count;
-	char	*var;
 
 	if (*(toks->s + 1) == '?' || (toks->s + 1) >= toks->es)
 	{
@@ -49,7 +48,7 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 	toks->s += count;
 }
 
-void	expand(char **new, t_strptrs *toks, char *env)
+void	expand(char **new, t_strptrs *toks, t_env *env)
 {
 	char	c;
 	int		count;
@@ -68,7 +67,6 @@ void	expand(char **new, t_strptrs *toks, char *env)
 void	expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 {
 	char	*new;
-	char	*temp;
 	int		count;
 
 	count = 0;
@@ -83,5 +81,5 @@ void	expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 			expand(&new, &toks, env);
 		count = 0;
 	}
-	arg_add_back(&exec->args_list, args(new, toks.es, 1));
+	arg_add_back(&exec->args_list, args(new, NULL));
 }

@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:36:41 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/12 17:43:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:23:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	args_free(t_arg *head)
 {
 	if (!head)
 		return ;
-	if (head->is_malloced)
-		free(head->s);
+	free(head->s);
 	if (head->next)
 		args_free(head->next);
 	free(head);

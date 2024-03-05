@@ -6,18 +6,11 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 15:07:21 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:22:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	error(t_cmd	*cmd)
-{
-	t_error	*error;
-
-	error = (t_error *)cmd;
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		if (line && *line)
 		{
-			tree = praser(line, &envp_list);
+			tree = parser(line, envp_list);
 			print_tree(tree);
 			// if (tree->type == ERROR)
 				// 

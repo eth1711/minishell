@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 21:57:17 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:18:24 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename)
 	redir->fd = fd;
 	redir->mode = mode;
 	redir->filename = filename.s;
-	redir->efilename = filename.es;
 	return ((t_cmd *)redir);
 }
 
@@ -44,6 +43,7 @@ t_arg	*args(char *s, t_arg *next)
 	t_arg	*arg;
 
 	arg = malloc(sizeof(t_arg));
+	arg->s = s;
 	arg->next = next;
 	return (arg);
 }

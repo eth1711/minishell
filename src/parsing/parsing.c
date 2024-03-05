@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 20:33:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:19:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	int			tok;
 	t_strptrs	toks;
 
+	(void)env;
 	printf("parsredir: enter\n");
 	while (checktoken(s, es, "<>"))
 	{
@@ -43,10 +44,8 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 {
 	t_types		ptrs;
 	t_strptrs	toks;
-	int			i;
 	int			tok;
 
-	i = 0;
 	ptrs.exec = (t_execcmd *)execmd();
 	ptrs.cmd = parseredir(s, es, (t_cmd *)ptrs.exec, env);
 	while (!checktoken(s, es, SYMBOLS))
