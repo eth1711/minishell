@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 17:22:31 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/05 21:12:22 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,11 @@ typedef struct s_strptrs
 }	t_strptrs;
 
 //environement
+//getter and setter functions for env
 
 t_env	*env(char *string, t_env *envp);
 t_env	*init_envp(char **envp);
-char	*get_env(char *key, t_env *envp);
+char	*get_env(char *key, t_env *envp, int len);
 void	put_env(char *string, t_env **envp);
 
 // Parsing
