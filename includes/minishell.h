@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 17:17:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:30:07 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ t_cmd	*parsepipe(char **s, char *es);
 //These functions are constructors for the structs
 
 t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_token filename);
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename);
 t_cmd	*execmd(int argc);
 
 //Builtins
