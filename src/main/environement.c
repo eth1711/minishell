@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/22 15:34:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/07 20:48:21 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ char	*get_env(char *key, t_env *envp)
 void	put_env(char *string, t_env **envp)
 {
 	t_env	*new;
+    char    *ptr;
 
+    ptr = string;
+    while (*ptr && *ptr != '=')
+        ptr++:
+    if (*ptr != '=')
+        return ;
 	if (!envp)
 		return ;
 	new = env(string, *envp);
