@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 22:02:37 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:00:21 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	ret_value(char **s, char *es)
 	else
 	{
 		ret = 'a';
-		if (check_quotes(*s, es))
-			return (-1);
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
 			(*s)++;

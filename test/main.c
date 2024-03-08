@@ -29,7 +29,7 @@ int	check_quotes(char *s, char *es)
 
 int main()
 {
-	char *str = "he\"ll\"\'o\"";
+	char *str = "hello";
 	char *estr = str + strlen(str);
 	printf("[%c]\n", *estr);
 	if (!check_quotes(str, estr))

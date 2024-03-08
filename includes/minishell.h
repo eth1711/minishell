@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:19:37 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:27:08 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void	cd_cmd(char *line);
 // Parsing utils
 
 int		check_quotes(char *s, char *es);
+int		check_quotes(char *s, char *es);
 void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
@@ -148,6 +149,10 @@ void	arg_add_front(t_arg **head, t_arg *add);
 void	args_free(t_arg *head);
 int		arg_count(t_arg *head);
 t_arg	*arg_last(t_arg *head);
+
+//free.c
+void	free_tree(t_cmd	*head);
+void	free_2D(char **array);
 
 // Debug utils 
 

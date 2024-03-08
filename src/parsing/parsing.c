@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:19:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:55:11 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ t_cmd	*parser(char *line, t_env *env)
 	char	*es;
 
 	es = line + ft_strlen(line);
+	if (!check_quotes(line, es))
+		return (NULL);
 	cmd = parsepipe(&line, es, env);
 	return (cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arg_list_funcs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:36:41 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:23:27 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:29:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ void	arg_add_front(t_arg **head, t_arg *add)
 	}
 	add->next = *head;
 	*head = add;
-}
-
-void	args_free(t_arg *head)
-{
-	if (!head)
-		return ;
-	free(head->s);
-	if (head->next)
-		args_free(head->next);
-	free(head);
 }
 
 t_arg	*arg_last(t_arg *head)
