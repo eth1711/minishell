@@ -14,4 +14,13 @@
 
 void	cd_cmd(char	**args_array)
 {
+    if (++(*args_array))
+    {
+        if (**args_array)
+            chdir(*args_array);
+    }
+    else
+    {
+        chdir("/home");
+    }
 }
