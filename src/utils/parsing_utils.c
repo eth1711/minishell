@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 22:16:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:34:10 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,38 +43,31 @@ int	check_quotes(char *s, char *es)
 }
 
 //helper function for gettoken, that sets the value of ret
-int	ret_value(char **s, char *es)
+void	ret_value(char **s, char *es, int *ret)
 {
-	int	ret;
-
 	if (ft_strchr(SYMBOLS, **s))
 	{
-		ret = **s;
-		(*s)++;
-		if (**s == '<' && ret == '<')
-			ret = LL;
-		else if (**s == '>' && ret == '>')
-			ret = RR;
-		if (ret == RR || ret == LL)
+		*ret = *((*s)++);
+		if (**s == '<' && *ret == '<')
+			*ret = LL;
+		else if (**s == '>' && *ret == '>')
+			*ret = RR;
+		if (*ret == RR || *ret == LL)
 			(*s)++;
 	}
 	else
 	{
-		ret = 'a';
+		*ret = 'a';
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
 		{
 			if (ft_strchr(QUOTES, **s))
-			{
-				(*s)++;
-				while (!ft_strchr(QUOTES, **s))
-					(*s)++;
-			}
+				while (!ft_strchr(QUOTES, *(++(*s))))
+					;
 			else
 				(*s)++;
 		}
 	}
-	return (ret);
 }
 
 // Function that 'gets' the next token it can find, the return value indicates
@@ -95,7 +88,7 @@ int	gettoken(char **s, char *es, char **t, char **et)
 		*t = *s;
 	if (!**s)
 		return (0);
-	ret = ret_value(s, es);
+	ret_value(s, es, &ret);
 	if (et)
 		*et = *s;
 	while (*s < es && ft_strchr(WHITESPACE, **s))
