@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 22:06:41 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:35:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ char	*ft_safejoin(char *s1, char *s2)
 {
 	char	*tmp;
 
-	printf("ft_safejoin: *s1: %p\n", s1);
 	tmp = s1;
-	printf("ft_safejoin: *tmp: %p\n", tmp);
 	s1 = ft_strjoin(s1, s2);
 	free(tmp);
 	free(s2);
@@ -31,26 +29,28 @@ char	*ft_safejoin(char *s1, char *s2)
 
 void	expand_env(char **new, t_strptrs *toks, t_env *env)
 {
-	int		count;
+	int	count;
 
-	if (*(toks->s + 1) == '?')
+	count = 0;
+	toks->s++;
+	if (*toks->s == '?')
 	{
 		//to be iplemented
 		*new = ft_safejoin(*new, ft_strdup("{exit_code_here}"));
-		toks->s += 17;
-		return ;
-	}
-	if ((toks->s + 1) >= toks->es)
-	{
-		*new = ft_safejoin(*new, ft_strdup("$"));
 		toks->s += 1;
 		return ;
 	}
-	count = 0;
-	while ((toks->s + count) < toks->es && ft_strchr("\'\"$", toks->s[count]))
+	if (toks->s >= toks->es)
+	{
+		*new = ft_safejoin(*new, ft_strdup("$"));
+		return ;
+	}
+	while ((toks->s + count) < toks->es && !ft_strchr("\'\"", toks->s[count]))
 		count++;
-	printf("expansion: expand_env: toks->s: %s\n", toks->s);
-	printf("expansion: expand_env: count: %i\n", count);
+	printf("expansion: key: [");
+	for (int i = 0; i < count; i++)
+		printf("%c", toks->s[i]);
+	printf("]\n");
 	*new = ft_safejoin(*new, ft_strdup(get_env(toks->s, env, count)));
 	toks->s += count;
 	printf("expand_env: *new: %s\n", *new);
@@ -62,8 +62,8 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 	int		count;
 
 	printf("expansion: expand_quotes: enter\n");
-	count = 1;
-	c = *toks->s;
+	count = 0;
+	c = *toks->s++;
 	printf("expand: expand_quotes: c: %c\n", c);
 	while ((toks->s + count) < toks->es && toks->s[count] != c)
 	{

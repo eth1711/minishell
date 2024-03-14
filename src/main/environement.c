@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 21:54:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:32:11 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ char	*get_env(char *key, t_env *envp, int len)
 	if (!envp)
 		return (NULL);
 	ret = envp->string;
-	while (envp->next && !ft_strncmp(key, ret, len))
+	while (envp->next && ft_strncmp(key, ret, len))
 	{
 		ret = envp->string;
 		envp = envp->next;
 	}
-	if (!ft_strncmp(key, ret, len))
+	if (ft_strncmp(key, ret, len))
 		return (ft_strdup(""));
 	while (*ret && *ret != '=')
 		ret++;
