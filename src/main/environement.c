@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:10:25 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:54:40 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ t_env	*env(char *string, t_env *next)
 char	*get_env(char *key, t_env *envp, int len)
 {
 	char	*ret;
-	int		n;
 
-	if (len >= 0)
-		n = len;
-	else
-		n = ft_strlen(key);
-	ret = envp->string;
+	if (len <= 0)
+		len = ft_strlen(key);
 	if (!envp)
 		return (NULL);
-	while (envp->next && ft_strncmp(key, ret, n))
+	ret = envp->string;
+	while (envp->next && !ft_strncmp(key, ret, len))
+	{
+		ret = envp->string;
 		envp = envp->next;
-	if (ft_strncmp(key, ret, n))
-		return (NULL);
+	}
+	if (!ft_strncmp(key, ret, len))
+		return (ft_strdup(""));
 	while (*ret && *ret != '=')
 		ret++;
 	if (*ret == '=')
@@ -47,18 +47,26 @@ char	*get_env(char *key, t_env *envp, int len)
 
 void	put_env(char *string, t_env **envp)
 {
-	t_env	*new;
+	t_env	*ptr;
 
 	if (!envp)
 		return ;
-	new = env(string, *envp);
-	*envp = new;
+	if (!*envp)
+	{
+		*envp = env(string, NULL);
+		return ;
+	}
+	ptr = *envp;
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = env(string, NULL);
 }
 
 t_env	*init_envp(char **envp)
 {
 	t_env	*head;
 
+	head = NULL;
 	while (*envp)
 	{
 		put_env(*envp, &head);

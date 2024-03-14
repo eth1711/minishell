@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/07 15:33:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:45:54 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ void	print_tree(t_cmd *head)
 		print_exec((t_execcmd *)head);
 	else if (head->type == REDIR)
 		print_redir((t_redircmd *)head);
+}
+
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s\n", env->string);
+		env = env->next;
+	}
+	printf("\n");
 }
