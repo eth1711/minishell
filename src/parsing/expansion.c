@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 23:35:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:05:12 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 	printf("expansion: expand_quotes: enter\n");
 	count = 0;
 	c = *toks->s++;
-	printf("expand: expand_quotes: c: %c\n", c);
 	while ((toks->s + count) < toks->es && toks->s[count] != c)
 	{
 		if (toks->s[count] == '$' && c != '\'')

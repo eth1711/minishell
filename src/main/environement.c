@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 23:32:11 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:04:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_env(char *key, t_env *envp, int len)
 {
 	char	*ret;
 
-	if (len <= 0)
+	if (len < 0)
 		len = ft_strlen(key);
 	if (!envp)
 		return (NULL);

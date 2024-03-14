@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 22:34:10 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:58:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,18 @@ void	ret_value(char **s, char *es, int *ret)
 	}
 	else
 	{
-		*ret = 'a';
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
 		{
 			if (ft_strchr(QUOTES, **s))
-				while (!ft_strchr(QUOTES, *(++(*s))))
-					;
-			else
-				(*s)++;
+			{
+				*ret = *((*s)++);
+				while (**s != *ret)
+					(*s)++;
+			}
+			(*s)++;
 		}
+		*ret = 'a';
 	}
 }
 
@@ -91,6 +93,10 @@ int	gettoken(char **s, char *es, char **t, char **et)
 	ret_value(s, es, &ret);
 	if (et)
 		*et = *s;
+	printf("parsing_utils: gettoken: [");
+	for (char *ptr = *t; ptr < *et; ptr++)
+		printf("%c", *ptr);
+	printf("]\n");
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
