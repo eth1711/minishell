@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/08 16:55:11 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:39:10 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 		printf("parsredir: enter while\n");
 		tok = gettoken(s, es, 0, 0);
 		gettoken(s, es, &toks.s, &toks.es);
+		toks.s = expansion(toks, NULL, env);
 		if (tok == '>')
-			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks);
+			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
 		else if (tok == '<')
-			cmd = redircmd(cmd, 0, O_RDONLY, toks);
+			cmd = redircmd(cmd, 0, O_RDONLY, toks.s);
 		else if (tok == RR)
-			cmd = redircmd(cmd, 1, O_RDONLY | O_CREAT, toks);
+			cmd = redircmd(cmd, 1, O_RDONLY | O_CREAT, toks.s);
 		else if (tok == LL)
-			cmd = redircmd(cmd, 0, LL, toks);
+			cmd = redircmd(cmd, 0, LL, toks.s);
 	}
 	// printf("parsredir: return\n");
 	return (cmd);

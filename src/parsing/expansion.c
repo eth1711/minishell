@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 17:10:58 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:36:45 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 	toks->s += count;
 }
 
-void	expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
+char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 {
 	char	*new;
 	int		count;
@@ -104,5 +104,9 @@ void	expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 			expand_env(&new, &toks, env);
 		count = 0;
 	}
-	arg_add_back(&exec->args_list, args(new, NULL));
+	if (exec)
+		arg_add_back(&exec->args_list, args(new, NULL));
+	else
+		return (new);
+	return (NULL);
 }

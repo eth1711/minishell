@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 23:58:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:42:37 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	gettoken(char **s, char *es, char **t, char **et)
 	ret_value(s, es, &ret);
 	if (et)
 		*et = *s;
-	printf("parsing_utils: gettoken: [");
-	for (char *ptr = *t; ptr < *et; ptr++)
-		printf("%c", *ptr);
-	printf("]\n");
+	// printf("parsing_utils: gettoken: [");
+	// for (char *ptr = *t; ptr < *et; ptr++)
+	// 	printf("%c", *ptr);
+	// printf("]\n");
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 17:45:33 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:39:44 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,13 @@ void	put_env(char *string, t_env **envp);
 t_cmd	*parser(char *line, t_env *env);
 
 //expansiom
-void	expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
+char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
 
 // Nodes
 // These functions are constructors for the structs
 
 t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename);
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
 t_cmd	*execmd(void);
 t_arg	*args(char *s, t_arg *next);
 t_cmd	*error(t_cmd *head, char *message);

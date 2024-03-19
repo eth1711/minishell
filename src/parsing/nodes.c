@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 21:18:24 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:37:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 	return ((t_cmd *)pipe);
 }
 
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename)
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename)
 {
 	t_redircmd	*redir;
 
@@ -34,7 +34,7 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_strptrs filename)
 	redir->type = REDIR;
 	redir->fd = fd;
 	redir->mode = mode;
-	redir->filename = filename.s;
+	redir->filename = filename;
 	return ((t_cmd *)redir);
 }
 
