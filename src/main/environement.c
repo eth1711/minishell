@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/15 00:04:33 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:23:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ char	*get_env(char *key, t_env *envp, int len)
 {
 	char	*ret;
 
+	// printf("get_env: len: %i\n", len);
 	if (len < 0)
 		len = ft_strlen(key);
 	if (!envp)
 		return (NULL);
-	ret = envp->string;
-	while (envp->next && ft_strncmp(key, ret, len))
-	{
-		ret = envp->string;
+	while (envp->next && ft_strncmp(key, envp->string, len))
 		envp = envp->next;
-	}
+	ret = envp->string;
 	if (ft_strncmp(key, ret, len))
 		return (ft_strdup(""));
 	while (*ret && *ret != '=')

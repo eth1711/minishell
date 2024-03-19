@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/15 00:05:12 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:10:58 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 		toks->s += 1;
 		return ;
 	}
-	if (toks->s >= toks->es)
+	if (toks->s >= toks->es || (!(*toks->s >= 'a' && *toks->s <= 'z') &&
+		!(*toks->s >= 'A' && *toks->s <= 'Z')))
 	{
 		*new = ft_safejoin(*new, ft_strdup("$"));
+		printf("expansion: expand_env: new: %s\n", *new);
 		return ;
 	}
 	while ((toks->s + count) < toks->es && !ft_strchr("\'\"", toks->s[count]))
@@ -70,11 +72,12 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 		{
 			*new = ft_safejoin(*new, ft_substr(toks->s, 0, count));
 			toks->s += count;
-			printf("expansion: new: %s\n", *new);
+			printf("expansion: expand_quotes: new: %s\n", *new);
 			expand_env(new, toks, env);
 			count = 0;
 		}
-		count++;
+		else
+			count++;
 	}
 	*new = ft_safejoin(*new, ft_substr(toks->s, 0, count));
 	toks->s += count;
