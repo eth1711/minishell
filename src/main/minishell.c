@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/20 18:20:31 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:23:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		line = readline("minishell$ ");
 	}
-	write(1, "\n", 1);
+	ft_putstr_fd("exit\n", 0);
 	exit(0);
 	return (0);
 }
