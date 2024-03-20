@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 21:13:06 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:20:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	init_signals();
 	envp_list = init_envp(envp);
 	print_env(envp_list);
 	line = readline("minishell$ ");
@@ -38,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		line = readline("minishell$ ");
 	}
+	write(1, "\n", 1);
 	exit(0);
 	return (0);
 }

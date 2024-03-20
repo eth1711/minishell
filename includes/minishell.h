@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 17:39:44 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:10:09 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include "libft.h"
+
+# define _GNU_SOURCE
+
+# define CTRL_C SIGINT
+# define CTRL_D EOF
+# define CTRL_SLSH SIGQUIT
 
 # define WHITESPACE "\n\t\r\v "
 # define SYMBOLS "|<>"
@@ -106,6 +112,10 @@ typedef struct s_strptrs
 	char	*s;
 	char	*es;
 }	t_strptrs;
+
+//signals
+
+void	init_signals(void);
 
 //environement
 //getter and setter functions for env

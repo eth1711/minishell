@@ -8,7 +8,7 @@ FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 
 INCLUDES = -Iincludes
 
-LINKER = -L./Libft -lft -lreadline
+LINKER = -L./Libft -lft -lreadline -lhistory
 
 NAME = minishell
 
