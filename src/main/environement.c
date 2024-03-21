@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 18:27:33 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/21 21:01:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 t_env	*env(char *string, t_env *next)
 {
 	t_env	*new;
+	int		count;
 
+	count = 0;
 	new = malloc(sizeof(t_env));
-	new->string = ft_strdup(string);
+	while (string[count] && count != '=')
+		count++;
+	new->key = ft_substr(string, 0, count);
+	string += count + 1;
+	new->value = ft_substr(string, 0, ft_strlen(string));
 	new->next = next;
 	return (new);
 }

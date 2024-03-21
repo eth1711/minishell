@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 18:28:07 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/21 20:53:26 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct s_error
 
 typedef struct s_env
 {
-	char			*string;
+	char			*key;
+	char			*value;
 	struct s_env	*next;
 }	t_env;
 
