@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 17:23:31 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:27:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,27 @@ t_env	*env(char *string, t_env *next)
 	return (new);
 }
 
-char	*get_env(char *key, t_env *envp, int len)
+int	check_key(char *key, char *string)
+{
+	int	len;
+
+	len = 0;
+	while (*string++ != '=')
+		len++;
+	return (0);
+}
+
+char	*get_env(char *key, t_env *envp, int k_len)
 {
 	char	*ret;
 
-	// printf("get_env: len: %i\n", len);
-	if (len < 0)
-		len = ft_strlen(key);
 	if (!envp)
 		return (NULL);
-	while (envp->next && ft_strncmp(key, envp->string, len))
+	while (envp->next && check_key(key, envp->string))
 		envp = envp->next;
 	ret = envp->string;
-	if (ft_strncmp(key, ret, len))
-		return (ft_strdup(""));
+	if (ft_strncmp(key, ret, get_len(ret)))
+		return (printf("expansion: get_env: return nothing\n"), NULL);
 	while (*ret && *ret != '=')
 		ret++;
 	if (*ret == '=')

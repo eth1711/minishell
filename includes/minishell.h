@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/20 18:10:09 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:28:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include "libft.h"
-
-# define _GNU_SOURCE
+# include <libft.h>
 
 # define CTRL_C SIGINT
 # define CTRL_D EOF
@@ -122,7 +120,7 @@ void	init_signals(void);
 
 t_env	*env(char *string, t_env *envp);
 t_env	*init_envp(char **envp);
-char	*get_env(char *key, t_env *envp, int len);
+char	*get_env(char *key, t_env *envp, int k_len);
 void	put_env(char *string, t_env **envp);
 
 // Parsing
