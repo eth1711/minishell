@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 21:01:07 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:15:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env	*env(char *string, t_env *next)
 
 	count = 0;
 	new = malloc(sizeof(t_env));
-	while (string[count] && count != '=')
+	while (string[count] && string[count] != '=')
 		count++;
 	new->key = ft_substr(string, 0, count);
 	string += count + 1;
@@ -28,32 +28,15 @@ t_env	*env(char *string, t_env *next)
 	return (new);
 }
 
-int	check_key(char *key, char *string)
+char	*get_env(char *key, t_env *envp)
 {
-	int	len;
-
-	len = 0;
-	while (*string++ != '=')
-		len++;
-	return (0);
-}
-
-char	*get_env(char *key, t_env *envp, int k_len)
-{
-	char	*ret;
-
 	if (!envp)
 		return (NULL);
-	while (envp->next && check_key(key, envp->string))
+	while (envp->next && ft_strcmp(envp->key, key))
 		envp = envp->next;
-	ret = envp->string;
-	if (ft_strncmp(key, ret, get_len(ret)))
-		return (printf("expansion: get_env: return nothing\n"), NULL);
-	while (*ret && *ret != '=')
-		ret++;
-	if (*ret == '=')
-		ret++;
-	return (ret);
+	if (!ft_strcmp(envp->key, key))
+		return (envp->value);
+	return (printf("expansion: get_env: return nothing\n"), NULL);
 }
 
 void	put_env(char *string, t_env **envp)

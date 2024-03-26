@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 21:08:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 18:01:18 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 	for (int i = 0; i < count; i++)
 		printf("%c", toks->s[i]);
 	printf("]\n");
-	*new = ft_safejoin(*new, ft_strdup(get_env(toks->s, env, count)));
+	*new = ft_safejoin(*new, ft_strdup(get_env(toks->s, env)));
 	toks->s += count;
 	printf("expand_env: *new: %s\n", *new);
 }

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 20:53:26 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:46:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	init_signals(void);
 
 t_env	*env(char *string, t_env *envp);
 t_env	*init_envp(char **envp);
-char	*get_env(char *key, t_env *envp, int k_len);
+char	*get_env(char *key, t_env *envp);
 void	put_env(char *string, t_env **envp);
 
 // Parsing

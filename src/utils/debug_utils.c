@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/14 17:45:54 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:59:30 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	print_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s\n", env->string);
+		// printf("%s\n", env->string);
+		printf("%s=%s\n", env->key, env->value);
+		// printf("key: %s\n", env->key);
+		// printf("value:%s\n", env->value);
 		env = env->next;
 	}
 	printf("\n");
