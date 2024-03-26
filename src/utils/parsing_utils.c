@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/01 20:20:24 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:48:06 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,55 @@ int	checktoken(char **s, char *es, char *find)
 	return (**s && ft_strchr(find, **s));
 }
 
-//helper function for gettoken
-int	ret_value(char **s, char *es)
+//function that checks whether quotes are closed in a string
+int	check_quotes(char *s, char *es)
 {
-	int	ret;
+	char	quote;
 
+	while (s < es)
+	{
+		if (ft_strchr(QUOTES, *s))
+		{
+			quote = *s;
+			s++;
+			while (s < es && *s != quote)
+				s++;
+			if (*s != quote)
+				return (0);
+		}
+		s++;
+	}
+	return (1);
+}
+
+//helper function for gettoken, that sets the value of ret
+void	ret_value(char **s, char *es, int *ret)
+{
 	if (ft_strchr(SYMBOLS, **s))
 	{
-		ret = **s;
-		(*s)++;
-		if (**s == '<' && ret == '<')
-			ret = LL;
-		else if (**s == '>' && ret == '>')
-			ret = RR;
-		if (ret == RR || ret == LL)
+		*ret = *((*s)++);
+		if (**s == '<' && *ret == '<')
+			*ret = LL;
+		else if (**s == '>' && *ret == '>')
+			*ret = RR;
+		if (*ret == RR || *ret == LL)
 			(*s)++;
 	}
 	else
 	{
-		ret = 'a';
-		(*s)++;
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
+		{
+			if (ft_strchr(QUOTES, **s))
+			{
+				*ret = *((*s)++);
+				while (**s != *ret)
+					(*s)++;
+			}
 			(*s)++;
+		}
+		*ret = 'a';
 	}
-	return (ret);
 }
 
 // Function that 'gets' the next token it can find, the return value indicates
@@ -53,7 +77,7 @@ int	ret_value(char **s, char *es)
 // 'a' indicates an argument of a command, LL and RR indicate
 // << and >> respectively and any other character returned indicates that symbol
 // 0 if it is the end of the string
-// (the turnary at the end checks if **s is null)
+// -1 if quotes are not closed
 // s will be moved to the next token, and if t and et, are not null, t will
 // be set to the start of the token and et to end of the token
 int	gettoken(char **s, char *es, char **t, char **et)
@@ -66,28 +90,37 @@ int	gettoken(char **s, char *es, char **t, char **et)
 		*t = *s;
 	if (!**s)
 		return (0);
-	ret = ret_value(s, es);
+	ret_value(s, es, &ret);
 	if (et)
 		*et = *s;
+	// printf("parsing_utils: gettoken: [");
+	// for (char *ptr = *t; ptr < *et; ptr++)
+	// 	printf("%c", *ptr);
+	// printf("]\n");
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
 }
 
-int	argcount(char *s, char *es)
+void	list_to_array(t_execcmd *exec)
 {
+	t_arg	*ptr;
 	int		argc;
-	char	token;
 
 	argc = 0;
-	token = gettoken(&s, es, 0 ,0);
-	// printf("argcount: enter\n");
-	while (token)
+	ptr = exec->args_list;
+	while (ptr)
 	{
-		if (token == 'a')	
-			argc++;
-		token = gettoken(&s, es, 0, 0);	
+		argc++;
+		ptr = ptr->next;
 	}
-	// printf("argcount: return\n");
-	return (argc);
+	exec->args_array = malloc(sizeof(char *) * argc + 1);
+	ptr = exec->args_list;
+	argc = 0;
+	while (ptr)
+	{
+		exec->args_array[argc++] = ptr->s;
+		ptr = ptr->next;
+	}
+	exec->args_array[argc] = NULL;
 }

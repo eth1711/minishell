@@ -6,19 +6,19 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 
-INCLUDES = -Iincludes
+INCLUDES = -Iincludes -I/usr/local/Cellar/readline/8.2.1/include/
 
-LINKER = -L./Libft -lft -lreadline
+LINKER = -L./Libft -L/usr/local/Cellar/readline/8.2.1/lib/ -lft -lreadline -lhistory
 
 NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	@$(CC) $(FLAGS) -c -o $@ $< $(INCLUDES)
+	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $< 
 
 $(NAME) : $(OBJ)
 	@make -C Libft
-	@$(CC) $(FLAGS) $(INCLUDES) $(OBJ) -o $(NAME) $(LINKER)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LINKER)
 
 all : $(NAME)
 

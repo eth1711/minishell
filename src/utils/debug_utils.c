@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/02/05 20:34:04 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:59:30 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@ void	print_exec(t_execcmd *exec)
 	}
 	printf("----------------EXEC----------------\n");
 	printf("argv: ");
-	for (int i = 0; exec->argv[i]; i++)
-	{
-		while (exec->argv[i] < exec->eargv[i])
-			printf("%c", *(exec->argv[i]++));
-		printf(" ");
-	}
+	for (t_arg *ptr = exec->args_list; ptr; ptr = ptr->next)
+		printf("[%s]", ptr->s);
 	printf("\n");
 }
 
@@ -41,8 +37,7 @@ void	print_redir(t_redircmd	*redir)
 	printf("FD: %i\n", redir->fd);
 	printf("mode: %i\n", redir->mode);
 	printf("filename: ");
-	while (*redir->filename && redir->filename < redir->efilename)
-		printf("%c", *(redir->filename++));
+	printf("%s", redir->filename);
 	printf("\n");
 	print_tree(redir->cmd);
 }
@@ -74,4 +69,17 @@ void	print_tree(t_cmd *head)
 		print_exec((t_execcmd *)head);
 	else if (head->type == REDIR)
 		print_redir((t_redircmd *)head);
+}
+
+void	print_env(t_env *env)
+{
+	while (env)
+	{
+		// printf("%s\n", env->string);
+		printf("%s=%s\n", env->key, env->value);
+		// printf("key: %s\n", env->key);
+		// printf("value:%s\n", env->value);
+		env = env->next;
+	}
+	printf("\n");
 }

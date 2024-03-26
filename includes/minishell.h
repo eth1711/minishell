@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/05 17:17:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 20:46:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,43 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
-# include "libft.h"
+# include <libft.h>
+
+# define CTRL_C SIGINT
+# define CTRL_D EOF
+# define CTRL_SLSH SIGQUIT
 
 # define WHITESPACE "\n\t\r\v "
-# define SYMBOLS "|<>\'\""
+# define SYMBOLS "|<>"
+# define QUOTES "\'\""
 
-//These enums are for the cmd types
+// Error strings
+# define ERROR_QUOTES "Expected closing quote"
+
+// These enums are for the cmd types
 //LL and RR represent << and >> respectively
 enum
 {
 	EXEC,
 	REDIR,
+	ERROR,
 	PIPE,
 	LL,
 	RR
 };
 
-//Struct for different struct ptrs, intended to be used in
+// Struct for different struct ptrs, intended to be used in
 //exec and gettoken
 typedef struct s_cmd
 {
 	int				type;
 }	t_cmd;
+
+typedef struct s_arg
+{
+	char			*s;
+	struct s_arg	*next;
+}	t_arg;
 
 typedef struct s_error
 {
@@ -55,15 +70,10 @@ typedef struct s_error
 
 typedef struct s_env
 {
-	char			*string;
+	char			*key;
+	char			*value;
 	struct s_env	*next;
 }	t_env;
-
-typedef struct s_arg
-{
-	char	*s;
-	char	*next;
-}	t_arg;
 
 typedef struct s_execmd
 {
@@ -102,38 +112,60 @@ typedef struct s_strptrs
 	char	*es;
 }	t_strptrs;
 
-//environement
+//signals
 
-t_env	*env(char *string, t_env *next);
+void	init_signals(void);
+
+//environement
+//getter and setter functions for env
+
+t_env	*env(char *string, t_env *envp);
 t_env	*init_envp(char **envp);
 char	*get_env(char *key, t_env *envp);
 void	put_env(char *string, t_env **envp);
 
-//Parsing
+// Parsing
 
-t_cmd	*parser(char *line);
-t_cmd	*parseline(char **s, char *es);
-t_cmd	*parsepipe(char **s, char *es);
+t_cmd	*parser(char *line, t_env *env);
 
-//Nodes
-//These functions are constructors for the structs
+//expansiom
+char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
+
+// Nodes
+// These functions are constructors for the structs
 
 t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
-t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, t_token filename);
-t_cmd	*execmd(int argc);
+t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
+t_cmd	*execmd(void);
+t_arg	*args(char *s, t_arg *next);
+t_cmd	*error(t_cmd *head, char *message);
 
-//Builtins
+// Builtins
 
 void	cd_cmd(char *line);
 
-//Parsing utils
+// Parsing utils
 
-int		argcount(char *s, char *es);
+int		check_quotes(char *s, char *es);
+int		check_quotes(char *s, char *es);
+void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
 
-//Debug utils 
+// arg list funcs
+void	arg_add_back(t_arg **head, t_arg *add);
+void	arg_add_front(t_arg **head, t_arg *add);
+void	args_free(t_arg *head);
+int		arg_count(t_arg *head);
+t_arg	*arg_last(t_arg *head);
 
+//free.c
+void	free_tree(t_cmd	*head);
+void	free_2D(char **array);
+
+// Debug utils 
+
+void	print_env(t_env *env);
 void	print_tree(t_cmd *head);
 
 #endif
