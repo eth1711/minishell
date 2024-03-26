@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/21 15:32:21 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:23:04 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init_signals();
 	envp_list = init_envp(envp);
-	print_env(envp_list);
+	// print_env(envp_list);
 	line = readline("minishell$ ");
 	while (line)
 	{
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line && *line)
 		{
 			tree = parser(line, envp_list);
-			print_tree(tree);
+			// print_tree(tree);
 			free_tree(tree);
 			// system("leaks minishell");
 			// if (tree->type == ERROR)
