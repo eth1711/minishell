@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/26 20:59:30 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:37:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	print_redir(t_redircmd	*redir)
 	printf("----------------REDIR----------------\n");
 	printf("FD: %i\n", redir->fd);
 	printf("mode: %i\n", redir->mode);
-	printf("filename: ");
-	printf("%s", redir->filename);
-	printf("\n");
+	printf("filename: [%s]\n", redir->filename);
 	print_tree(redir->cmd);
 }
 

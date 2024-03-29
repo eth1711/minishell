@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 17:48:06 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:51:47 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_quotes(char *s, char *es)
 //helper function for gettoken, that sets the value of ret
 void	ret_value(char **s, char *es, int *ret)
 {
-	if (ft_strchr(SYMBOLS, **s))
+	if (*s < es && ft_strchr(SYMBOLS, **s))
 	{
 		*ret = *((*s)++);
 		if (**s == '<' && *ret == '<')
@@ -55,7 +55,7 @@ void	ret_value(char **s, char *es, int *ret)
 		if (*ret == RR || *ret == LL)
 			(*s)++;
 	}
-	else
+	else if (*s < es)
 	{
 		while (*s < es && !ft_strchr(WHITESPACE, **s)
 			&& !ft_strchr(SYMBOLS, **s))
@@ -88,15 +88,15 @@ int	gettoken(char **s, char *es, char **t, char **et)
 		(*s)++;
 	if (t)
 		*t = *s;
-	if (!**s)
-		return (0);
 	ret_value(s, es, &ret);
 	if (et)
+	{
 		*et = *s;
-	// printf("parsing_utils: gettoken: [");
-	// for (char *ptr = *t; ptr < *et; ptr++)
-	// 	printf("%c", *ptr);
-	// printf("]\n");
+		// printf("l97: parsing_utils: gettoken: [");
+		// for (char *ptr = *t; ptr < *et; ptr++)
+		// 	printf("%c", *ptr);
+		// printf("]\n");
+	}
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
