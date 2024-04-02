@@ -6,9 +6,9 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 
-INCLUDES = -Iincludes -I/usr/local/Cellar/readline/8.1.2/include/
+INCLUDES = -Iincludes -I/usr/local/Cellar/readline/8.2.1/include/
 
-LINKER = -L./Libft -L/usr/local/Cellar/readline/8.1.2/lib/ -lft -lreadline -lhistory
+LINKER = -L./Libft -L/usr/local/Cellar/readline/8.2.1/lib/ -lft -lreadline -lhistory
 
 NAME = minishell
 

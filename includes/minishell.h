@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 14:23:22 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:13:21 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ enum
 	RR
 };
 
-// Struct for different struct ptrs, intended to be used in
-//exec and gettoken
+//Basic cmd struct, to be typcasted into the correct node
 typedef struct s_cmd
 {
 	int				type;
 }	t_cmd;
 
+//Struct for linked list of args of a cmd
 typedef struct s_arg
 {
 	char			*s;
@@ -68,6 +68,7 @@ typedef struct s_error
 	t_cmd			*head;
 }	t_error;
 
+//environement varibale struct
 typedef struct s_env
 {
 	char			*key;
@@ -75,12 +76,14 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+//Execution node, contains both list and array of arguments of command
 typedef struct s_execmd
 {
 	int		type;
 	t_arg	*args_list;
 	char	**args_array;
 }	t_execcmd;
+
 
 typedef struct s_pipecmd
 {
@@ -98,6 +101,7 @@ typedef struct s_redircmd
 	char	*filename;
 }	t_redircmd;
 
+//Node with pointers of each node type
 typedef struct s_types
 {
 	t_cmd		*cmd;
@@ -142,7 +146,7 @@ t_cmd	*error(t_cmd *head, char *message);
 
 // Builtins
 
-void	cd_cmd(char *line);
+void	cd_cmd(char	**args_array);
 
 // Parsing utils
 

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 14:24:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:35:44 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	// print_env(envp_list);
 	line = readline("minishell$ ");
 
-    int count = 0;
-    while (envp)
-    {
-        ft_strncmp(*envp, "HOME=", );
-        envp++;
-    }
 	while (line)
 	{
 		add_history(line);
