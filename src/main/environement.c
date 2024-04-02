@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/26 21:15:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:48:20 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*get_env(char *key, t_env *envp)
 {
 	if (!envp)
 		return (NULL);
+	printf("expansion: get_env: key %s\n", key);
 	while (envp->next && ft_strcmp(envp->key, key))
 		envp = envp->next;
 	if (!ft_strcmp(envp->key, key))

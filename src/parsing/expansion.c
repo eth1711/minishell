@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/26 21:21:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:06:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 		// printf("expansion: expand_env: new: %s\n", *new);
 		return ;
 	}
-	while ((toks->s + count) < toks->es && !ft_strchr("\'\" \n\t",
+	while ((toks->s + count) < toks->es && !ft_strchr("\'\" \n\t$",
 			toks->s[count]))
 		count++;
 	// printf("expansion: key: [");
-	for (int i = 0; i < count; i++)
-		printf("%c", toks->s[i]);
+	// for (int i = 0; i < count; i++)
+	// 	printf("%c", toks->s[i]);
 	// printf("]\n");
-	*new = ft_safejoin(*new, ft_strdup(get_env(toks->s, env)));
+	*new = ft_safejoin(*new, ft_strdup(get_env(ft_substr(toks->s, 0, count), env)));
 	toks->s += count;
 	// printf("expand_env: *new: %s\n", *new);
 }
@@ -100,11 +100,12 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 		while ((toks.s + count) < toks.es && !ft_strchr("\'\"$", toks.s[count]))
 			count++;
 		new = ft_safejoin(new, ft_substr(toks.s, 0, count));
-		// printf("expansion: new: %s\n", new);
+		printf("expansion: new: %s\n", new);
 		toks.s += count;
 		count = 0;
-		// printf("expansion: count: %i\n", count);
-		// printf("expansion: toks.s[count]: %c\n", toks.s[count]);
+		printf("expansion: count: %i\n", count);
+		if ((toks.s + count) >= toks.es)
+			printf("expansion: toks.s is more or equal to toks.es\n");
 		if ((toks.s + count) < toks.es && ft_strchr("\'\"", toks.s[count]))
 			expand_quotes(&new, &toks, env);
 		else if ((toks.s + count) < toks.es && toks.s[count] == '$')
