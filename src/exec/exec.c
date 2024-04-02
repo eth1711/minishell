@@ -6,22 +6,33 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/04/02 15:48:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:58:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redir_cmd(t_redircmd *redir, t_env *envp)
+void	exec_redir(t_redircmd *redir, t_env *envp)
 {
 	
 }
 
-void	exec_cmd(t_execcmd *exec, t_env *envp)
+void	exec_execcmd(t_execcmd *exec, t_env *envp)
 {
+	int		pid;
+	int		ret;
+	char	**envp_array;
+
 	if (is_builtin(exec->args_array, envp))
 		return ;
-	
+	pid = fork();
+	if (!pid)
+	{
+		ret = execve();
+		exit(ret);
+	}
+	wait()
+			
 }
 
 void	exec_pipe(t_pipecmd *pipe, t_env *envp)

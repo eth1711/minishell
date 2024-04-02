@@ -1,39 +1,42 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 
-int	check_quotes(char *s, char *es)
+char **ft_split(char const*, char);
+
+void	exec(char *line, char **envp)
 {
-	char	quote;
+	int	pid;
+	int ret;
+	char **args;
 
-	while (s < es)
+	args = ft_split(line, ' ');
+	pid = fork();
+	if (!pid)
 	{
-		if (strchr("\'\"", *s))
+		pid = fork();
+		if (!pid)
 		{
-			quote = *s;
-			s++;
-			while (s < es && *s != quote)
-			{
-				printf("*s: %c\n", *s);
-				s++;
-			}
-			if (*s != quote)
-				return (0);
-			s++;
+			ret = execve(args[0], args, envp);
+			exit(ret);
 		}
-		else
-			s++;
+		ret = wait(0);
+		printf("ret: %i\n", ret);
 	}
-	return (1);
 }
 
-
-int main()
+int main(int c, char **argv, char **envp)
 {
-	char *str = "hello";
-	char *estr = str + strlen(str);
-	printf("[%c]\n", *estr);
-	if (!check_quotes(str, estr))
-		printf("quotes not closed\n");
-	else
-		printf("quotes are closed\n");
+	char *line;
+
+	line = readline("test$");
+	while (line)
+	{
+		exec(line, envp);
+		free(line);
+		line = readline("test$");
+	}
 }

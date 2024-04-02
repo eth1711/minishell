@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 15:13:21 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:40:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,10 @@ typedef struct s_strptrs
 	char	*es;
 }	t_strptrs;
 
+//exec
+
+void	exec(t_cmd *head, t_env *envp);
+
 //signals
 
 void	init_signals(void);
@@ -124,7 +128,7 @@ void	init_signals(void);
 //getter and setter functions for env
 
 t_env	*env(char *string, t_env *envp);
-t_env	*init_envp(char **envp);
+t_env	*envp_to_list(char **envp);
 char	*get_env(char *key, t_env *envp);
 void	put_env(char *string, t_env **envp);
 
@@ -146,7 +150,13 @@ t_cmd	*error(t_cmd *head, char *message);
 
 // Builtins
 
-void	cd_cmd(char	**args_array);
+void	ft_cd(char **args_array);
+void	ft_echo(char **args_array);
+void	ft_export(char **args_array, t_env *envp);
+void	ft_unset(char **args_array, t_env *envp);
+void	ft_exit(char **args_array, t_env *envp);
+void	ft_pwd(char **args_array, t_env *envp);
+
 
 // Parsing utils
 

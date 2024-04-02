@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 14:30:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:43:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,35 @@ void	put_env(char *string, t_env **envp)
 	ptr->next = env(string, NULL);
 }
 
-t_env	*init_envp(char **envp)
+char	**envp_to_array(t_env *envp)
+{
+	t_env	*ptr;
+	char	*tmp;
+	char	**new;
+	int		count;
+
+	ptr = envp;
+	count = 0;
+	while (ptr)
+	{
+		ptr = ptr->next;
+		count++;
+	}
+	new = malloc(sizeof(char *) * count + 1);
+	new[count] = NULL;
+	count = 0;
+	ptr = envp;
+	while (ptr)
+	{
+		tmp = ft_strjoin(ptr->key, "=");
+		new[count] = ft_strjoin(tmp, ptr->value);
+		free(tmp);
+		ptr = ptr->next;
+	}
+	return (new);
+}
+
+t_env	*envp_to_list(char **envp)
 {
 	t_env	*head;
 
