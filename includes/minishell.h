@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 17:40:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:47:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 # include <stdint.h>
+# include <sys/stat.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <readline/readline.h>
@@ -84,7 +85,6 @@ typedef struct s_execmd
 	char	**args_array;
 }	t_execcmd;
 
-
 typedef struct s_pipecmd
 {
 	int		type;
@@ -125,18 +125,20 @@ void	exec(t_cmd *head, t_env *envp);
 void	init_signals(void);
 
 //environement
-//getter and setter functions for env
-
-t_env	*env(char *string, t_env *envp);
-t_env	*envp_to_list(char **envp);
-char	*get_env(char *key, t_env *envp);
+//setter function for env
 void	put_env(char *string, t_env **envp);
+//getter function for env
+char	*get_env(char *key, t_env *envp);
+
+char	**env_to_array(t_env *envp);
+t_env	*env_to_list(char **envp);
 
 // Parsing
 
 t_cmd	*parser(char *line, t_env *env);
 
 //expansiom
+
 char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
 
 // Nodes
@@ -156,7 +158,6 @@ void	ft_export(char **args_array, t_env *envp);
 void	ft_unset(char **args_array, t_env *envp);
 void	ft_exit(char **args_array, t_env *envp);
 void	ft_pwd(char **args_array, t_env *envp);
-
 
 // Parsing utils
 

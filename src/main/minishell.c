@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 17:40:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:22:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_signals();
-	envp_list = envp_to_list(envp);
+	envp_list = env_to_list(envp);
 	// print_env(envp_list);
 	line = readline("minishell$ ");
 
