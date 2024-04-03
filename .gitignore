@@ -6,5 +6,5 @@
 # whitelist these files
 !*.c
 !*.h
-# !Makefile
+!Makefile
 !.gitignore
