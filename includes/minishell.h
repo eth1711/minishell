@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/12 13:01:44 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/12 21:33:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,9 @@ t_env	*env_to_list(char **envp);
 
 t_cmd	*parser(char *line, t_env *env);
 
-//expansiom
+//expansion
 
+char	*ft_safejoin(char *s1, char *s2);
 char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
 
 // Nodes

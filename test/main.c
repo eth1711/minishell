@@ -17,8 +17,10 @@ void	exec(char *line, char **envp)
 
 	args = ft_split(line, ' ');
 	ret = stat(args[0], &stats);
-	if (stats.st_mode & S_IFDIR)
-		printf("is directory\n");
+	if (!ret && stats.st_mode & S_IXUSR && !(stats.st_mode & S_IFDIR))
+		printf("has execute perms\n");
+	else
+		printf("no execute perms\n");
 	printf("ret: %i\n", ret);
 	// pid = fork();
 	// if (!pid)
