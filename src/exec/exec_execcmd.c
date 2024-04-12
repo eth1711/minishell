@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/12 22:02:04 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/12 22:14:43 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ char	*find_command(char *cmd, t_env *envp)
 		&& (stats.st_mode & S_IXUSR))
 		return (cmd);
 	env_path = get_env("PATH", envp);
-	count = 0;
 	while (*env_path)
 	{
+		count = 0;
 		while (env_path[count] && env_path[count] != ':')
 			count++;
 		tmp = ft_safejoin(ft_substr(env_path, 0, count), ft_strdup(cmd));
 		if (stat(tmp, &stats) && !(stats.st_mode & S_IFDIR)
 			&& (stats.st_mode & S_IXUSR))
-			return (free(tmp), cmd);
+			return (tmp);
+		free(tmp);
 		if (env_path[count] == ':')
 			count++;
-		free(tmp);
 		env_path += count;
 	}
 	return (NULL);
