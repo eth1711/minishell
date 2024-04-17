@@ -6,13 +6,13 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 18:01:30 by etlim            ###   ########.fr       */
+/*   Updated: 2024/04/17 16:03:52 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cd_cmd(char	**args_array)
+void	ft_cd(char	**args_array)
 {
 	if (++(*args_array))
 	{
