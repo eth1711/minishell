@@ -5,6 +5,7 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 char **ft_split(char const*, char);
 char	*ft_strjoin(const char *s1, const char *s2);
@@ -39,15 +40,35 @@ void	exec(char *line, char **envp)
 	wait(0);
 }
 
-int main(int c, char **argv, char **envp)
-{
-	char *line;
+// int main(int c, char **argv, char **envp)
+// {
+// 	char *line;
 
-	line = readline("test$");
-	while (line)
-	{
-		exec(line, envp);
-		free(line);
-		line = readline("test$");
-	}
+// 	line = readline("test$");
+// 	while (line)
+// 	{
+// 		exec(line, envp);
+// 		free(line);
+// 		line = readline("test$");
+// 	}
+// }
+
+int main() {
+    // Write C code here
+    char    *buf;
+
+    printf("hello\n");
+    int fd = open("file.txt", O_CREAT | O_RDWR | O_TRUNC);
+    dup2(fd, 1);
+    printf("parent\n");
+    int pid = fork();
+    if (!pid)
+    {
+        printf("child\n");
+        exit(0);
+    }
+    read(fd, buf, 5);
+    printf("from file: %s\n", buf);
+	close(fd);
+    return 0;
 }

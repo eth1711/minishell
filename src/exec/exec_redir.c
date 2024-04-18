@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/04/18 17:47:42 by amaligno         ###   ########.fr       */
+/*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
+/*   Updated: 2024/04/18 18:17:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_error;
-
-void	exec(t_cmd *head, t_env *envp)
+void	heredoc()
 {
-	int	children;
 	
-	children = 0;
-	if (head->type == PIPE)
+}
+
+void	exec_redir(t_redircmd *redir, t_env *envp)
+{
+	int	fd;
+
+	if (redir->mode == LL)
 	{
-		exec_pipe((t_pipecmd *)head, envp);
-		children += 2;
+		
 	}
-	else if (head->type == EXEC)
+	else
 	{
-		exec_cmd((t_execcmd *)head, envp);
-		children += 1;
+		fd = open(redir->filename, redir->mode);
+		dup2(fd, redir->fd);
+		close(fd);
 	}
-	else if (head->type == REDIR)
-	{
-		exec_redir((t_redircmd *)head, envp);
-		children += 1;
-	}
-	while (children)
-	{
-		wait(&g_error);
-		children--;
-	}
+	exec_execcmd(redir->cmd, envp);
 }

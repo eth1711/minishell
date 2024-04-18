@@ -6,11 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/12 13:18:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:21:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_error = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
