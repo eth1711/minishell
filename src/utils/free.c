@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:25:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/17 15:37:10 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:46:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ void	args_free(t_arg *head)
 
 void	free_2d(char **array)
 {
-	while (array)
+	while (*array)
 		free(*array++);
 }

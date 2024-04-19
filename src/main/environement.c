@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/03 17:22:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:16:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	**env_to_array(t_env *envp)
 		ptr = ptr->next;
 		count++;
 	}
-	new = malloc(sizeof(char *) * count + 1);
+	// printf("l74: environement: envp_to_array: count: %i\n", count);
+	new = malloc(sizeof(char *) * (count + 1));
 	new[count] = NULL;
 	count = 0;
 	ptr = envp;
@@ -80,8 +81,12 @@ char	**env_to_array(t_env *envp)
 		tmp = ft_strjoin(ptr->key, "=");
 		new[count] = ft_strjoin(tmp, ptr->value);
 		free(tmp);
+		count++;
 		ptr = ptr->next;
 	}
+	// printf("l85: environement: envp_to_array: new:\n");
+	// for (char **ptr = new; *ptr; ptr++)
+	// 	printf("[%s]\n", *ptr);
 	return (new);
 }
 

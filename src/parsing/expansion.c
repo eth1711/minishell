@@ -6,11 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/29 18:06:23 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:37:17 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_error;
 
 char	*ft_safejoin(char *s1, char *s2)
 {
@@ -37,7 +39,7 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 	toks->s++;
 	if (*toks->s == '?')
 	{
-		*new = ft_safejoin(*new, ft_strdup("{exit_code_here}"));
+		*new = ft_safejoin(*new, ft_itoa(g_error));
 		toks->s += 1;
 		return ;
 	}
