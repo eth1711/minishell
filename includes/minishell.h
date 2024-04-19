@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:13:38 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:59:56 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ typedef struct s_strptrs
 
 //exec
 
-void	exec_redir(t_redircmd *redir, t_env *envp);
-void	exec_execcmd(t_execcmd *exec, t_env *envp);
-void	exec_pipe(t_pipecmd *pipecmd, t_env *envp);
-void	exec_cmd(t_pipecmd *pipecmd, t_env *envp);
+int		exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids);
+int		exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids);
+int		exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
+void	exec_cmd(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
 void	exec(t_cmd *head, t_env *envp);
 
 //signals

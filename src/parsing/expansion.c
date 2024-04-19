@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:37:17 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 20:43:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 		while ((toks.s + count) < toks.es && !ft_strchr("\'\"$", toks.s[count]))
 			count++;
 		new = ft_safejoin(new, ft_substr(toks.s, 0, count));
-		printf("expansion: new: %s\n", new);
+		// printf("expansion: new: %s\n", new);
 		toks.s += count;
 		count = 0;
-		printf("expansion: count: %i\n", count);
-		if ((toks.s + count) >= toks.es)
-			printf("expansion: toks.s is more or equal to toks.es\n");
+		// printf("expansion: count: %i\n", count);
+		// if ((toks.s + count) >= toks.es)
+			// printf("expansion: toks.s is more or equal to toks.es\n");
 		if ((toks.s + count) < toks.es && ft_strchr("\'\"", toks.s[count]))
 			expand_quotes(&new, &toks, env);
 		else if ((toks.s + count) < toks.es && toks.s[count] == '$')

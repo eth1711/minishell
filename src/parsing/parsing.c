@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:18:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 21:13:13 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 		else if (tok == '<')
 			cmd = redircmd(cmd, 0, O_RDONLY, toks.s);
 		else if (tok == RR)
-			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT, toks.s);
+			cmd = redircmd(cmd, 1, O_RDWR | O_CREAT | O_APPEND, toks.s);
 		else if (tok == LL)
 			cmd = redircmd(cmd, 0, LL, toks.s);
 	}
@@ -53,7 +53,7 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 		tok = gettoken(s, es, &toks.s, &toks.es);
 		if (tok != 'a')
 			break ;
-		printf("parseexec: es: %p\n", es);
+		// printf("parseexec: es: %p\n", es);
 		expansion(toks, ptrs.exec, env);
 		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
@@ -83,7 +83,7 @@ t_cmd	*parser(char *line, t_env *env)
 	char	*es;
 
 	es = line + ft_strlen(line);
-	printf("parser: es: %p\n", es);
+	// printf("parser: es: %p\n", es);
 	if (!check_quotes(line, es))
 		return (NULL);
 	cmd = parsepipe(&line, es, env);

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 17:15:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 21:02:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(cmd), NULL);
 }
 
-void	exec_execcmd(t_execcmd *exec, t_env *envp)
+int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
 {
 	int		pid;
 	// int		ret;
@@ -43,15 +43,20 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp)
 	char	*path;
 
 	if (is_builtin(exec->args_array, envp))
-		return ;
+		return (0);
 	pid = fork();
+	if (pids)
+		pids[0] = pid;
 	if (!pid)
 	{
+		signal(CTRL_C, SIG_DFL);
+		signal(CTRL_SLSH, SIG_DFL);
 		path = find_command(exec->args_array[0], envp);
-		printf("l57: exec_execcmd: execve: %i\n", execve(path, exec->args_array, env_to_array(envp)));
+		execve(path, exec->args_array, env_to_array(envp));
 		ft_putstr_fd("minish: command not found: ", STDERR_FILENO);
 		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
 		ft_putchar_fd('\n', STDERR_FILENO);
 		exit(127);
 	}
+	return (1);
 }
