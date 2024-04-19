@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/17 20:21:27 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:08:02 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			tree = parser(line, envp_list);
 			print_tree(tree);
+			exec(tree, envp_list);
 			free_tree(tree);
 			// system("leaks minishell");
 			// if (tree->type == ERROR)

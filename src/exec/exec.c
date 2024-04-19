@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/04/18 17:47:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:40:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec(t_cmd *head, t_env *envp)
 	}
 	else if (head->type == EXEC)
 	{
-		exec_cmd((t_execcmd *)head, envp);
+		exec_execcmd((t_execcmd *)head, envp);
 		children += 1;
 	}
 	else if (head->type == REDIR)

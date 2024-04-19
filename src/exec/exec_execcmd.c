@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/17 19:01:05 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:06:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,28 @@
 
 char	*find_command(char *cmd, t_env *envp)
 {
-	char		*paths;
+	char		**paths;
 	char		*ret;
-	int			count;
 
 	if (access(cmd, F_OK | X_OK))
 		return (cmd);
 	paths = ft_split(get_env("PATH", envp), ':');
 	while (*paths)
 	{
-		ret = strjoin(cmd, *paths);
-		if (acess(cmd, F_OK | X_OK))
-			return (free_2D(paths), free(paths), free(ret), cmd);
+		ret = ft_strjoin(cmd, *paths);
+		if (access(cmd, F_OK | X_OK))
+			return (free_2d(paths), free(paths), free(ret), cmd);
 		free(ret);
 		paths++;
 	}
-	return (free_2D(paths), free(paths), NULL);
+	return (free_2d(paths), free(paths), NULL);
 }
 
 void	exec_execcmd(t_execcmd *exec, t_env *envp)
 {
 	int		pid;
-	int		ret;
-	char	**envp_array;
+	// int		ret;
+	// char	**envp_array;
 	char	*path;
 
 	if (is_builtin(exec->args_array, envp))

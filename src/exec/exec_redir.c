@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/18 19:28:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:04:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	exec_redir(t_redircmd *redir, t_env *envp)
 		dup2(fd, redir->fd);
 		close(fd);
 	}
-	exec_execcmd(redir->cmd, envp);
+	exec_execcmd((t_execcmd *)redir->cmd, envp);
 }

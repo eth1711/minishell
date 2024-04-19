@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/02 12:21:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:18:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 	t_strptrs	toks;
 	int			tok;
 
-	ptrs.exec = (t_execcmd *)execmd();
+	ptrs.exec = (t_execcmd *)execcmd();
 	ptrs.cmd = parseredir(s, es, (t_cmd *)ptrs.exec, env);
 	while (!checktoken(s, es, SYMBOLS))
 	{
@@ -57,6 +57,7 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 		expansion(toks, ptrs.exec, env);
 		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
+	list_to_array(ptrs.exec);
 	return (ptrs.cmd);
 }
 

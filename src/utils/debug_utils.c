@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/29 16:37:46 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:24:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ void	print_exec(t_execcmd *exec)
 		return ;
 	}
 	printf("----------------EXEC----------------\n");
-	printf("argv: ");
+	printf("argv, list: ");
 	for (t_arg *ptr = exec->args_list; ptr; ptr = ptr->next)
 		printf("[%s]", ptr->s);
+	printf("\nargv, array: ");
+	for (char **ptr = exec->args_array; *ptr; ptr++)
+		printf("[%s]", *ptr);
 	printf("\n");
 }
 

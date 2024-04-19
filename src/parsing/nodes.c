@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/19 17:37:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:13:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_arg	*args(char *s, t_arg *next)
 	return (arg);
 }
 
-t_cmd	*execmd(void)
+t_cmd	*execcmd(void)
 {
 	t_execcmd	*exec;
 

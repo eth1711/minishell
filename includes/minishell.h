@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/12 21:33:38 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:13:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_env
 }	t_env;
 
 //Execution node, contains both list and array of arguments of command
-typedef struct s_execmd
+typedef struct s_execcmd
 {
 	int		type;
 	t_arg	*args_list;
@@ -120,6 +120,8 @@ typedef struct s_strptrs
 
 void	exec_redir(t_redircmd *redir, t_env *envp);
 void	exec_execcmd(t_execcmd *exec, t_env *envp);
+void	exec_pipe(t_pipecmd *pipecmd, t_env *envp);
+void	exec_cmd(t_pipecmd *pipecmd, t_env *envp);
 void	exec(t_cmd *head, t_env *envp);
 
 //signals
@@ -149,7 +151,7 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
 
 t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
-t_cmd	*execmd(void);
+t_cmd	*execcmd(void);
 t_arg	*args(char *s, t_arg *next);
 t_cmd	*error(t_cmd *head, char *message);
 
@@ -179,11 +181,15 @@ t_arg	*arg_last(t_arg *head);
 
 //free.c
 void	free_tree(t_cmd	*head);
-void	free_2D(char **array);
+void	free_2d(char **array);
 
 // Debug utils 
 
 void	print_env(t_env *env);
 void	print_tree(t_cmd *head);
+
+//Exec Utils
+
+int	is_builtin(char **args, t_env *envp);
 
 #endif

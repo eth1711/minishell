@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/03/29 16:51:47 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/19 16:22:21 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,15 @@ void	list_to_array(t_execcmd *exec)
 		argc++;
 		ptr = ptr->next;
 	}
-	exec->args_array = malloc(sizeof(char *) * argc + 1);
+	exec->args_array = malloc(sizeof(char *) * (argc + 1));
 	ptr = exec->args_list;
+	printf("l119: parsing_utils: list_to_array: argc: %i\n", argc);
 	argc = 0;
 	while (ptr)
 	{
 		exec->args_array[argc++] = ptr->s;
 		ptr = ptr->next;
 	}
+	printf("l125: parsing_utils: list_to_array: argc: %i\n", argc);
 	exec->args_array[argc] = NULL;
 }
