@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:24:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 18:34:15 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 10:06:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids)
+int	exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids)
 {
 	int	fds[2];
 	int	pid;
 
+	pipe(fds);
 	pid = fork();
 	pids[0] = pid;
 	if (!pid)
@@ -36,4 +37,5 @@ void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids)
 		exec(pipecmd->right, envp);
 		exit(0);
 	}
+	return (2);
 }

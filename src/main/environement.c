@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 17:16:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 10:33:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_env(char *key, t_env *envp)
 {
 	if (!envp)
 		return (NULL);
-	printf("expansion: get_env: key %s\n", key);
+	// printf("expansion: get_env: key %s\n", key);
 	while (envp->next && ft_strcmp(envp->key, key))
 		envp = envp->next;
 	if (!ft_strcmp(envp->key, key))

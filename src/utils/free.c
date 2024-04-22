@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:25:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:46:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 11:08:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_tree(t_cmd	*head)
 	{
 		ptrs.exec = (t_execcmd *)head;
 		args_free(ptrs.exec->args_list);
+		free(ptrs.exec->args_array);
 	}
 	free(head);
 }
