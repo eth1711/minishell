@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 20:43:46 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:05:52 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ char	*ft_safejoin(char *s1, char *s2)
 
 void	expand_env(char **new, t_strptrs *toks, t_env *env)
 {
-	int	count;
+	int		count;
+	char	*key;
 
 	count = 0;
 	toks->s++;
@@ -57,7 +58,9 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 	// for (int i = 0; i < count; i++)
 	// 	printf("%c", toks->s[i]);
 	// printf("]\n");
-	*new = ft_safejoin(*new, ft_strdup(get_env(ft_substr(toks->s, 0, count), env)));
+	key = ft_substr(toks->s, 0, count);
+	*new = ft_safejoin(*new, ft_strdup(get_env(key, env)));
+	free(key);
 	toks->s += count;
 	// printf("expand_env: *new: %s\n", *new);
 }

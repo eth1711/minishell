@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 11:07:50 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:11:10 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 char	*find_command(char *cmd, t_env *envp)
 {
-	char		**ptr;
-	char		**paths;
-	char		*ret;
+	char	**ptr;
+	char	**paths;
+	char	*ret;
 
 	if (!access(cmd, F_OK | X_OK))
 		return (cmd);
@@ -40,7 +40,6 @@ char	*find_command(char *cmd, t_env *envp)
 int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
 {
 	int		pid;
-	// int		ret;
 	char	**envp_array;
 	char	*path;
 
