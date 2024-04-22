@@ -6,19 +6,23 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 16:54:53 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/22 18:51:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc(char *delimiter, t_env *envp)
+static void	handler(int sig)
 {
-	int			fds[2];
+	(void)sig;
+}
+
+int	heredoc(char *delimiter, t_env *envp, int *fds)
+{
 	char		*line;
 	t_strptrs	toks;
 
-	pipe(fds);
+	signal(CTRL_C, SIG_DFL);
 	line = readline("heredoc> ");
 	while (line && *line)
 	{
@@ -33,10 +37,25 @@ void	heredoc(char *delimiter, t_env *envp)
 		free(line);
 		line = readline("heredoc> ");
 	}
-	free(line);
+	exit(0);
+}
+
+int	fork_heredoc(char *delimiter, t_env *envp)
+{
+	int	fds[2];
+	int	pid;
+	int	status;
+
+	pipe(fds);
+	pid = fork();
+	if (!pid)
+		heredoc(delimiter, envp, fds);
+	signal(CTRL_C, handler);
 	close(fds[1]);
 	dup2(fds[0], STDIN_FILENO);
-	close(fds[0]);
+	waitpid(pid, &status, 0);
+	init_signals();
+	return (status);
 }
 
 int	exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids)
@@ -45,8 +64,8 @@ int	exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids)
 
 	if (redir->mode == LL)
 	{
-		heredoc(redir->filename, envp);
-		init_signals();
+		if (fork_heredoc(redir->filename, envp))
+			return (ft_putchar_fd('\n', STDERR_FILENO), 0);
 	}
 	else
 	{
