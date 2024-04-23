@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 17:44:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:53:14 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	{
 		tok = gettoken(s, es, 0, 0);
 		gettoken(s, es, &toks.s, &toks.es);
-		// if (!*toks.s || ft_strchr("<>|", *toks.s))
-		// 	return (ft_putstr_fd("minish: syntax error near unexpected"), NULL);
+		if (!*toks.s || ft_strchr("<>|", *toks.s))
+			return (error(cmd, ERR_SYTX_RDIR));
 		toks.s = expansion(toks, NULL, env);
 		if (tok == '>')
 			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
@@ -48,12 +48,11 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 
 	ptrs.exec = (t_execcmd *)execcmd();
 	ptrs.cmd = parseredir(s, es, (t_cmd *)ptrs.exec, env);
-	while (!checktoken(s, es, SYMBOLS))
+	while (!checktoken(s, es, SYMBOLS) && ptrs.cmd->type != ERROR)
 	{
 		tok = gettoken(s, es, &toks.s, &toks.es);
 		if (tok != 'a')
 			break ;
-		// printf("parseexec: es: %p\n", es);
 		expansion(toks, ptrs.exec, env);
 		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
@@ -64,15 +63,18 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 t_cmd	*parsepipe(char **s, char *es, t_env *env)
 {
 	t_cmd	*cmd;
+	t_cmd	*pipe;
 
-	// printf("parsepipe: enter\n");
 	cmd = parseexec(s, es, env);
-	if (checktoken(s, es, "|") && cmd)
+	if (checktoken(s, es, "|") && cmd->type != ERROR)
 	{
-		// printf("parsepipe: inside if: **s: %c\n", **s);
-		// printf("parsepipe: checktoken found pipe\n");
 		gettoken(s, es, 0, 0);
-		cmd = pipecmd(cmd, parsepipe(s, es, env));
+		if (!*s)
+			return (error(cmd, ERR_SYTX_PIPE));
+		pipe = parsepipe(s, es, env);
+		if (pipe->type == ERROR)
+			return (pipe);
+		cmd = pipecmd(cmd, pipe);
 	}
 	return (cmd);
 }
@@ -83,9 +85,11 @@ t_cmd	*parser(char *line, t_env *env)
 	char	*es;
 
 	es = line + ft_strlen(line);
-	// printf("parser: es: %p\n", es);
 	if (!check_quotes(line, es))
+	{
+		ft_putstr_fd(ERR_QUOTES, STDERR_FILENO);
 		return (NULL);
+	}
 	cmd = parsepipe(&line, es, env);
 	return (cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 19:30:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:52:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@
 # define QUOTES "\'\""
 
 // Error strings
-# define ERR_QUOTES ": Expected closing quote\n"
-# define ERR_SYTX_RDIR ": syntax error near unexpected token"
-# define ERR_RDIR_FILE ": "
+# define ERR_QUOTES "minish: Expected closing quote\n"
+# define ERR_SYTX_RDIR "minish: syntax error near redir\n"
+# define ERR_SYTX_PIPE "minish: syntax error near pipe\n"
 
 // These enums are for the cmd types
 //LL and RR represent << and >> respectively
@@ -67,7 +67,7 @@ typedef struct s_arg
 typedef struct s_error
 {
 	int				type;
-	char			*error_msg;
+	char			*err_msg;
 	t_cmd			*head;
 }	t_error;
 
@@ -110,6 +110,7 @@ typedef struct s_types
 	t_execcmd	*exec;
 	t_pipecmd	*pipe;
 	t_redircmd	*redir;
+	t_error		*error;
 }	t_types;
 
 typedef struct s_strptrs
@@ -155,7 +156,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
 t_cmd	*execcmd(void);
 t_arg	*args(char *s, t_arg *next);
-t_cmd	*error(t_cmd *head, char *message);
+t_cmd	*error(t_cmd *head, char *err_msg);
 
 // Builtins
 
@@ -192,6 +193,6 @@ void	print_tree(t_cmd *head);
 
 //Exec Utils
 
-int		s_builtin(char **args, t_env *envp);
+int		is_builtin(char **args, t_env *envp);
 
 #endif

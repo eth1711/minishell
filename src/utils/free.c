@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:25:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 11:08:07 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:11:36 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	free_tree(t_cmd	*head)
 
 	if (!head)
 		return ;
-	if (head->type == PIPE)
+	if (head->type == ERROR)
+		free_tree(((t_error *)head)->head);
+	else if (head->type == PIPE)
 	{
 		ptrs.pipe = (t_pipecmd *)head;
 		free_tree(ptrs.pipe->left);

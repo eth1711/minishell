@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 17:36:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:42:06 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ t_cmd	*execcmd(void)
 	return ((t_cmd *)exec);
 }
 
-t_cmd	*error(t_cmd *head, char *message)
+t_cmd	*error(t_cmd *head, char *err_msg)
 {
 	t_error	*error;
 
 	error = malloc(sizeof(t_error));
+	if (err_msg)
+		perror(err_msg);
 	error->type = ERROR;
-	error->error_msg = ft_strdup(message);
 	error->head = head;
 	return ((t_cmd *)error);
 }
