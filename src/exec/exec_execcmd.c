@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 15:11:10 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:30:21 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
 		envp_array = env_to_array(envp);
 		path = find_command(exec->args_array[0], envp);
 		execve(path, exec->args_array, envp_array);
-		ft_putstr_fd("minish: command not found: ", STDERR_FILENO);
+		ft_putstr_fd("minish: ", STDERR_FILENO);
 		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		// free_2d(envp_array);
 		// free(path);
 		exit(127);

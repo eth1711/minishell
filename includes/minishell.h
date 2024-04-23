@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 20:59:56 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/23 19:30:40 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@
 # define QUOTES "\'\""
 
 // Error strings
-# define ERROR_QUOTES "Expected closing quote"
+# define ERR_QUOTES ": Expected closing quote\n"
+# define ERR_SYTX_RDIR ": syntax error near unexpected token"
+# define ERR_RDIR_FILE ": "
 
 // These enums are for the cmd types
 //LL and RR represent << and >> respectively
@@ -190,6 +192,6 @@ void	print_tree(t_cmd *head);
 
 //Exec Utils
 
-int	is_builtin(char **args, t_env *envp);
+int		s_builtin(char **args, t_env *envp);
 
 #endif

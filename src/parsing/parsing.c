@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 21:13:13 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/23 17:44:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	t_strptrs	toks;
 
 	(void)env;
-	// printf("parsredir: enter\n");
 	while (checktoken(s, es, "<>"))
 	{
 		tok = gettoken(s, es, 0, 0);
 		gettoken(s, es, &toks.s, &toks.es);
+		// if (!*toks.s || ft_strchr("<>|", *toks.s))
+		// 	return (ft_putstr_fd("minish: syntax error near unexpected"), NULL);
 		toks.s = expansion(toks, NULL, env);
 		if (tok == '>')
 			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
@@ -33,7 +34,6 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 		else if (tok == LL)
 			cmd = redircmd(cmd, 0, LL, toks.s);
 	}
-	// printf("parsredir: return\n");
 	return (cmd);
 }
 
@@ -67,7 +67,7 @@ t_cmd	*parsepipe(char **s, char *es, t_env *env)
 
 	// printf("parsepipe: enter\n");
 	cmd = parseexec(s, es, env);
-	if (checktoken(s, es, "|"))
+	if (checktoken(s, es, "|") && cmd)
 	{
 		// printf("parsepipe: inside if: **s: %c\n", **s);
 		// printf("parsepipe: checktoken found pipe\n");
