@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 00:53:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:54:55 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ t_cmd	*parsepipe(char **s, char *es, t_env *env)
 	if (checktoken(s, es, "|") && cmd->type != ERROR)
 	{
 		gettoken(s, es, 0, 0);
-		if (!*s)
+		if (!**s || checktoken(s, es, "|"))
 			return (error(cmd, ERR_SYTX_PIPE));
 		pipe = parsepipe(s, es, env);
 		if (pipe->type == ERROR)
-			return (pipe);
+			return (free_tree(pipe), error(cmd, NULL));
 		cmd = pipecmd(cmd, pipe);
 	}
 	return (cmd);

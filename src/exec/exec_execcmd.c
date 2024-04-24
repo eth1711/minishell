@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 17:30:21 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:58:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
 	char	**envp_array;
 	char	*path;
 
-	if (is_builtin(exec->args_array, envp))
+	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
 		return (0);
 	pid = fork();
 	if (pids)

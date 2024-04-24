@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:25:58 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:59:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//function that skips whitespace, then returns 1 when pointer is not pointing
-//to null, and points to one of the characters from the given string "find"
+//function that skips whitespace, then returns 1 when pointer is
+//pointing to one of the characters from the given string "find"
 int	checktoken(char **s, char *es, char *find)
 {
 	while (*s < es && ft_strchr(WHITESPACE, **s))

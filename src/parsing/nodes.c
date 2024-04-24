@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 00:42:06 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:27:19 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_cmd	*error(t_cmd *head, char *err_msg)
 
 	error = malloc(sizeof(t_error));
 	if (err_msg)
-		perror(err_msg);
+		ft_putstr_fd(err_msg, STDERR_FILENO);
 	error->type = ERROR;
 	error->head = head;
 	return ((t_cmd *)error);
