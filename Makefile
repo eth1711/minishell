@@ -4,7 +4,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
 INCLUDES = -Iincludes -I/Users/amaligno/homebrew/Cellar/readline/8.2.10/include/
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	@$(CC) $(FLAGS) $(INCLUDES) -c -o $@ $< 
+	@$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
 
 $(NAME) : $(OBJ)
 	@make -C Libft

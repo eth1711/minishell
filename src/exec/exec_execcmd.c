@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 09:58:25 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:02:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
 		ft_putstr_fd("minish: ", STDERR_FILENO);
 		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		// free_2d(envp_array);
-		// free(path);
+		free_2d(envp_array);
+		free(path);
 		exit(127);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 08:27:19 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:07:28 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 {
 	t_pipecmd	*pipe;
 
-	if (!left || right)
+	if (!left || !right)
 		return (NULL);
 	pipe = malloc(sizeof(t_pipecmd));
 	pipe->type = PIPE;

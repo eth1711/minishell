@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 09:54:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:07:17 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ t_cmd	*parser(char *line, t_env *env)
 		return (NULL);
 	}
 	cmd = parsepipe(&line, es, env);
+	// printf("l99: parser: cmd: %p\n", cmd);
 	return (cmd);
 }

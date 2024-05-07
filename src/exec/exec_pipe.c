@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:24:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 10:06:38 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:30:24 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,28 @@
 int	exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids)
 {
 	int	fds[2];
-	int	pid;
 
 	pipe(fds);
-	pid = fork();
-	pids[0] = pid;
-	if (!pid)
+	pids[0] = fork();
+	if (!pids[0])
 	{
-		dup2(fds[0], STDOUT_FILENO);
+		close(fds[0]);
+		dup2(fds[1], STDOUT_FILENO);
 		if (pipecmd->left->type == REDIR)
 			exec_redir((t_redircmd *)pipecmd->left, envp, NULL);
 		else
 			exec_execcmd((t_execcmd *)pipecmd->left, envp, NULL);
 		exit(0);
 	}
-	pid = fork();
-	pids[1] = pid;
-	if (!pid)
+	pids[1] = fork();
+	if (!pids[1])
 	{
-		dup2(fds[1], STDIN_FILENO);
+		close(fds[1]);
+		dup2(fds[0], STDIN_FILENO);
 		exec(pipecmd->right, envp);
 		exit(0);
 	}
+	close(fds[0]);
+	close(fds[1]);
 	return (2);
 }

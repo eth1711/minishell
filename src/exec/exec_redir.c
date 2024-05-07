@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 17:47:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:54:20 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,18 @@ int	heredoc(char *delimiter, t_env *envp, int *fds)
 
 	signal(CTRL_C, SIG_DFL);
 	line = readline("heredoc> ");
-	while (line && *line)
+	while (line && *line && ft_strcmp(line, delimiter))
 	{
 		toks.s = line;
 		toks.es = line + ft_strlen(line);
 		line = expansion(toks, NULL, envp);
 		free(toks.s);
-		if (!ft_strcmp(line, delimiter))
-			break ;
 		ft_putstr_fd(line, fds[1]);
 		ft_putchar_fd('\n', fds[1]);
 		free(line);
 		line = readline("heredoc> ");
 	}
+	clear_history();
 	exit(0);
 }
 

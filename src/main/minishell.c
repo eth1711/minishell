@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 09:54:52 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:26:55 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line && *line)
 		{
 			tree = parser(line, envp_list);
-			// print_tree(tree);
+			print_tree(tree);
 			free(line);
 			if (tree && tree->type != ERROR)
 				exec(tree, envp_list);
@@ -58,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	// system("sudo leaks minishell");
+	clear_history();
 	exit(0);
 	return (0);
 }
