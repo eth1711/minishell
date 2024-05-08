@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/02 17:07:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:43:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,19 @@ typedef struct s_strptrs
 	char	*es;
 }	t_strptrs;
 
+typedef struct s_pid
+{
+	pid_t			pid;
+	struct s_pid	*next;
+}	t_pid;
+
 //exec
 
-int		exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids);
-int		exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids);
-int		exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
-void	exec_cmd(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
-void	exec(t_cmd *head, t_env *envp);
+int		exec_redir(t_redircmd *redir, t_env *envp, int *io_fds);
+int		exec_execcmd(t_execcmd *exec, t_env *envp, int *io_fds);
+int		exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *io_fds);
+void	exec_cmd(t_pipecmd *pipecmd, t_env *envp, int *io_fds);
+void	exec(t_cmd *head, t_env *envp, int *io_fds);
 
 //signals
 
@@ -176,6 +182,7 @@ int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
 
 // arg list funcs
+
 void	arg_add_back(t_arg **head, t_arg *add);
 void	arg_add_front(t_arg **head, t_arg *add);
 void	args_free(t_arg *head);

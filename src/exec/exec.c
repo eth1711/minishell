@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/04/19 21:02:41 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:22:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,60 @@
 
 extern int	g_error;
 
-void	exec(t_cmd *head, t_env *envp)
-{
-	int		children;
-	int		i;
-	pid_t	*pids;
+void	free_children(t_pid *head)
+{	
+	t_pid	*ptr;
 
-	i = 0;
-	children = 0;
-	pids = malloc(sizeof(pid_t) * 2);
+	while (head)
+	{
+		head = ptr->next;
+		free(ptr);
+	}
+}
+
+void	add_child(t_pid **head, t_pid *new)
+{
+	t_pid	*ptr;
+
+	if (!head)
+		return ;
+	ptr = *head;
+	if (!ptr)
+	{
+		*head = new;
+		return ;
+	}
+	while (ptr->next)
+		ptr = ptr->next;
+	ptr->next = new;
+}
+
+t_pid	*child(pid_t pid, pid_t *next)
+{
+	t_pid	*new;
+
+	new = malloc(sizeof(t_pid));
+	new->pid = pid;
+	new->next = next;
+	return (new);
+}
+
+void	exec(t_cmd *head, t_env *envp, t_pid **children)
+{	
+	t_pid	*ptr;
+	
+	if (!children)
+		children = ptr;
 	if (head->type == PIPE)
-		children = exec_pipe((t_pipecmd *)head, envp, pids);
+		exec_pipe((t_pipecmd *)head, envp, NULL);
 	else if (head->type == EXEC)
-		children = exec_execcmd((t_execcmd *)head, envp, pids);
+		exec_execcmd((t_execcmd *)head, envp, NULL);
 	else if (head->type == REDIR)
-		children = exec_redir((t_redircmd *)head, envp, pids);
-	while (i < children)
-		waitpid(pids[i++], &g_error, 0);
-	free(pids);
+		exec_redir((t_redircmd *)head, envp, NULL);
+	while (*children)
+	{
+		wait(&g_error);
+		*children = (*children)->next;
+	}
+	free_children(children);
 }

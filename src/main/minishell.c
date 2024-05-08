@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/02 16:26:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:15:26 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	save_fds(int **fds)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	int		*fds;
+	int		*io_fds;
 	t_cmd	*tree;
 	t_env	*envp_list;
 
 	(void)argc;
 	(void)argv;
-	save_fds(&fds);
+	save_fds(&io_fds);
 	init_signals();
 	envp_list = env_to_list(envp);
 	line = readline("minishell$ ");
@@ -49,16 +49,16 @@ int	main(int argc, char **argv, char **envp)
 			print_tree(tree);
 			free(line);
 			if (tree && tree->type != ERROR)
-				exec(tree, envp_list);
+				exec(tree, envp_list, io_fds);
+			reset_fds(io_fds);
 			free_tree(tree);
 		}
-		reset_fds(fds);
 		// system("leaks minishell");
 		line = readline("minishell$ ");
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	// system("sudo leaks minishell");
-	clear_history();
+	rl_clear_history();
 	exit(0);
 	return (0);
 }
