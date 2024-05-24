@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 11:02:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:13:12 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,24 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(paths), free(cmd), NULL);
 }
 
-int	exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids)
+void	exec_execcmd(t_execcmd *exec, t_env *envp, t_pid **pids, int i_fd)
 {
-	int		pid;
+	t_pid	*pid;
 	char	**envp_array;
 	char	*path;
 
 	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
-		return (0);
-	pid = fork();
-	if (pids)
-		pids[0] = pid;
-	if (!pid)
-	{
-		signal(CTRL_C, SIG_DFL);
-		signal(CTRL_SLSH, SIG_DFL);
-		envp_array = env_to_array(envp);
-		path = find_command(exec->args_array[0], envp);
-		execve(path, exec->args_array, envp_array);
-		ft_putstr_fd("minish: ", STDERR_FILENO);
-		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		free_2d(envp_array);
-		free(path);
-		exit(127);
-	}
-	return (1);
+		return ;
+	signal(CTRL_C, SIG_DFL);
+	signal(CTRL_SLSH, SIG_DFL);
+	envp_array = env_to_array(envp);
+	path = find_command(exec->args_array[0], envp);
+	execve(path, exec->args_array, envp_array);
+	ft_putstr_fd("minish: ", STDERR_FILENO);
+	ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	free_2d(envp_array);
+	free(path);
+	exit(127);
+	ft_putstr_fd("l63: exec_execcmd\n", 2);
 }

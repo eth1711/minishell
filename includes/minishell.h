@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/08 16:43:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:58:06 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,11 @@ typedef struct s_pid
 
 //exec
 
-int		exec_redir(t_redircmd *redir, t_env *envp, int *io_fds);
-int		exec_execcmd(t_execcmd *exec, t_env *envp, int *io_fds);
-int		exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *io_fds);
-void	exec_cmd(t_pipecmd *pipecmd, t_env *envp, int *io_fds);
-void	exec(t_cmd *head, t_env *envp, int *io_fds);
+void	exec_redir(t_redircmd *redir, t_env *envp, t_pid **pids);
+void	exec_execcmd(t_execcmd *exec, t_env *envp, t_pid **pids);
+void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, t_pid **pids);
+void	exec(t_cmd *head, t_env *envp, t_pid **pids);
+void	start_exec(t_cmd *head, t_env *envp);
 
 //signals
 
@@ -180,6 +180,11 @@ int		check_quotes(char *s, char *es);
 void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
+
+//pid_funcs
+t_pid	*new_pid(pid_t pid, t_pid *next);
+void	add_pid(t_pid **head, t_pid *new);
+
 
 // arg list funcs
 

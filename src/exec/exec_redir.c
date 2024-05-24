@@ -3,25 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/02 16:54:20 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:07:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handler(int sig)
+int	heredoc(char *delimiter, t_env *envp)
 {
-	(void)sig;
-}
-
-int	heredoc(char *delimiter, t_env *envp, int *fds)
-{
+	int			*fds;
 	char		*line;
 	t_strptrs	toks;
 
+	pipe(fds);
 	signal(CTRL_C, SIG_DFL);
 	line = readline("heredoc> ");
 	while (line && *line && ft_strcmp(line, delimiter))
@@ -39,33 +36,13 @@ int	heredoc(char *delimiter, t_env *envp, int *fds)
 	exit(0);
 }
 
-int	fork_heredoc(char *delimiter, t_env *envp)
-{
-	int	fds[2];
-	int	pid;
-	int	status;
-
-	pipe(fds);
-	pid = fork();
-	if (!pid)
-		heredoc(delimiter, envp, fds);
-	signal(CTRL_C, handler);
-	close(fds[1]);
-	dup2(fds[0], STDIN_FILENO);
-	waitpid(pid, &status, 0);
-	init_signals();
-	return (status);
-}
-
-int	exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids)
+void	exec_redir(t_redircmd *redir, t_env *envp, t_pid **pids)
 {
 	int	fd;
 
 	if (redir->mode == LL)
-	{
-		if (fork_heredoc(redir->filename, envp))
-			return (ft_putchar_fd('\n', STDERR_FILENO), 0);
-	}
+		if (heredoc(redir->filename, envp))
+			return (ft_putchar_fd('\n', STDERR_FILENO));
 	else
 	{
 		fd = open(redir->filename, redir->mode, 0644);
@@ -74,10 +51,10 @@ int	exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids)
 			ft_putstr_fd("minish: ", STDERR_FILENO);
 			ft_putstr_fd(redir->filename, STDERR_FILENO);
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return (0);
+			return ;
 		}
 		dup2(fd, redir->fd);
 		close(fd);
 	}
-	return (exec_execcmd((t_execcmd *)redir->cmd, envp, pids));
+	exec_execcmd((t_execcmd *)redir->cmd, envp, pids);
 }

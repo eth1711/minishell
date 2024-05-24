@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/08 17:15:26 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:28:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **envp)
 			print_tree(tree);
 			free(line);
 			if (tree && tree->type != ERROR)
-				exec(tree, envp_list, io_fds);
+				start_exec(tree, envp_list);
 			reset_fds(io_fds);
 			free_tree(tree);
 		}

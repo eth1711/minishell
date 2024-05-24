@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/05/08 17:22:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/24 20:08:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,42 @@
 
 extern int	g_error;
 
-void	free_children(t_pid *head)
-{	
+void	start_exec(t_cmd *head, t_env *envp)
+{
+	t_pid	*pids;
 	t_pid	*ptr;
 
-	while (head)
+	pids = NULL;
+	exec(head, envp, pids);
+	while (pids)
 	{
-		head = ptr->next;
+		waitpid(pids->pid, &g_error, 0);
+		ptr = pids;
+		pids = pids->next;
 		free(ptr);
 	}
 }
 
-void	add_child(t_pid **head, t_pid *new)
+void	exec(t_cmd *head, t_env *envp, t_pid **pids)
 {
-	t_pid	*ptr;
+	int		fds[2];
+	t_pid	*pid;
 
-	if (!head)
-		return ;
-	ptr = *head;
-	if (!ptr)
+	pipe(fds);
+	pid = new_pid(fork(), NULL);
+	if (!pid->pid)
 	{
-		*head = new;
-		return ;
+		dup2(fds[1], STDOUT_FILENO);
+		close(fds[0]);
+		close(fds[1]);
+		if (pipecmd->left->type == REDIR)
+			exec_redir((t_redircmd *)pipecmd->left, envp, pids);
+		else if (pipecmd->left->type == EXEC)
+			exec_execcmd((t_execcmd *)pipecmd->left, envp, pids);
 	}
-	while (ptr->next)
-		ptr = ptr->next;
-	ptr->next = new;
-}
-
-t_pid	*child(pid_t pid, pid_t *next)
-{
-	t_pid	*new;
-
-	new = malloc(sizeof(t_pid));
-	new->pid = pid;
-	new->next = next;
-	return (new);
-}
-
-void	exec(t_cmd *head, t_env *envp, t_pid **children)
-{	
-	t_pid	*ptr;
-	
-	if (!children)
-		children = ptr;
-	if (head->type == PIPE)
-		exec_pipe((t_pipecmd *)head, envp, NULL);
-	else if (head->type == EXEC)
-		exec_execcmd((t_execcmd *)head, envp, NULL);
-	else if (head->type == REDIR)
-		exec_redir((t_redircmd *)head, envp, NULL);
-	while (*children)
-	{
-		wait(&g_error);
-		*children = (*children)->next;
-	}
-	free_children(children);
+	add_pid(pids, pid);
+	dup2(fds[0], STDIN_FILENO);
+	close(fds[0]);
+	close(fds[1]);
+	exec(pipecmd->right, envp, pids);
 }
