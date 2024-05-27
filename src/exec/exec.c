@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/05/27 20:54:29 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:27:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	start_exec(t_cmd *head, t_env *envp)
 {
 	pid_t		pid;
 
+	signal(CTRL_C, handler);
 	if (head->type != PIPE)
 	{
 		exec(head, envp, 0);
@@ -31,11 +32,8 @@ void	start_exec(t_cmd *head, t_env *envp)
 	}
 	pid = fork();
 	if (!pid)
-	{
 		exec(head, envp, 1);
-		signal(CTRL_C, handler);
-		waitpid(pid, &g_error, 0);
-	}
+	waitpid(pid, &g_error, 0);
 }
 
 void	exec(t_cmd *head, t_env *envp, int forked)
