@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 16:54:37 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:18:18 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,10 @@ void	start_exec(t_cmd *head, t_env *envp);
 //signals
 
 void	init_signals(void);
+void	handle_sigint(int sigint, siginfo_t *info, void *data);
 
 //environement
+
 //setter function for env
 void	put_env(char *string, t_env **envp);
 //getter function for env
@@ -162,7 +164,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
 t_cmd	*execcmd(void);
 t_arg	*args(char *s, t_arg *next);
-t_cmd	*error(t_cmd *head, char *err_msg);
+t_cmd	*error(t_cmd *head, char *err_msg, int error_number);
 
 // Builtins
 

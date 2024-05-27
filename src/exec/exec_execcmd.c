@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 16:56:17 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:27:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp)
 
 	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
 		return ;
-	signal(CTRL_C, SIG_DFL);
-	signal(CTRL_SLSH, SIG_DFL);
 	envp_array = env_to_array(envp);
 	path = find_command(exec->args_array[0], envp);
 	execve(path, exec->args_array, envp_array);

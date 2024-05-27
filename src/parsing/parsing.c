@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/02 17:07:17 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:20:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 		tok = gettoken(s, es, 0, 0);
 		gettoken(s, es, &toks.s, &toks.es);
 		if (!*toks.s || ft_strchr("<>|", *toks.s))
-			return (error(cmd, ERR_SYTX_RDIR));
+			return (error(cmd, ERR_SYTX_RDIR, 258));
 		toks.s = expansion(toks, NULL, env);
 		if (tok == '>')
 			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
@@ -70,10 +70,10 @@ t_cmd	*parsepipe(char **s, char *es, t_env *env)
 	{
 		gettoken(s, es, 0, 0);
 		if (!**s || checktoken(s, es, "|"))
-			return (error(cmd, ERR_SYTX_PIPE));
+			return (error(cmd, ERR_SYTX_PIPE, 258));
 		pipe = parsepipe(s, es, env);
 		if (pipe->type == ERROR)
-			return (free_tree(pipe), error(cmd, NULL));
+			return (free_tree(pipe), error(cmd, NULL, 258));
 		cmd = pipecmd(cmd, pipe);
 	}
 	return (cmd);

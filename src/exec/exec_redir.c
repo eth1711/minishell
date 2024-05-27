@@ -6,19 +6,19 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 16:56:27 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:26:18 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(char *delimiter, t_env *envp)
+extern int	g_error;
+
+void	heredoc(char *delimiter, t_env *envp, int *fds)
 {
-	int			fds[2];
 	char		*line;
 	t_strptrs	toks;
 
-	pipe(fds);
 	signal(CTRL_C, SIG_DFL);
 	line = readline("heredoc> ");
 	while (line && *line && ft_strcmp(line, delimiter))
@@ -36,14 +36,30 @@ int	heredoc(char *delimiter, t_env *envp)
 	exit(0);
 }
 
+
+int	fork_heredoc(char *delimiter, t_env *envp)
+{
+	int	fds[2];
+	int	pid;
+	
+	pipe(fds);
+	pid = fork();
+	if (!pid)
+		heredoc(delimiter, envp, fds);
+	close(fds[1]);
+	dup2(fds[0], STDIN_FILENO);
+	waitpid(pid, &g_error, 0);
+	return (g_error);
+}
+
 void	exec_redir(t_redircmd *redir, t_env *envp)
 {
 	int	fd;
 
 	if (redir->mode == LL)
 	{
-		if (heredoc(redir->filename, envp))
-			return (ft_putchar_fd('\n', STDERR_FILENO));
+		fork_heredoc(redir->filename, envp);
+		return (ft_putchar_fd('\n', STDERR_FILENO));
 	}
 	else
 	{

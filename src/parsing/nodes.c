@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/02 17:07:28 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:17:59 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_error;
 
 //Constructors for the token nodes
 
@@ -61,7 +63,7 @@ t_cmd	*execcmd(void)
 	return ((t_cmd *)exec);
 }
 
-t_cmd	*error(t_cmd *head, char *err_msg)
+t_cmd	*error(t_cmd *head, char *err_msg, int error_number)
 {
 	t_error	*error;
 
@@ -70,5 +72,6 @@ t_cmd	*error(t_cmd *head, char *err_msg)
 		ft_putstr_fd(err_msg, STDERR_FILENO);
 	error->type = ERROR;
 	error->head = head;
+	g_error = error_number;
 	return ((t_cmd *)error);
 }
