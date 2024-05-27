@@ -6,11 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 17:27:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:57:36 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_error;
 
 //Returns the path of the given command, if not found NULL
 // char	*find_command(char *cmd, t_env *envp)
@@ -37,21 +39,29 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(paths), free(cmd), NULL);
 }
 
-void	exec_execcmd(t_execcmd *exec, t_env *envp)
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked)
 {
 	char	**envp_array;
 	char	*path;
-
+	pid_t	pid;
+	
+	pid = 1;
 	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
 		return ;
-	envp_array = env_to_array(envp);
-	path = find_command(exec->args_array[0], envp);
-	execve(path, exec->args_array, envp_array);
-	ft_putstr_fd("minish: ", STDERR_FILENO);
-	ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	free_2d(envp_array);
-	free(path);
-	exit(127);
-	ft_putstr_fd("l63: exec_execcmd\n", 2);
+	if (!forked)
+		pid = fork();
+	if (!pid || (pid && forked))
+	{
+		envp_array = env_to_array(envp);
+		path = find_command(exec->args_array[0], envp);
+		execve(path, exec->args_array, envp_array);
+		ft_putstr_fd("minish: ", STDERR_FILENO);
+		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		free_2d(envp_array);
+		free(path);
+		exit(127);
+	}
+	else if (pid && !forked)
+		waitpid(pid, &g_error, 0);
 }

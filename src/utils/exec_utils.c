@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/22 09:38:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:01:04 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_builtin(char **args, t_env *envp)
 {
 	(void)envp;
 	if (!ft_strcmp(args[0], "echo"))
-		return (/*ft_echo(args),*/ printf("ft_echo\n"), 1);
+		return (ft_echo(args), 1);
 	if (!ft_strcmp(args[0], "cd"))
 		return (/*ft_cd(args),*/printf("ft_cd\n"), 1);
 	if (!ft_strcmp(args[0], "export"))

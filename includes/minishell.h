@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 19:18:18 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:53:57 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ typedef struct s_pid
 
 //exec
 
-void	exec_redir(t_redircmd *redir, t_env *envp);
-void	exec_execcmd(t_execcmd *exec, t_env *envp);
+void	exec_redir(t_redircmd *redir, t_env *envp, int forked);
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked);
 void	exec_pipe(t_pipecmd *pipecmd, t_env *envp);
-void	exec(t_cmd *head, t_env *envp);
+void	exec(t_cmd *head, t_env *envp, int forked);
 void	start_exec(t_cmd *head, t_env *envp);
 
 //signals

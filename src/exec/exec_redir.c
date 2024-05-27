@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 17:26:18 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:55:47 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	fork_heredoc(char *delimiter, t_env *envp)
 	return (g_error);
 }
 
-void	exec_redir(t_redircmd *redir, t_env *envp)
+void	exec_redir(t_redircmd *redir, t_env *envp, int forked)
 {
 	int	fd;
 
@@ -69,10 +69,10 @@ void	exec_redir(t_redircmd *redir, t_env *envp)
 			ft_putstr_fd("minish: ", STDERR_FILENO);
 			ft_putstr_fd(redir->filename, STDERR_FILENO);
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			return ;
+			exit(1);
 		}
 		dup2(fd, redir->fd);
 		close(fd);
 	}
-	exec_execcmd((t_execcmd *)redir->cmd, envp);
+	exec_execcmd((t_execcmd *)redir->cmd, envp, forked);
 }
