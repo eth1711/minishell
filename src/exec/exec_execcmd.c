@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/24 18:13:12 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:56:17 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(paths), free(cmd), NULL);
 }
 
-void	exec_execcmd(t_execcmd *exec, t_env *envp, t_pid **pids, int i_fd)
+void	exec_execcmd(t_execcmd *exec, t_env *envp)
 {
-	t_pid	*pid;
 	char	**envp_array;
 	char	*path;
 

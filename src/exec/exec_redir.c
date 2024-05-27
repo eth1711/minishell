@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/24 18:07:23 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:56:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	heredoc(char *delimiter, t_env *envp)
 {
-	int			*fds;
+	int			fds[2];
 	char		*line;
 	t_strptrs	toks;
 
@@ -36,13 +36,15 @@ int	heredoc(char *delimiter, t_env *envp)
 	exit(0);
 }
 
-void	exec_redir(t_redircmd *redir, t_env *envp, t_pid **pids)
+void	exec_redir(t_redircmd *redir, t_env *envp)
 {
 	int	fd;
 
 	if (redir->mode == LL)
+	{
 		if (heredoc(redir->filename, envp))
 			return (ft_putchar_fd('\n', STDERR_FILENO));
+	}
 	else
 	{
 		fd = open(redir->filename, redir->mode, 0644);
@@ -56,5 +58,5 @@ void	exec_redir(t_redircmd *redir, t_env *envp, t_pid **pids)
 		dup2(fd, redir->fd);
 		close(fd);
 	}
-	exec_execcmd((t_execcmd *)redir->cmd, envp, pids);
+	exec_execcmd((t_execcmd *)redir->cmd, envp);
 }
