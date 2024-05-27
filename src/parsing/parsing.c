@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 19:20:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:46:16 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 		if (tok != 'a')
 			break ;
 		expansion(toks, ptrs.exec, env);
-		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
+		if (ptrs.cmd->type == REDIR)
+			((t_redircmd *)ptrs.cmd)->cmd = parseredir(s, es, ptrs.cmd, env);
+		else	
+			ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
 	list_to_array(ptrs.exec);
 	return (ptrs.cmd);
