@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/05/27 21:27:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:47:44 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	start_exec(t_cmd *head, t_env *envp)
 	pid_t		pid;
 
 	signal(CTRL_C, handler);
+	// printf("l28: start_exec\n");
 	if (head->type != PIPE)
 	{
 		exec(head, envp, 0);

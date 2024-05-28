@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 16:51:13 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:44:02 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 	return ((t_cmd *)pipe);
 }
 
+
+//This conrtuctor node adds the given command to the last node if it is a redir
+//this is to correctly built the tree for redir during execution
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename)
 {
 	t_redircmd	*redir;
@@ -44,7 +47,9 @@ t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename)
 	{
 		ptr = (t_redircmd *)cmd;
 		while (ptr && ptr->cmd->type == REDIR)
+		{
 			ptr = (t_redircmd *)ptr->cmd;
+		}
 		exec = ptr->cmd;
 		ptr->cmd = (t_cmd *)redir;
 		redir->cmd = exec;

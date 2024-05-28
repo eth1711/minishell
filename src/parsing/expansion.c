@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 19:52:58 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:26:03 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 	char	*new;
 	int		count;
 
-	// printf("expansion: enter\n");
 	count = 0;
 	new = ft_strdup("");
 	while ((toks.s + count) < toks.es)

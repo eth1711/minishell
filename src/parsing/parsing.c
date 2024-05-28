@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 17:15:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:21:41 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,26 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	int			tok;
 	t_strptrs	toks;
 
+	printf("");
 	while (checktoken(s, es, "<>"))
-	{
+	{	
+		// ft_putstr_fd("l28: parseredir: enter while\n", 2);
 		tok = gettoken(s, es, 0, 0);
 		gettoken(s, es, &toks.s, &toks.es);
 		if (!*toks.s || ft_strchr("<>|", *toks.s))
 			return (error(cmd, ERR_SYTX_RDIR, 258));
-		toks.s = expansion(toks, NULL, env);
-		if (tok == '>')
-			cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
-		else if (tok == '<')
-			cmd = redircmd(cmd, 0, O_RDONLY, toks.s);
-		else if (tok == RR)
-			cmd = redircmd(cmd, 1, O_RDWR | O_CREAT | O_APPEND, toks.s);
-		else if (tok == LL)
-			cmd = redircmd(cmd, 0, LL, toks.s);
+		if (tok == LL)
+			cmd = redircmd(cmd, 0, LL, ft_substr(toks.s, 0, toks.es - toks.s));
+		else
+		{
+			toks.s = expansion(toks, NULL, env);
+			if (tok == '>')
+				cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
+			else if (tok == '<')
+				cmd = redircmd(cmd, 0, O_RDONLY, toks.s);
+			else if (tok == RR)
+				cmd = redircmd(cmd, 1, O_RDWR | O_CREAT | O_APPEND, toks.s);
+		}
 	}
 	return (cmd);
 }
@@ -47,13 +52,13 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 
 	ptrs.exec = (t_execcmd *)execcmd();
 	ptrs.cmd = parseredir(s, es, (t_cmd *)ptrs.exec, env);
-	while (!checktoken(s, es, SYMBOLS) && ptrs.cmd->type != ERROR)
+	while (**s && !checktoken(s, es, SYMBOLS) && ptrs.cmd->type != ERROR)
 	{
 		tok = gettoken(s, es, &toks.s, &toks.es);
 		if (tok != 'a')
 			break ;
-		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 		expansion(toks, ptrs.exec, env);
+		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
 	list_to_array(ptrs.exec);
 	return (ptrs.cmd);

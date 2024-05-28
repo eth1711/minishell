@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 16:51:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:15:48 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	main(int argc, char **argv, char **envp)
 		if (line && *line)
 		{
 			tree = parser(line, envp_list);
+			// exit(0);
 			// print_tree(tree);
+			// printf("\n");
 			free(line);
 			if (tree && tree->type != ERROR)
 				start_exec(tree, envp_list);

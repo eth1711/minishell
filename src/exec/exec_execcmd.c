@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 21:22:31 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:49:26 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked)
 {
 	char	**envp_array;
 	char	*path;
-	(void)forked;
 	pid_t	pid;
 	
 	pid = 1;

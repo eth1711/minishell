@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 16:15:18 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:25:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	print_pipe(t_pipecmd *pipe)
 
 void	print_tree(t_cmd *head)
 {
+	printf("\n");
 	if (!head)
 	{
 		printf("print_tree: head node is null\n");
