@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:38:27 by etlim             #+#    #+#             */
-/*   Updated: 2024/05/27 21:07:03 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:55:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_echo(char **args_array)
 	while (args_array[i])
 	{
 		ft_putstr_fd(args_array[i], 1);
+		ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (flag == 0)

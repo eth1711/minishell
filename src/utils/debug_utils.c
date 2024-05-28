@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 17:06:35 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/24 08:40:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:15:18 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_exec(t_execcmd *exec)
 	for (t_arg *ptr = exec->args_list; ptr; ptr = ptr->next)
 		printf("[%s]", ptr->s);
 	printf("\nargv, array: ");
-	for (char **ptr = exec->args_array; *ptr; ptr++)
+	for (char **ptr = exec->args_array; ptr && *ptr; ptr++)
 		printf("[%s]", *ptr);
 	printf("\n");
 }

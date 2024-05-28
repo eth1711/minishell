@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 20:53:57 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:29:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,6 @@ typedef struct s_strptrs
 	char	*es;
 }	t_strptrs;
 
-typedef struct s_pid
-{
-	pid_t			pid;
-	struct s_pid	*next;
-}	t_pid;
-
 //exec
 
 void	exec_redir(t_redircmd *redir, t_env *envp, int forked);
@@ -182,11 +176,6 @@ int		check_quotes(char *s, char *es);
 void	list_to_array(t_execcmd *exec);
 int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
-
-//pid_funcs
-t_pid	*new_pid(pid_t pid, t_pid *next);
-void	add_pid(t_pid **head, t_pid *new);
-
 
 // arg list funcs
 

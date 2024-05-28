@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 20:01:04 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:54:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,3 @@ int	is_builtin(char **args, t_env *envp)
 		return (/*ft_exit(args, envp),*/ printf("ft_echo\n"), 1);
 	return (0);
 }
-
-// int	reset_signals()
-// {
-// 	signal(CTRL_C, SIG_DFL);
-// 	signal(CTRL_SLSH, SIG_DFL);
-// }

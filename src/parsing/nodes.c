@@ -6,13 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 19:17:59 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:51:13 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_error;
+extern int	g_error;
 
 //Constructors for the token nodes
 
@@ -32,13 +32,25 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename)
 {
 	t_redircmd	*redir;
+	t_redircmd	*ptr;
+	t_cmd		*exec;
 
 	redir = malloc(sizeof(t_redircmd));
-	redir->cmd = cmd;
 	redir->type = REDIR;
 	redir->fd = fd;
 	redir->mode = mode;
 	redir->filename = filename;
+	if (cmd->type == REDIR)
+	{
+		ptr = (t_redircmd *)cmd;
+		while (ptr && ptr->cmd->type == REDIR)
+			ptr = (t_redircmd *)ptr->cmd;
+		exec = ptr->cmd;
+		ptr->cmd = (t_cmd *)redir;
+		redir->cmd = exec;
+		return (cmd);
+	}
+	redir->cmd = cmd;
 	return ((t_cmd *)redir);
 }
 

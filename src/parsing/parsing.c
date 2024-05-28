@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/27 21:46:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:15:36 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	int			tok;
 	t_strptrs	toks;
 
-	(void)env;
 	while (checktoken(s, es, "<>"))
 	{
 		tok = gettoken(s, es, 0, 0);
@@ -53,11 +52,8 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 		tok = gettoken(s, es, &toks.s, &toks.es);
 		if (tok != 'a')
 			break ;
+		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 		expansion(toks, ptrs.exec, env);
-		if (ptrs.cmd->type == REDIR)
-			((t_redircmd *)ptrs.cmd)->cmd = parseredir(s, es, ptrs.cmd, env);
-		else	
-			ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
 	list_to_array(ptrs.exec);
 	return (ptrs.cmd);
@@ -94,6 +90,5 @@ t_cmd	*parser(char *line, t_env *env)
 		return (NULL);
 	}
 	cmd = parsepipe(&line, es, env);
-	// printf("l99: parser: cmd: %p\n", cmd);
 	return (cmd);
 }
