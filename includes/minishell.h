@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 16:29:27 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:30:02 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,19 @@
 # define CTRL_D EOF
 # define CTRL_SLSH SIGQUIT
 
+#define FD_STDIN 3
+#define FD_STDOUT 4
+// #define PIPE_R 5
+// #define PIPE_W 6
+// #define PIPE_CLOSE 7
+
 # define WHITESPACE "\n\t\r\v "
 # define SYMBOLS "|<>"
 # define QUOTES "\'\""
 
 // Error strings
-# define ERR_QUOTES "minish: Expected closing quote\n"
+# define MINISH "minish:"
+# define ERR_QUOTES MINSH "Expected closing quote\n"
 # define ERR_SYTX_RDIR "minish: syntax error near redir\n"
 # define ERR_SYTX_PIPE "minish: syntax error near pipe\n"
 
@@ -121,10 +128,10 @@ typedef struct s_strptrs
 
 //exec
 
-void	exec_redir(t_redircmd *redir, t_env *envp, int forked);
-void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked);
-void	exec_pipe(t_pipecmd *pipecmd, t_env *envp);
-void	exec(t_cmd *head, t_env *envp, int forked);
+void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe);
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe);
+void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe);
+void	exec(t_cmd *head, t_env *envp, int forked, int *fds_pipe);
 void	start_exec(t_cmd *head, t_env *envp);
 
 //signals

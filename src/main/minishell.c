@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 19:15:48 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:01:42 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ int		g_error = 0;
 
 static void	reset_fds(int startup)
 {
-	static int	fd_in;
-	static int	fd_out;
-
 	if (startup)
 	{
-		fd_in = dup(STDIN_FILENO);
-		fd_out = dup(STDOUT_FILENO);
+		dup2(STDIN_FILENO, FD_STDIN);
+		dup2(STDOUT_FILENO, FD_STDOUT);
 		return ;
 	}
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
+	dup2(FD_STDIN, STDIN_FILENO);
+	dup2(FD_STDOUT, STDOUT_FILENO);
 }
 
 int	main(int argc, char **argv, char **envp)

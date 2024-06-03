@@ -73,9 +73,14 @@
 //     return 0;
 // }
 
+# define MINISH "minish:"
+# define ERR_QUOTES MINISH "Expected closing quote\n"
+
 int main()
 {
-	char *s = "hello";
-	char *es = s + strlen(s);
-	printf("len: %i", (int)(es - s));
+	// char *s = "hello";
+	// char *es = s + strlen(s);
+	// printf("len: %i", (int)(es - s));
+
+	printf(MINISH ERR_QUOTES);
 }

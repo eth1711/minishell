@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+// /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 17:49:26 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:08:13 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(paths), free(cmd), NULL);
 }
 
-void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked)
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe)
 {
 	char	**envp_array;
 	char	*path;
@@ -52,6 +52,9 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked)
 		pid = fork();
 	if (!pid || (pid && forked))
 	{
+		dup2(fds_pipe[0], STDIN_FILENO);
+		dup2(fds_pipe[1], STDOUT_FILENO);
+		close(fds_pipe[2]);
 		envp_array = env_to_array(envp);
 		path = find_command(exec->args_array[0], envp);
 		execve(path, exec->args_array, envp_array);
@@ -62,6 +65,4 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked)
 		free(path);
 		exit(127);
 	}
-	else if (pid && !forked)
-		waitpid(pid, &g_error, 0);
 }

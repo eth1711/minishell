@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 19:21:41 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:48:28 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 	int			tok;
 	t_strptrs	toks;
 
-	printf("");
 	while (checktoken(s, es, "<>"))
 	{	
 		// ft_putstr_fd("l28: parseredir: enter while\n", 2);
