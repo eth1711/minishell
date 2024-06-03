@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/03 15:56:26 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:00:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,38 @@
 
 extern int	g_error;
 
-static void	sigint_handler(int sig)
+// static void	sigint_handler(int sigint)
+// {
+// 	(void)sigint;
+// 	printf("\n");
+// 	close(STDIN_FILENO);
+// }
+
+static void	sigint_handler(int sigint, siginfo_t *info, void *data)
 {
-	(void)sig;
+	int	*flag;
+
+	(void)sigint;
+	(void)info;
+	flag = (int *)data;
+	*flag = 1;
 	printf("\n");
 	close(STDIN_FILENO);
 }
 
-void	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
+static void	init_sig(int *flag)
 {
-	int			fds[2];
+	struct sigaction sa;
+	
+	sa.sa_sigaction = sigint_handler;
+	sigaction(CTRL_C, &sa, (void *)flag);
+}
+
+void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
+{
 	char		*line;
 	t_strptrs	toks;
-	pipe(fds);
-	// dup2(FD_STDIN, STDOUT_FILENO);
-	// dup2(FD_STDOUT, STDOUT_FILENO);
-	signal(CTRL_C, sigint_handler);
+
 	line = readline("heredoc> ");
 	while (line && *line)
 	{
@@ -45,58 +61,37 @@ void	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 		line = readline("heredoc> ");
 	}
 	free(line);
-	close(fds[1]);
-	fds_pipe[0] = fds[0];
 }
 
-// void	heredoc(char *delimiter, t_env *envp, int fd)
-// {
-// 	char		*line;
-// 	t_strptrs	toks;
+void	heredoc(char *delimiter, t_env *envp, int *fds_pipe, int *flag)
+{
+	int			fds[2];
 
-// 	signal(CTRL_C, SIG_DFL);
-// 	line = readline("heredoc> ");
-// 	ft_putstr_fd("l24: heredoc\n", STDERR_FILENO);
-// 	while (line && *line && ft_strcmp(line, delimiter))
-// 	{
-// 		ft_putstr_fd("l27: heredoc\n", STDERR_FILENO);
-// 		toks.s = line;
-// 		toks.es = line + ft_strlen(line);
-// 		line = expansion(toks, NULL, envp);
-// 		free(toks.s);
-// 		ft_putstr_fd(line, fd);
-// 		ft_putchar_fd('\n', fd);
-// 		free(line);
-// 		line = readline("heredoc> ");
-// 	}
-// 	ft_putstr_fd("l37: heredoc\n", STDERR_FILENO);
-// 	// clear_history();
-// 	// exit(0);
-// }
-
-
-// int	fork_heredoc(char *delimiter, t_env *envp)
-// {
-// 	int	fds[2];
-// 	// int	pid;
-	
-// 	pipe(fds);
-// 	// pid = fork();
-// 	// if (!pid)
-// 	heredoc(delimiter, envp, fds[1]);
-// 	dup2(fds[0], STDIN_FILENO);
-// 	close(fds[0]);
-// 	// waitpid(pid, &g_error, 0);
-// 	ft_putstr_fd("l54: fork_heredoc\n", STDERR_FILENO);
-// 	return (g_error);
-// }
+	pipe(fds);
+	init_sig(flag);
+	heredoc_helper(delimiter, fds, envp);
+	close(fds[1]);
+	if (!flag)
+		fds_pipe[0] = fds[0];
+	else
+		close(fds[0]);
+}
 
 void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
 {
 	int	fd;
+	int	flag;
 
+	flag = 0;
 	if (redir->mode == LL)
-		heredoc(redir->filename, envp, fds_pipe);
+	{
+		heredoc(redir->filename, envp, fds_pipe, &flag);
+		if (flag)
+		{
+			g_error = 1;
+			return ;
+		}
+	}
 	else
 	{
 		fd = open(redir->filename, redir->mode, 0644);
@@ -105,7 +100,8 @@ void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
 			ft_putstr_fd("minish: ", STDERR_FILENO);
 			ft_putstr_fd(redir->filename, STDERR_FILENO);
 			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-			exit(1);
+			g_error = 1;
+			return ;
 		}
 		dup2(fd, fds_pipe[redir->fd]);
 		close(fd);
