@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/03 20:00:33 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/03 22:24:57 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,12 @@ extern int	g_error;
 // 	close(STDIN_FILENO);
 // }
 
-static void	sigint_handler(int sigint, siginfo_t *info, void *data)
+static void	sigint_handler(int sigint)
 {
-	int	*flag;
-
 	(void)sigint;
-	(void)info;
-	flag = (int *)data;
-	*flag = 1;
+	g_error = 1;
 	printf("\n");
 	close(STDIN_FILENO);
-}
-
-static void	init_sig(int *flag)
-{
-	struct sigaction sa;
-	
-	sa.sa_sigaction = sigint_handler;
-	sigaction(CTRL_C, &sa, (void *)flag);
 }
 
 void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
@@ -63,15 +51,15 @@ void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
 	free(line);
 }
 
-void	heredoc(char *delimiter, t_env *envp, int *fds_pipe, int *flag)
+void	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 {
 	int			fds[2];
 
 	pipe(fds);
-	init_sig(flag);
+	signal(CTRL_C, sigint_handler);
 	heredoc_helper(delimiter, fds, envp);
 	close(fds[1]);
-	if (!flag)
+	if (!g_error)
 		fds_pipe[0] = fds[0];
 	else
 		close(fds[0]);
@@ -80,17 +68,12 @@ void	heredoc(char *delimiter, t_env *envp, int *fds_pipe, int *flag)
 void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
 {
 	int	fd;
-	int	flag;
 
-	flag = 0;
 	if (redir->mode == LL)
 	{
-		heredoc(redir->filename, envp, fds_pipe, &flag);
-		if (flag)
-		{
-			g_error = 1;
+		heredoc(redir->filename, envp, fds_pipe);
+		if (g_error)
 			return ;
-		}
 	}
 	else
 	{
