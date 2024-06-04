@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:59:17 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:29:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@
 
 # define FD_STDIN 3
 # define FD_STDOUT 4
-// #define PIPE_R 5
-// #define PIPE_W 6
-// #define PIPE_CLOSE 7
 
 # define WHITESPACE "\n\t\r\v "
 # define SYMBOLS "|<>"
@@ -127,10 +124,10 @@ typedef struct s_strptrs
 
 //exec
 
-void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe);
-void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe);
+void	exec_redir(t_redircmd *redir, t_env *envp, int *fds_pipe);
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe);
 void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe);
-void	exec(t_cmd *head, t_env *envp, int forked, int *fds_pipe);
+void	exec(t_cmd *head, t_env *envp, int *fds_pipe);
 void	start_exec(t_cmd *head, t_env *envp);
 void	ignore_sigint(int sig);
 

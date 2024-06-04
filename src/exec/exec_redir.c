@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:44:33 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:47:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 	return (close(fds[0]), 0);
 }
 
-void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
+void	exec_redir(t_redircmd *redir, t_env *envp, int *fds_pipe)
 {
 	int	fd;
 
@@ -99,5 +99,5 @@ void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
 		dup2(fd, fds_pipe[redir->fd]);
 		close(fd);
 	}
-	exec(redir->cmd, envp, forked, fds_pipe);
+	exec(redir->cmd, envp, fds_pipe);
 }

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 16:54:46 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:34:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	is_builtin(char **args, t_env *envp)
 	if (!ft_strcmp(args[0], "unset"))
 		return (/*ft_unset(args, envp),*/ printf("ft_echo\n"), 1);
 	if (!ft_strcmp(args[0], "exit"))
-		return (/*ft_exit(args, envp),*/ printf("ft_echo\n"), 1);
+		exit(0);
 	return (0);
 }

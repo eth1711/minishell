@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:59:54 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:21:39 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_error;
 
-//Returns the path of the given command, if not found NULL
+//Returns the path of the given command, if not found it returns NULL
 // char	*find_command(char *cmd, t_env *envp)
 
 char	*find_command(char *cmd, t_env *envp)
@@ -39,7 +39,7 @@ char	*find_command(char *cmd, t_env *envp)
 	return (free_2d(paths), free(paths), free(cmd), NULL);
 }
 
-void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe)
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 {
 	char	**envp_array;
 	char	*path;
@@ -48,9 +48,8 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe)
 	pid = 1;
 	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
 		return ;
-	if (!forked)
-		pid = fork();
-	if (!pid || (pid && forked))
+	pid = fork();
+	if (!pid)
 	{
 		dup2(fds_pipe[0], STDIN_FILENO);
 		dup2(fds_pipe[1], STDOUT_FILENO);

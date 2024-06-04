@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:24:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/03 15:47:40 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:47:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe)
 	fds_left[0] = fds_pipe[0];
 	fds_left[1] = fds[1];
 	fds_left[2] = fds[0];
-	exec(pipecmd->left, envp, 0, fds_left);
+	exec(pipecmd->left, envp, fds_left);
 	close(fds[1]);
 	fds_right[0] = fds[0];
 	fds_right[1] = STDOUT_FILENO;
 	fds_right[2] = -1;
-	exec(pipecmd->right, envp, 0, fds_right);
+	exec(pipecmd->right, envp, fds_right);
 	close(fds[0]);
 }

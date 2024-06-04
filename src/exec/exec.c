@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/04 17:52:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:30:48 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	start_exec(t_cmd *head, t_env *envp)
 	fds_pipe[2] = -1;
 	signal(CTRL_C, ignore_sigint);
 	if (head->type != PIPE)
-		exec(head, envp, 0, fds_pipe);
+		exec(head, envp, fds_pipe);
 	else if (!fork())
 	{
-		exec(head, envp, 0, fds_pipe);
+		exec(head, envp, fds_pipe);
 		while (wait(&g_error) > 0)
 			;
 		exit(WEXITSTATUS(g_error));
@@ -42,12 +42,12 @@ void	start_exec(t_cmd *head, t_env *envp)
 	close(fds_pipe[1]);
 }
 
-void	exec(t_cmd *head, t_env *envp, int forked, int *fds_pipe)
+void	exec(t_cmd *head, t_env *envp, int *fds_pipe)
 {
 	if (head->type == EXEC)
-		exec_execcmd((t_execcmd *)head, envp, forked, fds_pipe);
+		exec_execcmd((t_execcmd *)head, envp, fds_pipe);
 	else if (head->type == REDIR)
-		exec_redir((t_redircmd *)head, envp, forked, fds_pipe);
+		exec_redir((t_redircmd *)head, envp, fds_pipe);
 	else if (head->type == PIPE)
 		exec_pipe((t_pipecmd *)head, envp, fds_pipe);
 }
