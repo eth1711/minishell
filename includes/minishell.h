@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/03 15:30:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:55:01 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@
 # define QUOTES "\'\""
 
 // Error strings
-# define MINISH "minish:"
-# define ERR_QUOTES MINSH "Expected closing quote\n"
+# define ERR_QUOTES "minish: Expected closing quote\n"
 # define ERR_SYTX_RDIR "minish: syntax error near redir\n"
 # define ERR_SYTX_PIPE "minish: syntax error near pipe\n"
 
