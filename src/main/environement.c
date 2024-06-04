@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 17:16:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:39:25 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*env(char *string, t_env *next)
+t_env	*env(char *string, t_env *next, t_env *prev)
 {
 	t_env	*new;
 	int		count;
@@ -25,6 +25,7 @@ t_env	*env(char *string, t_env *next)
 	string += count + 1;
 	new->value = ft_substr(string, 0, ft_strlen(string));
 	new->next = next;
+	new->prev = prev;
 	return (new);
 }
 
@@ -48,13 +49,14 @@ void	put_env(char *string, t_env **envp)
 		return ;
 	if (!*envp)
 	{
-		*envp = env(string, NULL);
+		*envp = env(string, NULL, NULL);
 		return ;
 	}
 	ptr = *envp;
 	while (ptr->next)
 		ptr = ptr->next;
-	ptr->next = env(string, NULL);
+	ptr->next = env(string, NULL, ptr);
+	
 }
 
 char	**env_to_array(t_env *envp)
