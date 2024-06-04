@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/04 16:50:59 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:40:57 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 extern int	g_error;
 extern char	*g_pid;
 
-void handler(int sig)
+void ignore_sigint(int sig)
 {
 	(void)sig;
 }
@@ -27,7 +27,7 @@ void	start_exec(t_cmd *head, t_env *envp)
 	fds_pipe[0] = dup(FD_STDIN);
 	fds_pipe[1] = dup(FD_STDOUT);
 	fds_pipe[2] = -1;
-	signal(CTRL_C, handler);
+	signal(CTRL_C, ignore_sigint);
 	if (head->type != PIPE)
 		exec(head, envp, 0, fds_pipe);
 	else if (!fork())

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 16:25:29 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:44:33 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,23 @@
 
 extern int	g_error;
 
+static void	flag_setter(int *flag_add)
+{
+	static int	*flag;
+
+	if (!flag_add)
+		*flag = 1;
+	else
+	{
+		flag = flag_add;
+		*flag = 0;
+	}
+}
+
 static void	sigint_handler(int sigint)
 {
 	(void)sigint;
-	g_error = 1;
+	flag_setter(NULL);
 	printf("\n");
 	close(STDIN_FILENO);
 }
@@ -44,18 +57,23 @@ void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
 	free(line);
 }
 
-void	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
+int	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 {
-	int			fds[2];
+	int		fds[2];
+	int		flag;
 
+	flag_setter(&flag);
 	pipe(fds);
 	signal(CTRL_C, sigint_handler);
 	heredoc_helper(delimiter, fds, envp);
 	close(fds[1]);
-	if (!g_error)
+	if (!flag)
+	{
 		fds_pipe[0] = fds[0];
-	else
-		close(fds[0]);
+		return (1);
+	}
+	signal(CTRL_C, ignore_sigint);
+	return (close(fds[0]), 0);
 }
 
 void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
@@ -64,8 +82,7 @@ void	exec_redir(t_redircmd *redir, t_env *envp, int forked, int *fds_pipe)
 
 	if (redir->mode == LL)
 	{
-		heredoc(redir->filename, envp, fds_pipe);
-		if (g_error)
+		if (!heredoc(redir->filename, envp, fds_pipe))
 			return ;
 	}
 	else

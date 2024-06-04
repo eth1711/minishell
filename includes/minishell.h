@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 16:55:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:41:58 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe);
 void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe);
 void	exec(t_cmd *head, t_env *envp, int forked, int *fds_pipe);
 void	start_exec(t_cmd *head, t_env *envp);
+void	ignore_sigint(int sig);
 
 //signals
 
