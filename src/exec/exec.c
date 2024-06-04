@@ -6,16 +6,15 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/04 17:40:57 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:52:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_error;
-extern char	*g_pid;
 
-void ignore_sigint(int sig)
+void	ignore_sigint(int sig)
 {
 	(void)sig;
 }
@@ -23,7 +22,7 @@ void ignore_sigint(int sig)
 void	start_exec(t_cmd *head, t_env *envp)
 {
 	int				fds_pipe[3];
-	
+
 	fds_pipe[0] = dup(FD_STDIN);
 	fds_pipe[1] = dup(FD_STDOUT);
 	fds_pipe[2] = -1;

@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:41:58 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:59:17 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define CTRL_D EOF
 # define CTRL_SLSH SIGQUIT
 
-#define FD_STDIN 3
-#define FD_STDOUT 4
+# define FD_STDIN 3
+# define FD_STDOUT 4
 // #define PIPE_R 5
 // #define PIPE_W 6
 // #define PIPE_CLOSE 7

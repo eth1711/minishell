@@ -1,4 +1,4 @@
-// /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
@@ -6,13 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/31 20:08:13 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:59:54 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_error;
+extern int	g_error;
 
 //Returns the path of the given command, if not found NULL
 // char	*find_command(char *cmd, t_env *envp)
@@ -44,7 +44,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int forked, int *fds_pipe)
 	char	**envp_array;
 	char	*path;
 	pid_t	pid;
-	
+
 	pid = 1;
 	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
 		return ;

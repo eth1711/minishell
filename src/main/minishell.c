@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:05:01 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:57:17 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,22 @@ static void	reset_fds(int startup)
 	dup2(FD_STDOUT, STDOUT_FILENO);
 }
 
+void	init(t_env **envp_list, char **envp, int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	init_signals();
+	reset_fds(1);
+	*envp_list = env_to_list(envp);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_cmd	*tree;
 	t_env	*envp_list;
 
-	(void)argc;
-	(void)argv;
-	init_signals();
-	reset_fds(1);
-	envp_list = env_to_list(envp);
+	init(&envp_list, envp, argc, argv);
 	line = readline("minishell$ ");
 	while (line)
 	{
@@ -44,9 +49,6 @@ int	main(int argc, char **argv, char **envp)
 		if (line && *line)
 		{
 			tree = parser(line, envp_list);
-			// exit(0);
-			// print_tree(tree);
-			// printf("\n");
 			free(line);
 			if (tree && tree->type != ERROR)
 				start_exec(tree, envp_list);
@@ -54,12 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			reset_fds(0);
 			free_tree(tree);
 		}
-		// system("leaks minishell");
 		line = readline("minishell$ ");
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
-	// system("leaks minishell");
-	rl_clear_history();
-	exit(0);
-	return (0);
 }

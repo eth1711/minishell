@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 18:44:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:51:31 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 	pipe->right = right;
 	return ((t_cmd *)pipe);
 }
-
 
 //This conrtuctor node adds the given command to the last node if it is a redir
 //this is to correctly built the tree for redir during execution

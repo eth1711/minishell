@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 18:26:14 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:58:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,7 @@ int	gettoken(char **s, char *es, char **t, char **et)
 		*t = *s;
 	ret_value(s, es, &ret);
 	if (et)
-	{
 		*et = *s;
-		// printf("l97: parsing_utils: gettoken: [");
-		// for (char *ptr = *t; ptr < *et; ptr++)
-		// 	printf("%c", *ptr);
-		// printf("]\n");
-	}
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
