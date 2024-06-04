@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/03 17:31:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:50:59 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ void	start_exec(t_cmd *head, t_env *envp)
 	else if (!fork())
 	{
 		exec(head, envp, 0, fds_pipe);
-		while (wait(0) > 0)
+		while (wait(&g_error) > 0)
 			;
-		exit(g_error);
+		exit(WEXITSTATUS(g_error));
 	}
-	wait(&g_error);
+	if (wait(&g_error) > 0)
+		g_error = WEXITSTATUS(g_error);
 	close(fds_pipe[0]);
 	close(fds_pipe[1]);
 }

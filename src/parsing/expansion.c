@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/05/28 18:26:03 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:31:15 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 	toks->s++;
 	if (*toks->s == '?')
 	{
-		*new = ft_safejoin(*new, ft_itoa(WEXITSTATUS(g_error)));
+		*new = ft_safejoin(*new, ft_itoa(g_error));
 		toks->s += 1;
 		return ;
 	}

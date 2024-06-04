@@ -6,20 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/03 22:24:57 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:25:29 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_error;
-
-// static void	sigint_handler(int sigint)
-// {
-// 	(void)sigint;
-// 	printf("\n");
-// 	close(STDIN_FILENO);
-// }
 
 static void	sigint_handler(int sigint)
 {
