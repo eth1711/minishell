@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/12 14:36:24 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/12 14:43:46 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@
 # define CTRL_D EOF
 # define CTRL_SLSH SIGQUIT
 
+# define FD_STDIN 3
+# define FD_STDOUT 4
+
 # define WHITESPACE "\n\t\r\v "
 # define SYMBOLS "|<>"
 # define QUOTES "\'\""
 
 // Error strings
-# define ERROR_QUOTES "Expected closing quote"
+# define ERR_QUOTES "minish: Expected closing quote\n"
+# define ERR_SYTX_RDIR "minish: syntax error near redir\n"
+# define ERR_SYTX_PIPE "minish: syntax error near pipe\n"
 
 // These enums are for the cmd types
 //LL and RR represent << and >> respectively
@@ -65,7 +70,7 @@ typedef struct s_arg
 typedef struct s_error
 {
 	int				type;
-	char			*error_msg;
+	char			*err_msg;
 	t_cmd			*head;
 }	t_error;
 
@@ -109,6 +114,7 @@ typedef struct s_types
 	t_execcmd	*exec;
 	t_pipecmd	*pipe;
 	t_redircmd	*redir;
+	t_error		*error;
 }	t_types;
 
 typedef struct s_strptrs
@@ -119,17 +125,20 @@ typedef struct s_strptrs
 
 //exec
 
-int		exec_redir(t_redircmd *redir, t_env *envp, pid_t *pids);
-int		exec_execcmd(t_execcmd *exec, t_env *envp, pid_t *pids);
-int		exec_pipe(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
-void	exec_cmd(t_pipecmd *pipecmd, t_env *envp, pid_t *pids);
-void	exec(t_cmd *head, t_env *envp);
+void	exec_redir(t_redircmd *redir, t_env *envp, int *fds_pipe);
+void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe);
+void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe);
+void	exec(t_cmd *head, t_env *envp, int *fds_pipe);
+void	start_exec(t_cmd *head, t_env *envp);
+void	ignore_sigint(int sig);
 
 //signals
 
 void	init_signals(void);
+void	handle_sigint(int sigint, siginfo_t *info, void *data);
 
 //environement
+
 //setter function for env
 void	put_env(char *string, t_env **envp);
 //getter function for env
@@ -154,7 +163,7 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right);
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename);
 t_cmd	*execcmd(void);
 t_arg	*args(char *s, t_arg *next);
-t_cmd	*error(t_cmd *head, char *message);
+t_cmd	*error(t_cmd *head, char *err_msg, int error_number);
 
 // Builtins
 
@@ -174,6 +183,7 @@ int		gettoken(char **s, char *es, char **t, char **et);
 int		checktoken(char **s, char *es, char *find);
 
 // arg list funcs
+
 void	arg_add_back(t_arg **head, t_arg *add);
 void	arg_add_front(t_arg **head, t_arg *add);
 void	args_free(t_arg *head);
@@ -191,6 +201,6 @@ void	print_tree(t_cmd *head);
 
 //Exec Utils
 
-int	is_builtin(char **args, t_env *envp);
+int		is_builtin(char **args, t_env *envp);
 
 #endif

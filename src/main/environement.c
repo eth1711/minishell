@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 18:39:25 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/12 14:46:19 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*get_env(char *key, t_env *envp)
 {
 	if (!envp)
 		return (NULL);
-	printf("expansion: get_env: key %s\n", key);
 	while (envp->next && ft_strcmp(envp->key, key))
 		envp = envp->next;
 	if (!ft_strcmp(envp->key, key))
@@ -73,7 +72,6 @@ char	**env_to_array(t_env *envp)
 		ptr = ptr->next;
 		count++;
 	}
-	// printf("l74: environement: envp_to_array: count: %i\n", count);
 	new = malloc(sizeof(char *) * (count + 1));
 	new[count] = NULL;
 	count = 0;
@@ -86,9 +84,6 @@ char	**env_to_array(t_env *envp)
 		count++;
 		ptr = ptr->next;
 	}
-	// printf("l85: environement: envp_to_array: new:\n");
-	// for (char **ptr = new; *ptr; ptr++)
-	// 	printf("[%s]\n", *ptr);
 	return (new);
 }
 

@@ -6,11 +6,13 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 14:45:55 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 18:32:48 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/12 14:44:37 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_error;
 
 //Constructors for the token nodes
 
@@ -18,6 +20,8 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 {
 	t_pipecmd	*pipe;
 
+	if (!left || !right)
+		return (NULL);
 	pipe = malloc(sizeof(t_pipecmd));
 	pipe->type = PIPE;
 	pipe->left = left;
@@ -25,16 +29,32 @@ t_cmd	*pipecmd(t_cmd	*left, t_cmd *right)
 	return ((t_cmd *)pipe);
 }
 
+//This conrtuctor node adds the given command to the last node if it is a redir
+//this is to correctly built the tree for redir during execution
 t_cmd	*redircmd(t_cmd *cmd, int fd, int mode, char *filename)
 {
 	t_redircmd	*redir;
+	t_redircmd	*ptr;
+	t_cmd		*exec;
 
 	redir = malloc(sizeof(t_redircmd));
-	redir->cmd = cmd;
 	redir->type = REDIR;
 	redir->fd = fd;
 	redir->mode = mode;
 	redir->filename = filename;
+	if (cmd->type == REDIR)
+	{
+		ptr = (t_redircmd *)cmd;
+		while (ptr && ptr->cmd->type == REDIR)
+		{
+			ptr = (t_redircmd *)ptr->cmd;
+		}
+		exec = ptr->cmd;
+		ptr->cmd = (t_cmd *)redir;
+		redir->cmd = exec;
+		return (cmd);
+	}
+	redir->cmd = cmd;
 	return ((t_cmd *)redir);
 }
 
@@ -59,13 +79,15 @@ t_cmd	*execcmd(void)
 	return ((t_cmd *)exec);
 }
 
-t_cmd	*error(t_cmd *head, char *message)
+t_cmd	*error(t_cmd *head, char *err_msg, int error_number)
 {
 	t_error	*error;
 
 	error = malloc(sizeof(t_error));
+	if (err_msg)
+		ft_putstr_fd(err_msg, STDERR_FILENO);
 	error->type = ERROR;
-	error->error_msg = ft_strdup(message);
 	error->head = head;
+	g_error = error_number;
 	return ((t_cmd *)error);
 }

@@ -6,14 +6,14 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 16:39:02 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/19 16:25:58 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:58:46 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//function that skips whitespace, then returns 1 when pointer is not pointing
-//to null, and points to one of the characters from the given string "find"
+//function that skips whitespace, then returns 1 when pointer is
+//pointing to one of the characters from the given string "find"
 int	checktoken(char **s, char *es, char *find)
 {
 	while (*s < es && ft_strchr(WHITESPACE, **s))
@@ -90,13 +90,7 @@ int	gettoken(char **s, char *es, char **t, char **et)
 		*t = *s;
 	ret_value(s, es, &ret);
 	if (et)
-	{
 		*et = *s;
-		// printf("l97: parsing_utils: gettoken: [");
-		// for (char *ptr = *t; ptr < *et; ptr++)
-		// 	printf("%c", *ptr);
-		// printf("]\n");
-	}
 	while (*s < es && ft_strchr(WHITESPACE, **s))
 		(*s)++;
 	return (ret);
