@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 19:34:23 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:14:27 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	is_builtin(char **args, t_env *envp)
 	if (!ft_strcmp(args[0], "cd"))
 		return (/*ft_cd(args),*/printf("ft_cd\n"), 1);
 	if (!ft_strcmp(args[0], "export"))
-		return (/*ft_export(args, envp),*/ printf("ft_export\n"), 1);
+		return (ft_export(args, envp), 1);
 	if (!ft_strcmp(args[0], "pwd"))
-		return (/*ft_pwd(args, envp),*/ printf("ft_echo\n"), 1);
+		return (ft_pwd(), 1);
 	if (!ft_strcmp(args[0], "unset"))
-		return (/*ft_unset(args, envp),*/ printf("ft_echo\n"), 1);
+		return (ft_unset(args, envp), 1);
 	if (!ft_strcmp(args[0], "exit"))
 		exit(0);
 	return (0);
