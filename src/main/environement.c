@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:53:03 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:10:48 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_env(char *key, t_env *envp)
 		envp = envp->next;
 	if (!ft_strcmp(envp->key, key))
 		return (envp->value);
-	return (printf("expansion: get_env: return nothing\n"), NULL);
+	return (NULL);
 }
 
 void	put_env(char *string, t_env **envp)
