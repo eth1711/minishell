@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 17:29:23 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:53:02 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	put_env(char *key, char *value, t_env **envp)
 		return ;
 	}
 	ptr = *envp;
-	while (ptr->next)
+	while (ptr)
 	{
 		if (!ft_strcmp(key, ptr->key))
 		{
@@ -56,9 +56,13 @@ void	put_env(char *key, char *value, t_env **envp)
 			ptr->value = value;
 			return ;
 		}
+		if (!ptr->next)
+		{
+			ptr->next = env(key, value, NULL);
+			return ;
+		}
 		ptr = ptr->next;
 	}
-	ptr->next = env(key, value, NULL);
 }
 
 char	**env_to_array(t_env *envp)
