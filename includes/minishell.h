@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 14:55:25 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/19 17:25:32 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,9 @@ void	handle_sigint(int sigint, siginfo_t *info, void *data);
 
 //environement
 
+char	**key_value_splitter(char *string);
 //setter function for env
-void	put_env(char *string, t_env **envp);
+void	put_env(char *key, char *value, t_env **envp);
 //getter function for env
 char	*get_env(char *key, t_env *envp);
 

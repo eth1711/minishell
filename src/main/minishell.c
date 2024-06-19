@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 18:14:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:47:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 			reset_fds(0);
 			free_tree(tree);
 		}
+		// system("leaks minishell");
 		line = readline("minishell$ ");
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);

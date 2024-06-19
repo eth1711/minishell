@@ -6,24 +6,21 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 14:14:08 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:29:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*env(char *string, t_env *next)
+t_env	*env(char *key, char *value, t_env *next)
 {
 	t_env	*new;
 	int		count;
 
 	count = 0;
 	new = malloc(sizeof(t_env));
-	while (string[count] && string[count] != '=')
-		count++;
-	new->key = ft_substr(string, 0, count);
-	string += count + 1;
-	new->value = ft_substr(string, 0, ft_strlen(string));
+	new->key = key;
+	new->value = value;
 	new->next = next;
 	return (new);
 }
@@ -39,7 +36,7 @@ char	*get_env(char *key, t_env *envp)
 	return (NULL);
 }
 
-void	put_env(char *string, t_env **envp)
+void	put_env(char *key, char *value, t_env **envp)
 {
 	t_env	*ptr;
 
@@ -47,13 +44,21 @@ void	put_env(char *string, t_env **envp)
 		return ;
 	if (!*envp)
 	{
-		*envp = env(string, NULL);
+		*envp = env(key, value, NULL);
 		return ;
 	}
 	ptr = *envp;
 	while (ptr->next)
+	{
+		if (!ft_strcmp(key, ptr->key))
+		{
+			free(key);
+			ptr->value = value;
+			return ;
+		}
 		ptr = ptr->next;
-	ptr->next = env(string, NULL);
+	}
+	ptr->next = env(key, value, NULL);
 }
 
 char	**env_to_array(t_env *envp)
@@ -88,11 +93,14 @@ char	**env_to_array(t_env *envp)
 t_env	*env_to_list(char **envp)
 {
 	t_env	*head;
+	char	**pair;
 
 	head = NULL;
 	while (*envp)
 	{
-		put_env(*envp, &head);
+		pair = key_value_splitter(*envp);
+		put_env(pair[0], pair[1], &head);
+		free(pair);
 		envp++;
 	}
 	return (head);
