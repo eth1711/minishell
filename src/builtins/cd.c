@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/12 14:26:56 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/19 14:35:03 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	ft_cd(char	*args_array, t_env *envp)
 	char	*cwd;
 	
 	cwd = getcwd(args_array, sizeof(args_array));
+	printf("%s\n", cwd);
 	if (!args_array)// chdir()
 	{
-		chdir(args_array);
 		upd_env(args_array, "OLD_PWD", envp);
 		upd_env(args_array, "PWD", envp);
 	}
