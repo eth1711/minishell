@@ -16,7 +16,7 @@ NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
+	@$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
 
 $(NAME) : $(OBJ)
 	@make -C Libft
