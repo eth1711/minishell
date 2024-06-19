@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 18:53:02 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:04:05 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	put_env(char *key, char *value, t_env **envp)
 	{
 		if (!ft_strcmp(key, ptr->key))
 		{
-			free(key);
+			free_2d((char *[3]){key, ptr->value, NULL});
 			ptr->value = value;
 			return ;
 		}
