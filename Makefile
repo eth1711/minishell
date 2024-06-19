@@ -6,15 +6,17 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
-INCLUDES = -Iincludes -I/Users/etlim/homebrew/Cellar/readline/8.2.10/include/
+USER = $(shell whoami)
 
-LINKER = -L/Users/etlim/homebrew/Cellar/readline/8.2.10/lib/ -L./Libft -lft -lreadline -lhistory
+INCLUDES = -Iincludes -I/Users/$(USER)/homebrew/Cellar/readline/8.2.10/include/
+
+LINKER = -L/Users/$(USER)/homebrew/Cellar/readline/8.2.10/lib/ -L./Libft -lft -lreadline -lhistory
 
 NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	@$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
+	$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
 
 $(NAME) : $(OBJ)
 	@make -C Libft
