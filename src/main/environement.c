@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 19:04:05 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:40:36 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 t_env	*env(char *key, char *value, t_env *next)
 {
 	t_env	*new;
-	int		count;
 
-	count = 0;
 	new = malloc(sizeof(t_env));
 	new->key = key;
 	new->value = value;
