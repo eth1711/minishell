@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:51:24 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:35:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 		*new = ft_safejoin(*new, ft_strdup("$"));
 		return ;
 	}
-	while ((toks->s + count) < toks->es && !ft_strchr("\'\" \n\t$",
-			toks->s[count]))
+	while ((toks->s + count) < toks->es
+		&& !ft_strchr("\'\" \n\t$", toks->s[count])
+		&& (ft_isalnum(toks->s[count]) || toks->s[count] == '_'))
 		count++;
 	key = ft_substr(toks->s, 0, count);
 	*new = ft_safejoin(*new, ft_strdup(get_env(key, env)));
