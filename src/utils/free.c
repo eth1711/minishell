@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:25:37 by amaligno          #+#    #+#             */
-/*   Updated: 2024/04/23 23:11:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:49:22 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,22 @@ void	args_free(t_arg *head)
 	free(head);
 }
 
-void	free_2d(char **array)
+void	free_2d(void **array)
 {
 	while (*array)
 		free(*array++);
+}
+
+void	free_env(t_env *head)
+{
+	t_env	*ptr;
+
+	while (head)
+	{
+		free(head->key);
+		free(head->value);
+		ptr = head;
+		head = head->next;
+		free(ptr);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 17:25:32 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:49:38 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,9 @@ int		arg_count(t_arg *head);
 t_arg	*arg_last(t_arg *head);
 
 //free.c
+void	free_env(t_env *head);
 void	free_tree(t_cmd	*head);
-void	free_2d(char **array);
+void	free_2d(void **array);
 
 // Debug utils 
 

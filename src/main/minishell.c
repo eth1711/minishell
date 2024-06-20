@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 18:56:10 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:59:27 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 
 	init(&envp_list, envp, argc, argv);
 	line = readline("minishell$ ");
-	while (line)
+	while (line && ft_strcmp(line, "exit"))
 	{
 		add_history(line);
 		if (line && *line)
@@ -56,8 +56,10 @@ int	main(int argc, char **argv, char **envp)
 			reset_fds(0);
 			free_tree(tree);
 		}
-		system("leaks minishell");
 		line = readline("minishell$ ");
 	}
+	free(line);
+	clear_history();
+	free_env(envp_list);
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 }

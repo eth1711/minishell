@@ -6,13 +6,13 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 14:40:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 15:14:23 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*env(char *key, char *value, t_env *next)
+t_env	*env(char *key, char *value, t_env *next, t_env *prev)
 {
 	t_env	*new;
 
@@ -20,6 +20,7 @@ t_env	*env(char *key, char *value, t_env *next)
 	new->key = key;
 	new->value = value;
 	new->next = next;
+	new->prev = prev;
 	return (new);
 }
 
@@ -42,7 +43,7 @@ void	put_env(char *key, char *value, t_env **envp)
 		return ;
 	if (!*envp)
 	{
-		*envp = env(key, value, NULL);
+		*envp = env(key, value, NULL, NULL);
 		return ;
 	}
 	ptr = *envp;
@@ -50,13 +51,13 @@ void	put_env(char *key, char *value, t_env **envp)
 	{
 		if (!ft_strcmp(key, ptr->key))
 		{
-			free_2d((char *[3]){key, ptr->value, NULL});
+			free_2d((void *[3]){key, ptr->value, NULL});
 			ptr->value = value;
 			return ;
 		}
 		if (!ptr->next)
 		{
-			ptr->next = env(key, value, NULL);
+			ptr->next = env(key, value, NULL, ptr);
 			return ;
 		}
 		ptr = ptr->next;

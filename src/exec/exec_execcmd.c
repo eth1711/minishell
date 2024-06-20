@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 19:21:39 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:56:18 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*find_command(char *cmd, t_env *envp)
 	{
 		ret = ft_strjoin(*ptr, cmd);
 		if (!access(ret, F_OK | X_OK))
-			return (free_2d(paths), free(paths), free(cmd), ret);
+			return (free_2d((void **)paths), free(paths), free(cmd), ret);
 		free(ret);
 		ptr++;
 	}
-	return (free_2d(paths), free(paths), free(cmd), NULL);
+	return (free_2d((void **)paths), free(paths), free(cmd), NULL);
 }
 
 void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
@@ -60,7 +60,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 		ft_putstr_fd("minish: ", STDERR_FILENO);
 		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		free_2d(envp_array);
+		free_2d((void **)envp_array);
 		free(path);
 		exit(127);
 	}
