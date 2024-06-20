@@ -6,7 +6,7 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 16:35:27 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:59:59 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 		toks->s += 1;
 		return ;
 	}
-	if (toks->s >= toks->es || (!(*toks->s >= 'a' && *toks->s <= 'z')
-			&& !(*toks->s >= 'A' && *toks->s <= 'Z') && *toks->s != '_'))
+	if (toks->s >= toks->es || (!ft_isalpha(*toks->s) && *toks->s != '_'))
 	{
 		*new = ft_safejoin(*new, ft_strdup("$"));
 		return ;
