@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 14:35:03 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/20 17:30:25 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,33 @@ void	upd_env(char *args, char *key, t_env *envp)
 	
 }
 
-
-void	ft_cd(char	*args_array, t_env *envp)
+char *get_home_dir(t_env *envp)
 {
-	char	*cwd;
+	char *home;
 	
-	cwd = getcwd(args_array, sizeof(args_array));
-	printf("%s\n", cwd);
-	if (!args_array)// chdir()
+	home = NULL;
+	
+	while (envp->next && ft_strcmp("HOME", envp->key))
+		envp = envp->next;
+	if (!ft_strcmp("HOME", envp->key))
+		home = envp->value;
+	return(home);
+}
+
+void	ft_cd(char	**args_array, t_env *envp)
+{
+	if (!args_array[1])
 	{
-		upd_env(args_array, "OLD_PWD", envp);
-		upd_env(args_array, "PWD", envp);
+		chdir(get_home_dir(envp));
+		return ;
 	}
-	
+	args_array++;
+	if ()
+	{
+		if (chdir(args_array) == 0)
+		{
+			upd_env(*args_array, "OLD_PWD", envp);
+			upd_env(*args_array, "PWD", envp);
+		}
+	}
 }

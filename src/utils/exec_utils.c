@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/19 14:56:09 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/20 16:18:47 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_builtin(char **args, t_env *envp)
 	if (!ft_strcmp(args[0], "echo"))
 		return (ft_echo(args), 1);
 	if (!ft_strcmp(args[0], "cd"))
-		return (/*ft_cd(args),*/printf("ft_cd\n"), 1);
+		return (ft_cd(args, envp), 1);
 	if (!ft_strcmp(args[0], "export"))
 		return (ft_export(args, envp), 1);
 	if (!ft_strcmp(args[0], "pwd"))

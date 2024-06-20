@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< Updated upstream
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
 /*   Updated: 2024/06/20 15:49:38 by amaligno         ###   ########.fr       */
+=======
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
+/*   Updated: 2024/06/20 16:30:28 by etlim            ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +175,7 @@ t_cmd	*error(t_cmd *head, char *err_msg, int error_number);
 
 // Builtins
 
-void	ft_cd(char	*args_array, t_env *envp);
+void	ft_cd(char	**args_array, t_env *envp);
 void	ft_echo(char **args_array);
 void	ft_export(char **args_array, t_env *envp);
 void	ft_unset(char **args_array, t_env *envp);
