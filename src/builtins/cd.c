@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 17:30:25 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/20 18:44:31 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,42 @@ char *get_home_dir(t_env *envp)
 	return(home);
 }
 
+int	count_args(char **args_array)
+{
+	int count;
+
+	count = 0;
+	while (*args_array[count])
+		count++;
+	if (count > 1)
+	{
+		printf("minishell: cd: too many arguments\n");
+		return (1);
+	}
+	return (count > 1);
+}
+
 void	ft_cd(char	**args_array, t_env *envp)
 {
+	char *cwd;
+	
+	if(count_args(args_array))
+		return ;
+	cwd = getcwd(NULL, 0);
 	if (!args_array[1])
 	{
 		chdir(get_home_dir(envp));
 		return ;
 	}
 	args_array++;
-	if ()
+	if (access(*args_array, F_OK) < 0)
+		*args_array = ft_safejoin(ft_strdup("./"), *args_array);
+	if (chdir(*args_array) == 0)
 	{
-		if (chdir(args_array) == 0)
-		{
-			upd_env(*args_array, "OLD_PWD", envp);
-			upd_env(*args_array, "PWD", envp);
-		}
+		upd_env(cwd, "OLD_PWD", envp);
+		upd_env(*args_array, "PWD", envp);
+		return ;
 	}
+	else
+		printf("wip%s\n", strerror(errno));
 }
