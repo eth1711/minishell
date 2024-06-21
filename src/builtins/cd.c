@@ -6,33 +6,21 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 18:44:31 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/21 16:55:04 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	upd_env(char *args, char *key, t_env *envp)
-{
-	int	pwd;
-
-	while (envp->next && !ft_strcmp(envp->key, key))
+{	
+	while (envp->next && ft_strcmp(envp->key, key))
     	envp = envp->next;
-	// if (!envp->next)
-	if (ft_strcmp(envp->key, "OLD_PWD") == 0)
+	if (!ft_strcmp(envp->key, key))
 	{
-		pwd = ((ft_strlen(args) - ft_strlen("OLD_PWD=")) - 2);
-		free(envp->prev->value);
-		envp->prev->value = envp->value;
-	}
-	else if (ft_strcmp(envp->key, "PWD") == 0)
-	{
-		pwd = ((ft_strlen(args) - ft_strlen("PWD=")) - 2);
 		free(envp->value);
-		while(args[++pwd])
-			envp->value = &args[pwd];
+		envp->value = args;
 	}
-	
 }
 
 char *get_home_dir(t_env *envp)
@@ -53,14 +41,14 @@ int	count_args(char **args_array)
 	int count;
 
 	count = 0;
-	while (*args_array[count])
+	while (args_array[count])
 		count++;
-	if (count > 1)
+	if (count > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (1);
 	}
-	return (count > 1);
+	return (0);
 }
 
 void	ft_cd(char	**args_array, t_env *envp)
@@ -77,13 +65,19 @@ void	ft_cd(char	**args_array, t_env *envp)
 	}
 	args_array++;
 	if (access(*args_array, F_OK) < 0)
+	{
 		*args_array = ft_safejoin(ft_strdup("./"), *args_array);
+		// printf("hi2 %s\n", *args_array);
+	}
 	if (chdir(*args_array) == 0)
 	{
-		upd_env(cwd, "OLD_PWD", envp);
-		upd_env(*args_array, "PWD", envp);
+		upd_env(cwd, "OLDPWD", envp);
+		cwd = getcwd(NULL, 0);
+		upd_env(cwd, "PWD", envp);
 		return ;
 	}
 	else
-		printf("wip%s\n", strerror(errno));
+		printf("wip %s\n", strerror(errno));
+		return ;
+		
 }
