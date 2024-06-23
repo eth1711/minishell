@@ -6,23 +6,11 @@
 /*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:11:06 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/23 23:14:44 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 00:13:25 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_home_dir(t_env *envp)
-{
-	char	*home;
-
-	home = NULL;
-	while (envp->next && ft_strcmp("HOME", envp->key))
-		envp = envp->next;
-	if (!ft_strcmp("HOME", envp->key))
-		home = envp->value;
-	return (home);
-}
 
 int	count_args(char **args_array)
 {
@@ -45,13 +33,17 @@ void	ft_cd(char **args_array, t_env *envp)
 
 	if (count_args(args_array))
 		return ;
-	cwd = getcwd(NULL, 0);
 	if (!args_array[1])
 	{
-		chdir(get_home_dir(envp));
+		cwd = get_env("HOME", envp);
+		if (!cwd)
+			ft_putstr_fd("minish: cd: HOME not set\n", STDERR_FILENO);
+		else
+			chdir(cwd);
 		return ;
 	}
 	args_array++;
+	cwd = getcwd(NULL, 0);
 	if (chdir(*args_array) == 0)
 	{
 		put_env(ft_strdup("OLDPWD"), cwd, &envp);
