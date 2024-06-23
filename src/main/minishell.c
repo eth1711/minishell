@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 18:13:18 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/23 23:14:41 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	main(int argc, char **argv, char **envp)
 			reset_fds(0);
 			free_tree(tree);
 		}
-		// system("leaks minishell");
 		line = readline("minishell$ ");
 	}
 	free(line);
