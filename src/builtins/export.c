@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:33:15 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/19 18:34:18 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:32:32 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	check_env(char *args)
 {
 	int	i;
 
-	i = -1;
-	while (args && args[++i])
+	i = 0;
+	if (!ft_isalpha(args[i]) && args[i] != '_')
+		return (printf("minish: export: not a valid identifier\n"), 0);
+	while (*args && args[++i])
 	{
-		if (ft_isalpha(args[i]) || !ft_strchr(args, '_'))
-			if (!ft_strchr(args, '='))
-				return (0);
+		if (!ft_isalnum(args[i]) && args[i] != '_' && args[i] != '=')
+			return (printf("minish: export: not a valid identifier\n"), 0);
 	}
 	return (1);
 }

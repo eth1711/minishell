@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/23 23:14:41 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:10:13 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	reset_fds(int startup)
 	dup2(FD_STDOUT, STDOUT_FILENO);
 }
 
-void	init(t_env **envp_list, char **envp, int argc, char **argv)
+static void	init(t_env **envp_list, char **envp, int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
