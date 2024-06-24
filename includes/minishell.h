@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/24 10:55:05 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/24 19:41:09 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ t_cmd	*parser(char *line, t_env *env);
 //expansion
 
 char	*ft_safejoin(char *s1, char *s2);
-char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env);
+char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env, int heredoc);
 
 // Nodes
 // These functions are constructors for the structs

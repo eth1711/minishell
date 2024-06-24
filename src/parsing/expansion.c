@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 16:59:59 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 20:14:47 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,16 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 	toks->s += count + 1;
 }
 
-char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
+//helper function to handle when inside heredoc, which ignores quotes
+int	hdoc_quote(char c, int heredoc)
+{
+	if (heredoc)
+		return (!ft_strchr("$", c));
+	else
+		return (!ft_strchr("\'\"$", c));
+}
+
+char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env, int heredoc)
 {
 	char	*new;
 	int		count;
@@ -87,12 +96,13 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env)
 	new = ft_strdup("");
 	while ((toks.s + count) < toks.es)
 	{
-		while ((toks.s + count) < toks.es && !ft_strchr("\'\"$", toks.s[count]))
+		while ((toks.s + count) < toks.es && hdoc_quote(toks.s[count], heredoc))
 			count++;
 		new = ft_safejoin(new, ft_substr(toks.s, 0, count));
 		toks.s += count;
 		count = 0;
-		if ((toks.s + count) < toks.es && ft_strchr("\'\"", toks.s[count]))
+		if ((toks.s + count) < toks.es && ft_strchr("\'\"", toks.s[count])
+			&& !heredoc)
 			expand_quotes(&new, &toks, env);
 		else if ((toks.s + count) < toks.es && toks.s[count] == '$')
 			expand_env(&new, &toks, env);

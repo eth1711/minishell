@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 19:47:25 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:41:34 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
 	{
 		toks.s = line;
 		toks.es = line + ft_strlen(line);
-		line = expansion(toks, NULL, envp);
+		line = expansion(toks, NULL, envp, 1);
 		free(toks.s);
 		if (!ft_strcmp(line, delimiter))
 			break ;

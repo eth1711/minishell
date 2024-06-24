@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:01:10 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/04 17:57:55 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:41:50 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmd	*parseredir(char **s, char *es, t_cmd *cmd, t_env *env)
 			cmd = redircmd(cmd, 0, LL, ft_substr(toks.s, 0, toks.es - toks.s));
 		else
 		{
-			toks.s = expansion(toks, NULL, env);
+			toks.s = expansion(toks, NULL, env, 0);
 			if (tok == '>')
 				cmd = redircmd(cmd, 1, O_WRONLY | O_CREAT | O_TRUNC, toks.s);
 			else if (tok == '<')
@@ -55,7 +55,7 @@ t_cmd	*parseexec(char **s, char *es, t_env *env)
 		tok = gettoken(s, es, &toks.s, &toks.es);
 		if (tok != 'a')
 			break ;
-		expansion(toks, ptrs.exec, env);
+		expansion(toks, ptrs.exec, env, 0);
 		ptrs.cmd = parseredir(s, es, ptrs.cmd, env);
 	}
 	list_to_array(ptrs.exec);
