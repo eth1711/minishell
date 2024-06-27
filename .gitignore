@@ -1,7 +1,5 @@
 # ignore everything
 *
-test/
-test.c
 
 # whitelist directories
 !*/
