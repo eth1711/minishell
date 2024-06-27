@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 15:29:07 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/23 23:13:16 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:31:42 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	is_builtin(char **args, t_env *envp)
 	if (!ft_strcmp(args[0], "unset"))
 		return (ft_unset(args, envp), 1);
 	if (!ft_strcmp(args[0], "exit"))
-		exit(0);
+		return (ft_exit(args), 1);
 	return (0);
 }

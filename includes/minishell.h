@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/24 19:41:09 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:11:48 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	ft_echo(char **args_array);
 void	ft_export(char **args_array, t_env *envp);
 void	ft_unset(char **args_array, t_env *envp);
 void	ft_pwd(void);
+void	ft_exit(char **args_array);
 
 // Parsing utils
 
