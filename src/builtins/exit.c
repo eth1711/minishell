@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:38:52 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/27 17:23:45 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:39:13 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int  g_error;
+extern int	g_error;
 
-int		count_args(char *args_array)
+int	count_args(char *args_array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args_array[i] && ft_isdigit(args_array[i]))
@@ -28,27 +28,26 @@ int		count_args(char *args_array)
 
 void	ft_exit(char **args_array)
 {
-    args_array++;
-    if (*args_array && *(args_array + 1))
-    {
-        ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-        g_error = 1;
-        return ;  
-    }
-    else if (*args_array)
-    {
-        if (count_args(*args_array) && *args_array)
-        {
+	args_array++;
+	if (*args_array && *(args_array + 1))
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		g_error = 1;
+		return ;
+	}
+	else if (*args_array)
+	{
+		if (count_args(*args_array) && *args_array)
+		{
 			ft_putstr_fd("exit\n", STDERR_FILENO);
-            ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-            ft_putstr_fd(*args_array, STDERR_FILENO);
-            ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-            exit(255);
-        }
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(*args_array, STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			exit(255);
+		}
 		ft_putstr_fd("exit\n", STDERR_FILENO);
-        exit(ft_atoi(*args_array));
-    }
+		exit(ft_atoi(*args_array));
+	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	exit(0);
-    
 }
