@@ -6,7 +6,7 @@
 /*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:38:52 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/27 16:45:30 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:23:45 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_exit(char **args_array)
 		ft_putstr_fd("exit\n", STDERR_FILENO);
         exit(ft_atoi(*args_array));
     }
-    else
-        exit(0);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
+	exit(0);
     
 }
