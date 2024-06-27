@@ -6,11 +6,13 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:33:15 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/24 20:30:42 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:08:39 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_error;
 
 //check the string that is being inputed, for example
 //it takes in export USER=blahblahblah
@@ -60,7 +62,9 @@ void	ft_export(char **args_array, t_env *envp)
 			put_env(pair[0], pair[1], &envp);
 			free(pair);
 		}
+		else
+			g_error = 1;
 		args_array++;
 	}
-	return ;
+	g_error = 0;
 }

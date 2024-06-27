@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:39:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/20 18:12:57 by etlim            ###   ########.fr       */
+/*   Updated: 2024/06/27 15:53:05 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env	*env(char *key, char *value, t_env *next, t_env *prev)
 	t_env	*new;
 
 	new = malloc(sizeof(t_env));
-	new->key = key;
+	new->key = ft_strdup(key);
 	new->value = value;
 	new->next = next;
 	new->prev = prev;
@@ -51,7 +51,7 @@ void	put_env(char *key, char *value, t_env **envp)
 	{
 		if (!ft_strcmp(key, ptr->key))
 		{
-			free_2d((void *[3]){key, ptr->value, NULL});
+			free(ptr->value);
 			ptr->value = value;
 			return ;
 		}
@@ -103,6 +103,7 @@ t_env	*env_to_list(char **envp)
 	{
 		pair = key_value_splitter(*envp);
 		put_env(pair[0], pair[1], &head);
+		free(pair[0]);
 		free(pair);
 		envp++;
 	}

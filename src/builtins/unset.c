@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:33:24 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/20 15:33:57 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:09:07 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_error;
 
 void	ft_unset(char **args_array, t_env *envp)
 {
@@ -34,4 +36,5 @@ void	ft_unset(char **args_array, t_env *envp)
 		}
 		args_array++;
 	}
+	g_error = 0;
 }

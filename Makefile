@@ -4,7 +4,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
 USER = $(shell whoami)
 
