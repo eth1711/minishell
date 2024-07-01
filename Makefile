@@ -6,8 +6,6 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
-USER = $(shell whoami)
-
 INCLUDES = -Iincludes 
 
 LINKER = -L./lib/Libft -L./lib/readline -lft -lreadline -lhistory
