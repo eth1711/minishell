@@ -3,6 +3,7 @@
 
 # whitelist directories
 !*/
+!lib/readline/*
 
 # whitelist these files
 !*.c
