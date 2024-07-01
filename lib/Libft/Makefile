@@ -7,7 +7,7 @@ OBJS = $(SRCS:.c=.o)
 OBJS_DIR = objs/
 OBJS_PREF = $(addprefix $(OBJS_DIR), $(OBJS))
 
-INCLUDES = -I../includes
+INCLUDES = -I../../includes
 
 CC = gcc
 

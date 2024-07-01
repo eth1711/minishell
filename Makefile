@@ -8,9 +8,9 @@ FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
 USER = $(shell whoami)
 
-INCLUDES = -Iincludes -I/Users/$(USER)/homebrew/Cellar/readline/8.2.10/include/
+INCLUDES = -Iincludes 
 
-LINKER = -L/Users/$(USER)/homebrew/Cellar/readline/8.2.10/lib/ -L./Libft -lft -lreadline -lhistory
+LINKER = -L./lib/Libft -L./lib/readline -lft -lreadline -lhistory
 
 NAME = minishell
 
@@ -19,7 +19,7 @@ NAME = minishell
 	@$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
 
 $(NAME) : $(OBJ)
-	@make -C Libft
+	@make -C lib/Libft
 	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) $(LINKER)
 
 all : $(NAME)
@@ -27,11 +27,11 @@ all : $(NAME)
 
 clean :
 	@rm -rf $(OBJ)
-	@make clean -C Libft
+	@make clean -C ./lib/Libft
 
 fclean : clean
 	@rm -rf $(NAME)
-	@make fclean -C Libft
+	@make fclean -C ./lib/Libft
 
 re : fclean all
 
