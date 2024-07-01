@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 17:31:04 by etlim             #+#    #+#             */
-/*   Updated: 2024/07/01 17:52:41 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:47:05 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	start_exec(t_cmd *head, t_env *envp)
 {
 	int				fds_pipe[3];
 
-	fds_pipe[0] = FD_STDIN;
-	fds_pipe[1] = FD_STDOUT;
+	fds_pipe[0] = dup(FD_STDIN);
+	fds_pipe[1] = dup(FD_STDOUT);
 	fds_pipe[2] = -1;
 	signal(CTRL_C, ignore_sigint);
 	if (head->type != PIPE)
@@ -38,6 +38,8 @@ void	start_exec(t_cmd *head, t_env *envp)
 	}
 	if (wait(&g_error) > 0)
 		g_error = WEXITSTATUS(g_error);
+	close(fds_pipe[0]);
+	close(fds_pipe[1]);
 }
 
 void	exec(t_cmd *head, t_env *envp, int *fds_pipe)
