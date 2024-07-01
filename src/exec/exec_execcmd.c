@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/07/01 17:33:36 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:46:20 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ extern int	g_error;
 
 int	is_builtin(char **args, t_env *envp)
 {
-	(void)envp;
 	if (!ft_strcmp(args[0], "cd"))
 		return (ft_cd(args, envp), 1);
 	if (!ft_strcmp(args[0], "export"))
