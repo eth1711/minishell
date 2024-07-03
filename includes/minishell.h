@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/27 16:11:48 by etlim            ###   ########.fr       */
+/*   Updated: 2024/07/03 16:13:06 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	handle_sigint(int sigint, siginfo_t *info, void *data);
 
 //environement
 
-char	**key_value_splitter(char *string);
 //setter function for env
 void	put_env(char *key, char *value, t_env **envp);
 //getter function for env
@@ -156,7 +155,6 @@ t_cmd	*parser(char *line, t_env *env);
 
 //expansion
 
-char	*ft_safejoin(char *s1, char *s2);
 char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env, int heredoc);
 
 // Nodes
@@ -177,6 +175,15 @@ void	ft_unset(char **args_array, t_env *envp);
 void	ft_pwd(void);
 void	ft_exit(char **args_array);
 
+//environment utils
+
+char	**key_value_splitter(char *string);
+
+//expansion utils
+
+void	split_tokens(t_execcmd *exec, char **new);
+char	*ft_safejoin(char *s1, char *s2);
+
 // Parsing utils
 
 int		check_quotes(char *s, char *es);
@@ -193,7 +200,8 @@ void	args_free(t_arg *head);
 int		arg_count(t_arg *head);
 t_arg	*arg_last(t_arg *head);
 
-//free.c
+//free utils
+
 void	free_env(t_env *head);
 void	free_tree(t_cmd	*head);
 void	free_2d(void **array);

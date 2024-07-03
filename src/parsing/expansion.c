@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
+/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:19:24 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/26 16:50:03 by etlim            ###   ########.fr       */
+/*   Updated: 2024/07/03 16:09:41 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,7 @@
 
 extern int	g_error;
 
-char	*ft_safejoin(char *s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = s1;
-	s1 = ft_strjoin(s1, s2);
-	if (tmp)
-		free(tmp);
-	if (s2)
-		free(s2);
-	return (s1);
-}
-
-void	expand_env(char **new, t_strptrs *toks, t_env *env)
+void	expand_env(char **new, t_strptrs *toks, t_env *env, t_execcmd *exec)
 {
 	int		count;
 	char	*key;
@@ -51,11 +38,12 @@ void	expand_env(char **new, t_strptrs *toks, t_env *env)
 		count++;
 	key = ft_substr(toks->s, 0, count);
 	*new = ft_safejoin(*new, ft_strdup(get_env(key, env)));
+	split_tokens(exec, new);
 	free(key);
 	toks->s += count;
 }
 
-void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
+void	expand_quotes(char **new, t_strptrs *toks, t_env *env, t_execcmd *exec)
 {
 	char	c;
 	int		count;
@@ -68,7 +56,7 @@ void	expand_quotes(char **new, t_strptrs *toks, t_env *env)
 		{
 			*new = ft_safejoin(*new, ft_substr(toks->s, 0, count));
 			toks->s += count;
-			expand_env(new, toks, env);
+			expand_env(new, toks, env, exec);
 			count = 0;
 		}
 		else
@@ -103,9 +91,9 @@ char	*expansion(t_strptrs toks, t_execcmd *exec, t_env *env, int heredoc)
 		count = 0;
 		if ((toks.s + count) < toks.es && ft_strchr("\'\"", toks.s[count])
 			&& !heredoc)
-			expand_quotes(&new, &toks, env);
+			expand_quotes(&new, &toks, env, exec);
 		else if ((toks.s + count) < toks.es && toks.s[count] == '$')
-			expand_env(&new, &toks, env);
+			expand_env(&new, &toks, env, exec);
 		count = 0;
 	}
 	if (exec)
