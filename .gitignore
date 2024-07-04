@@ -10,3 +10,6 @@
 !*.h
 !Makefile
 !.gitignore
+
+#ignore this specifically
+.DS_Store

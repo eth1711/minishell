@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/07/01 17:46:20 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:55:49 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 	pid_t	pid;
 
 	pid = 1;
-	if (!exec->args_array[0] || is_builtin(exec->args_array, envp))
+	if (!exec->args_array[0][0] || is_builtin(exec->args_array, envp))
 		return ;
 	pid = fork();
 	if (!pid)
@@ -84,8 +84,6 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 		ft_putstr_fd("minish: ", STDERR_FILENO);
 		ft_putstr_fd(exec->args_array[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		free_2d((void **)envp_array);
-		free(path);
 		exit(127);
 	}
 }
