@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:38:52 by etlim             #+#    #+#             */
-/*   Updated: 2024/07/01 17:58:46 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:49:17 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,7 @@ int	count_args(char *args_array)
 void	ft_exit(char **args_array)
 {
 	args_array++;
-	if (*args_array && *(args_array + 1))
-	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		g_error = 1;
-		return ;
-	}
-	else if (*args_array)
+	if (*args_array)
 	{
 		if (count_args(*args_array) && *args_array)
 		{
@@ -45,9 +39,17 @@ void	ft_exit(char **args_array)
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			exit(255);
 		}
+		else if (*(args_array + 1))
+		{
+			ft_putstr_fd("exit\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+			g_error = 1;
+			return ;
+		}
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		exit(ft_atoi(*args_array));
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
-	exit(0);
+	exit(g_error);
+
 }
