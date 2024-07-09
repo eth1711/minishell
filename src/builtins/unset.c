@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 14:33:24 by etlim             #+#    #+#             */
-/*   Updated: 2024/06/27 16:09:07 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/09 18:56:07 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_unset(char **args_array, t_env *envp)
 	t_env	*ptr;
 
 	args_array++;
-	if (!*args_array)
-		ft_putstr_fd("unset: not enough arguments\n", STDERR_FILENO);
+	while (!*args_array)
+		break ;
 	while (args_array && *args_array)
 	{
 		ptr = envp;
