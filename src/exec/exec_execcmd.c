@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_execcmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:21:01 by amaligno          #+#    #+#             */
-/*   Updated: 2024/07/03 19:55:49 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:30:50 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*find_command(char *cmd, t_env *envp)
 	char	**paths;
 	char	*ret;
 
-	if (!access(cmd, F_OK | X_OK))
+	if (!*cmd || !access(cmd, F_OK | X_OK))
 		return (cmd);
 	cmd = ft_strjoin("/", cmd);
 	paths = ft_split(get_env("PATH", envp), ':');
@@ -67,8 +67,8 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 	char	*path;
 	pid_t	pid;
 
-	pid = 1;
-	if (!exec->args_array[0][0] || is_builtin(exec->args_array, envp))
+	if (!exec->args_array[0] || !exec->args_array[0][0] ||
+		is_builtin(exec->args_array, envp))
 		return ;
 	pid = fork();
 	if (!pid)

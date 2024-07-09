@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: etlim <etlim@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:01:57 by amaligno          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:06 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:15:31 by etlim            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <errno.h>
 # include <libft.h>
+# include <termios.h>
 
 # define CTRL_C SIGINT
 # define CTRL_D EOF
@@ -132,7 +133,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe);
 void	exec_pipe(t_pipecmd *pipecmd, t_env *envp, int *fds_pipe);
 void	exec(t_cmd *head, t_env *envp, int *fds_pipe);
 void	start_exec(t_cmd *head, t_env *envp);
-void	ignore_sigint(int sig);
+void	ignore_sig(int sig);
 
 //signals
 

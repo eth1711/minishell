@@ -6,7 +6,7 @@
 /*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:47:27 by amaligno          #+#    #+#             */
-/*   Updated: 2024/06/24 19:41:34 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/09 17:15:29 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 		fds_pipe[0] = fds[0];
 		return (1);
 	}
-	signal(CTRL_C, ignore_sigint);
+	signal(CTRL_C, ignore_sig);
 	return (close(fds[0]), 0);
 }
 
