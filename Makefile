@@ -6,9 +6,11 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
-INCLUDES = -Iincludes 
+RL_PATH = /Users/$(shell whoami)/homebrew/Cellar/readline/8.2.10/
 
-LINKER = -L./lib/Libft -L./lib/readline -lft -lreadline -lhistory
+INCLUDES = -Iincludes -I$(RL_PATH)include
+
+LINKER = -L./lib/Libft -L$(RL_PATH)lib -lft -lreadline -lhistory
 
 NAME = minishell
 
