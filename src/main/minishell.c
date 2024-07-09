@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amaligno <amaligno@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amaligno <antoinemalignon@yahoo.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:20:50 by amaligno          #+#    #+#             */
-/*   Updated: 2024/07/09 17:24:54 by amaligno         ###   ########.fr       */
+/*   Updated: 2024/07/10 00:57:43 by amaligno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,18 @@ static void	reset_fds(int startup)
 
 static void	init(t_env **envp_list, char **envp, int argc, char **argv)
 {
+	int		i_lvl;
+	char	*s_lvl;
+
 	(void)argc;
 	(void)argv;
 	init_signals();
 	reset_fds(1);
 	*envp_list = env_to_list(envp);
+	s_lvl = get_env("SHLVL", *envp_list);
+	i_lvl = ft_atoi(s_lvl);
+	s_lvl = ft_itoa(i_lvl + 1);
+	put_env("SHLVL", s_lvl, envp_list);
 }
 
 int	main(int argc, char **argv, char **envp)
