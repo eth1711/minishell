@@ -49,6 +49,8 @@ char	*find_command(char *cmd, t_env *envp)
 		return (cmd);
 	cmd = ft_strjoin("/", cmd);
 	paths = ft_split(get_env("PATH", envp), ':');
+	if (!paths)
+		return (free(cmd), NULL);
 	ptr = paths;
 	while (*ptr)
 	{
