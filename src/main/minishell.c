@@ -20,10 +20,11 @@ static void	reset_fds(int startup)
 	{
 		dup2(STDIN_FILENO, FD_STDIN);
 		dup2(STDOUT_FILENO, FD_STDOUT);
+		dup2(STDERR_FILENO, STDOUT_FILENO);
 		return ;
 	}
 	dup2(FD_STDIN, STDIN_FILENO);
-	dup2(FD_STDOUT, STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 }
 
 static void	init(t_env **envp_list, char **envp, int argc, char **argv)
@@ -33,7 +34,6 @@ static void	init(t_env **envp_list, char **envp, int argc, char **argv)
 
 	(void)argc;
 	(void)argv;
-	init_signals();
 	reset_fds(1);
 	*envp_list = env_to_list(envp);
 	s_lvl = get_env("SHLVL", *envp_list);
@@ -66,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell$ ");
 	}
 	free_env(envp_list);
+	free(line);
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	return (g_error);
 }

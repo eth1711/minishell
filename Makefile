@@ -2,9 +2,9 @@ SRC = $(wildcard src/*/*.c)
 
 OBJ = $(SRC:.c=.o)
 
-CC = gcc
+CC = clang
 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
+FLAGS = -Wall -Werror -Wextra #-g3 #-fsanitize=address
 
 RL_PATH = /Users/$(shell whoami)/homebrew/Cellar/readline/8.2.10/
 
@@ -16,7 +16,7 @@ NAME = minishell
 
 %.o : %.c
 	@echo Compiling $<
-	@$(CC) $(FLAGS) -static $(INCLUDES) -c -o $@ $< 
+	@$(CC) $(FLAGS) $(INCLUDES) -static -c -o $@ $< 
 
 $(NAME) : $(OBJ)
 	@make -C lib/Libft

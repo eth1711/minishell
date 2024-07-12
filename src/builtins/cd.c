@@ -54,7 +54,7 @@ void	ft_cd(char **args_array, t_env *envp)
 		g_error = errno;
 		return ;
 	}
-	printf("minish: cd: %s: %s\n", *args_array, strerror(errno));
+	printf("minish: cd: %s: %s\n", args_array[1], strerror(errno));
 	g_error = errno;
 	free(cwd);
 }

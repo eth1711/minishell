@@ -14,28 +14,34 @@
 
 extern int	g_error;
 
-static void	flag_setter(int *flag_add)
-{
-	static int	*flag;
+// static void	flag_setter(int *flag_add)
+// {
+// 	static int	*flag;
 
-	if (!flag_add)
-		*flag = 1;
-	else
+// 	if (!flag_add)
+// 		*flag = 1;
+// 	else
+// 	{
+// 		flag = flag_add;
+// 		*flag = 0;
+// 	}
+// }
+
+static void	handler(int sigint)
+{
+	if (sigint == CTRL_C)
 	{
-		flag = flag_add;
-		*flag = 0;
+		ft_putchar_fd('\n', STDERR_FILENO);
+		exit(1);
+	}
+	else if (sigint == CTRL_SLSH)
+	{
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
-static void	sigint_handler(int sigint)
-{
-	(void)sigint;
-	flag_setter(NULL);
-	printf("\n");
-	close(STDIN_FILENO);
-}
-
-void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
+void	heredoc(char *delimiter, int *fds, t_env *envp)
 {
 	char		*line;
 	t_strptrs	toks;
@@ -55,24 +61,31 @@ void	heredoc_helper(char *delimiter, int *fds, t_env *envp)
 		line = readline("heredoc> ");
 	}
 	free(line);
+	exit(0);
 }
 
-int	heredoc(char *delimiter, t_env *envp, int *fds_pipe)
+int	start_heredoc(char *delimiter, t_env *envp, int *fds_pipe)
 {
 	int		fds[2];
 	int		flag;
+	int		pid;
 
-	flag_setter(&flag);
 	pipe(fds);
-	signal(CTRL_C, sigint_handler);
-	heredoc_helper(delimiter, fds, envp);
+	pid = fork();
+	if (!pid)
+	{
+		dup2(FD_STDIN, STDIN_FILENO);
+		signal(CTRL_C, handler);
+		signal(CTRL_SLSH, handler);
+		heredoc(delimiter, fds, envp);
+	}
 	close(fds[1]);
-	if (!flag)
+	waitpid(pid, &flag, 0);
+	if (!WEXITSTATUS(flag))
 	{
 		fds_pipe[0] = fds[0];
 		return (1);
 	}
-	signal(CTRL_C, ignore_sig);
 	return (close(fds[0]), 0);
 }
 
@@ -82,7 +95,7 @@ void	exec_redir(t_redircmd *redir, t_env *envp, int *fds_pipe)
 
 	if (redir->mode == LL)
 	{
-		if (!heredoc(redir->filename, envp, fds_pipe))
+		if (!start_heredoc(redir->filename, envp, fds_pipe))
 			return ;
 	}
 	else

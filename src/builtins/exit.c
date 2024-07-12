@@ -42,7 +42,8 @@ void	ft_exit(char **args_array)
 		else if (*(args_array + 1))
 		{
 			ft_putstr_fd("exit\n", STDERR_FILENO);
-			ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+			ft_putstr_fd("minishell: exit: too many arguments\n",
+				STDERR_FILENO);
 			g_error = 1;
 			return ;
 		}
@@ -51,5 +52,4 @@ void	ft_exit(char **args_array)
 	}
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	exit(g_error);
-
 }

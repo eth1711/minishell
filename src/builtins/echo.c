@@ -32,9 +32,7 @@ void	ft_echo(char **args_array)
 			args_array++;
 		}
 		else
-		{
 			break ;
-		}
 	}
 	while (*args_array)
 	{

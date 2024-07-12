@@ -139,6 +139,7 @@ void	ignore_sig(int sig);
 
 void	init_signals(void);
 void	handle_sigint(int sigint, siginfo_t *info, void *data);
+void	handle_sigquit(int sigint, siginfo_t *info, void *data);
 
 //environement
 
