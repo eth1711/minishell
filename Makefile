@@ -4,7 +4,7 @@ OBJ = $(SRC:.c=.o)
 
 CC = clang
 
-FLAGS = -Wall -Werror -Wextra #-g3 #-fsanitize=address
+FLAGS = -Wall -Werror -Wextra #-g3 -fsanitize=address
 
 RL_PATH = /Users/$(shell whoami)/homebrew/Cellar/readline/8.2.10/
 

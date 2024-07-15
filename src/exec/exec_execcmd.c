@@ -14,12 +14,18 @@
 
 extern int	g_error;
 
-int	is_builtin(char **args, t_env *envp)
+int	is_builtin(char **args, t_env *envp, int *fds_pipe)
 {
 	if (!ft_strcmp(args[0], "cd"))
 		return (ft_cd(args, envp), 1);
 	if (!ft_strcmp(args[0], "export"))
-		return (ft_export(args, envp), 1);
+	{
+		dup2(fds_pipe[1], STDOUT_FILENO);
+		ft_export(args, envp);
+		close(STDOUT_FILENO);
+		dup2(STDERR_FILENO, STDOUT_FILENO);
+		return (1);
+	}
 	if (!ft_strcmp(args[0], "unset"))
 		return (ft_unset(args, envp), 1);
 	if (!ft_strcmp(args[0], "exit"))
@@ -32,7 +38,10 @@ int	is_fork_builtin(char **args)
 	if (!ft_strcmp(args[0], "pwd"))
 		return (ft_pwd(), 1);
 	if (!ft_strcmp(args[0], "echo"))
+	{
+		g_error = 0;
 		return (ft_echo(args), 1);
+	}
 	return (0);
 }
 
@@ -70,7 +79,7 @@ void	exec_execcmd(t_execcmd *exec, t_env *envp, int *fds_pipe)
 	pid_t	pid;
 
 	if (!exec->args_array[0] || !exec->args_array[0][0] ||
-		is_builtin(exec->args_array, envp))
+		is_builtin(exec->args_array, envp, fds_pipe))
 		return ;
 	pid = fork();
 	if (!pid)

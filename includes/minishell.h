@@ -215,6 +215,6 @@ void	print_tree(t_cmd *head);
 
 //Exec Utils
 
-int		is_builtin(char **args, t_env *envp);
+int		is_builtin(char **args, t_env *envp, int *fds_pipe);
 
 #endif

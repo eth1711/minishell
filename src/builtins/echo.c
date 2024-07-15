@@ -19,20 +19,19 @@ void	ft_echo(char **args_array)
 	int	flag;
 	int	i;
 
-	flag = 0;
 	args_array++;
-	while (*args_array && (*args_array)[0] == '-' && (*args_array)[1] == 'n')
+	i = 0;
+	flag = 0;
+	while (*args_array && (*args_array)[i] == '-' && (*args_array)[++i] == 'n')
 	{
-		i = 2;
-		while ((*args_array)[i] == 'n')
+		while ((*args_array)[++i] == 'n')
 			i++;
 		if (!(*args_array)[i])
 		{
 			flag = 1;
 			args_array++;
+			i = 0;
 		}
-		else
-			break ;
 	}
 	while (*args_array)
 	{
@@ -42,5 +41,4 @@ void	ft_echo(char **args_array)
 	}
 	if (flag == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	g_error = 0;
 }
