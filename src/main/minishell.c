@@ -35,6 +35,7 @@ static void	init(t_env **envp_list, char **envp, int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	reset_fds(1);
+	init_signals();
 	*envp_list = env_to_list(envp);
 	s_lvl = get_env("SHLVL", *envp_list);
 	i_lvl = ft_atoi(s_lvl);
