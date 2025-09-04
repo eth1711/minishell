@@ -12,7 +12,7 @@
 # 📑 About
 **Minishell** is a 42 project about re-creating a simpler version of bash.  
 The project guidelines ask that the shell be able to run **commands**, handle **unix signals**, **redirecting** and **piping**, as well as a few **built in commands**.  
-Despite the simple sounding premise, this is a project that requires a great amount of research, planning and understanding of what you're recreating. Making this project *infamous* as the first biggest roadblocks for 42 students in the core program.
+Despite the simple sounding premise, this is a project that requires a great amount of research, planning and understanding of what you're recreating. Making this project *infamous* as one of the first biggest roadblocks for 42 students in the core program.
 
 # 🛠️ Features
 * ⚙️**Command execution** - using absolute and relative paths, as well as the PATH environement variable, the shell can execute other processes
