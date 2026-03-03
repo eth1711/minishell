@@ -52,11 +52,11 @@ Despite the simple sounding premise, this is a project that requires a great amo
 * 📚 **Shell Scripting Understanding** - Gained practical insight into how shells work internally, improving overall command-line proficiency and bash scripting skills.
 
 # 🚀 Getting Started
-### Dependencies
+
+### Compiling from source
+#### Dependencies
 - **GCC** compiler
 - **Make** 
-
-### Installation
 *Clone The repo and make the project*
 ``` bash
 git clone https://github.com/eth1711/minishell
