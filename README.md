@@ -76,10 +76,3 @@ Then run the shell and use it like you would a normal shell!
 # 📄 License
 
 This project is part of the 42 School curriculum and follows the school's academic guidelines.
-
-# 🤝 Contributing
-
-As this is an academic project, direct contributions are not accepted. However, feel free to:
-- Report bugs or issues
-- Suggest improvements
-- Use this as reference for your own learning
