@@ -2,8 +2,8 @@
 
 <div align=center>
 
+![Minishell Demo](https://i.imgur.com/YvASFOO.gif)  
 *A simple bash re-creation*  
-![Minishell Demo](https://i.imgur.com/YvASFOO.gif)
 
 [![42 School](https://img.shields.io/badge/School-000000?style=flat-square&logo=42&logoColor=white)](https://42.fr/)
 [![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)](https://en.wikipedia.org/wiki/C_(programming_language))
