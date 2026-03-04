@@ -53,27 +53,31 @@ Despite the simple sounding premise, this is a project that requires a great amo
 
 # 🚀 Getting Started
 
-### Compiling from source
+### Download from [latest](https://github.com/eth1711/minishell/releases/latest)
+
+#### or
+
+### Compile from source
 #### Dependencies
 - **GCC** compiler
-- **Make** 
-*Clone The repo and make the project*
+- **Make**
+- **Lib Readline**  
 ``` bash
 git clone https://github.com/eth1711/minishell
 cd ./minishell
 make
 ```
-### Usage
+# 🔮 Usage
 Then run the shell and use it like you would a normal shell!
 ``` bash
 ./minishell
 ```
 
-## 📄 License
+# 📄 License
 
 This project is part of the 42 School curriculum and follows the school's academic guidelines.
 
-## 🤝 Contributing
+# 🤝 Contributing
 
 As this is an academic project, direct contributions are not accepted. However, feel free to:
 - Report bugs or issues
